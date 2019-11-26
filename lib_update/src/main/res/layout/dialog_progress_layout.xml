@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_dialog_progress_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="正在下载请稍后....."
+        android:typeface="monospace" />
+
+    <ProgressBar
+        android:id="@+id/pb_dialog_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/progressbar_bg" />
+
+
+</LinearLayout>

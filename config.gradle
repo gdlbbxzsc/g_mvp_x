@@ -1,0 +1,95 @@
+//keystore
+def keystore = [:]
+keystore.storeFile = "C:/Users/Administrator/Desktop/pbph"
+keystore.storePassword = "pbcom123"
+keystore.keyAlias = "pbph"
+keystore.keyPassword = "pbcom1234"
+ext.keystore = keystore
+/////////////////////////////////////////////////////////////////////
+//构建版本
+def build_versions = [:]
+build_versions.compileSdkVersion = 29
+build_versions.minSdkVersion = 19
+build_versions.targetSdkVersion = 29
+ext.build_versions = build_versions
+/////////////////////////////////////////////////////////////////////
+//apk版本
+def app_versions = [:]
+app_versions.applicationId = "c.g.a.x.g_mvp_x"
+
+app_versions.versionCode = 1
+app_versions.versionName = "1.0"
+ext.app_versions = app_versions
+/////////////////////////////////////////////////////////////////////
+//配置服务器地址第三方信息是正式版本还是测试版本
+def isDebug = true
+/////////////////////////////////////////////////////////////////////
+//服务器配置
+def server_config = [:]
+if (isDebug) {
+//测试下配置
+    server_config.base_url = "https://39.96.132.92:32443/"
+    server_config.aaaa = 123
+    server_config.bbbb = "gdl"
+} else {
+//正式下配置
+    server_config.base_url = "https://39.96.132.92:32443/"
+    server_config.aaaa = 321
+    server_config.bbbb = "ldg"
+}
+//正式测试通用配置
+server_config.project_applicationId = app_versions.applicationId
+ext.server_config = server_config
+/////////////////////////////////////////////////////////////////////
+//第三方配置 ps:微信 支付宝 百度 极光 客服等。
+def third_config = [:]
+if (isDebug) {
+} else {
+}
+ext.third_config = third_config
+
+def weixin_config = [:]
+if (isDebug) {
+    weixin_config.wx_app_id = "http://pbpb88.com/api/"
+    weixin_config.wx_app_secret = "http://pbpb88.com/api/"
+} else {
+    weixin_config.wx_app_id = "http://pbpb88.com/api/"
+    weixin_config.wx_app_secret = "http://pbpb88.com/api/"
+}
+ext.weixin_config = weixin_config
+/////////////////////////////////////////////////////////////////////
+//配置文件中的占位符都可以写在这里
+def manifest_placeholders = [:]
+manifest_placeholders.placeholder_applicationId = server_config.project_applicationId
+manifest_placeholders.placeholder_wx_app_id = weixin_config.wx_app_id
+ext.manifest_placeholders = manifest_placeholders
+/////////////////////////////////////////////////////////////////////
+//resConfigs打包过滤
+def res_configs = [:]
+if (isDebug) {
+    res_configs.configs = ["zh", "xxhdpi"]//, "en"
+} else {
+    res_configs.configs = ["zh"]//, "en"
+}
+ext.res_configs = res_configs
+/////////////////////////////////////////////////////////////////////
+//测试版本和发布版本是否带log日志
+def log_mode = [:]
+log_mode.debug = "true"
+log_mode.release = "false"
+ext.log_mode = log_mode
+/////////////////////////////////////////////////////////////////////
+//其他一些第三方框架版本号
+def dependencies_version = [:]
+//arouter  需要注意的是api要与compiler匹配使用，均使用最新版可以保证兼容
+dependencies_version.arouter_api_verion = "1.5.0"
+dependencies_version.arouter_compiler_verion = "1.2.2"
+dependencies_version.arouter_register = "1.0.2"
+
+dependencies_version.room_version = "2.2.0"
+
+//dependencies_version.objectbox_version = "2.4.1"
+
+
+ext.dependencies_version = dependencies_version
+

@@ -1,0 +1,23 @@
+<resources>
+
+    <style name="font_normal1.black1.Edt_B_mw_pad5_Bg_default">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/dp5</item>
+        <item name="android:background">@drawable/default_edt_bg</item>
+    </style>
+
+    <style name="font_normal1.black1.Edt_B_mw_pad5_Bg_default.Multiline55">
+        <item name="android:gravity">top|left</item>
+        <item name="android:minLines">5</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+    <style name="font_normal1.black1.Edt_B_mw_pad5_Bg_default.Singleline">
+        <item name="android:gravity">center|left</item>
+        <item name="android:minLines">1</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--系统用到的颜色-->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--自定义颜色-->
+    <color name="bantouming">#55000000</color>
+    <color name="touming">#00000000</color>
+
+    <!--部分通用背景颜色和分割线颜色 -->
+
+    <!--分割线颜色-->
+    <color name="line">#d7d7d7</color>
+
+    <!--部分背景颜色-->
+    <color name="bg">#f8f8f8</color>
+
+    <!--部分字体颜色-->
+    <color name="red">#ff2741</color>
+    <color name="blue">#0d7bd9</color>
+
+    <color name="black1">#313131</color>
+    <color name="black2">#818181</color>
+
+    <color name="white">#ffffff</color>
+
+    <color name="gray1">#cccccc</color>
+    <color name="gray2">#d7d7d7</color>
+    <color name="gray3">#f5f5f5</color>
+
+</resources>

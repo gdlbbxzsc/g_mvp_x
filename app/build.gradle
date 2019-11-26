@@ -1,0 +1,135 @@
+apply plugin: 'com.android.application'
+
+//// Create a variable called keystorePropertiesFile, and initialize it to your
+//// keystore.properties file, in the rootProject folder.
+//def keystorePropertiesFile = rootProject.file("keystore.properties")
+//// Initialize a new Properties() object called keystoreProperties.
+//def keystoreProperties = new Properties()
+//// Load your keystore.properties file into the keystoreProperties object.
+//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+////        release {
+////            storeFile file(keystoreProperties['storeFile'])
+////            storePassword keystoreProperties['storePassword']
+////            keyAlias keystoreProperties['keyAlias']
+////            keyPassword keystoreProperties['keyPassword']
+////        }
+
+
+android {
+    compileSdkVersion build_versions.compileSdkVersion
+//    buildToolsVersion buildToolsVersion
+
+    defaultConfig {
+        applicationId app_versions.applicationId
+        minSdkVersion build_versions.minSdkVersion
+        targetSdkVersion build_versions.targetSdkVersion
+        versionCode app_versions.versionCode
+        versionName app_versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        manifestPlaceholders = manifest_placeholders
+
+        resConfigs res_configs.configs
+
+        server_config.each { key, value ->
+            if (value instanceof Boolean) {
+                buildConfigField("boolean", (key), value.toString())
+            } else if (value instanceof GString || value instanceof String) {
+                buildConfigField("String", (key), "\"" + value + "\"")
+            } else if (value instanceof Number) {
+                buildConfigField("int", (key), value.toString())
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystore.storeFile)
+            storePassword keystore.storePassword
+            keyAlias keystore.keyAlias
+            keyPassword keystore.keyPassword
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+
+            minifyEnabled false
+
+            zipAlignEnabled false
+            shrinkResources false
+
+            buildConfigField("boolean", "LOG", log_mode.debug)
+
+            debuggable true
+
+            signingConfig signingConfigs.release//设置签名信息
+        }
+
+        release {
+
+            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //是否zip对齐
+            zipAlignEnabled true
+            // 缩减resource文件
+            shrinkResources true
+
+            buildConfigField("boolean", "LOG", log_mode.release)
+
+            signingConfig signingConfigs.release//设置签名信息
+        }
+    }
+
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+
+//apk 生成路径
+//            variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/build/outputs/apk/release")
+
+//apk 生成名称
+            def name
+            name = defaultConfig.applicationId
+            name = name.substring(name.lastIndexOf(".") + 1, name.length())
+//            name = project.name
+
+            def time = new Date().format("yyyyMMddmmss", TimeZone.getTimeZone("UTC"))
+
+            outputFileName = "${name}_${variant.flavorName}_v${defaultConfig.versionName}_${time}_${variant.buildType.name}.apk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation project(path: ':lib_support')
+    implementation project(path: ':lib_base')
+    implementation project(path: ':lib_mvp')
+    implementation project(path: ':global_application')
+
+    implementation project(path: ':module_main')
+
+    if (!module_Debug.toBoolean()) {
+        implementation project(path: ':module_login')
+    }
+
+}

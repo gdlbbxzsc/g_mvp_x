@@ -1,0 +1,4 @@
+C:\Program Files\Android\Android Studio\plugins\android\lib\templates\activities
+解压到 此文件夹下 
+重启android studio
+在lib_http module下右键 new  activity rerx选项

@@ -1,0 +1,5 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/font_normal1.black1.Tv_B_mw"
+    android:gravity="center"
+    android:paddingTop="@dimen/dp10"
+    android:paddingBottom="@dimen/dp10" />

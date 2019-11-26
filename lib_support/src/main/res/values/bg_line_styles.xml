@@ -1,0 +1,134 @@
+<resources>
+
+    <!--部分通用背景颜色和分割线颜色styles-->
+
+    <!--分割线颜色-->
+    <style name="Line">
+        <item name="android:background">@color/line</item>
+    </style>
+
+    <style name="Line.B_01px">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+
+    <style name="Line.B_m1px">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+
+    <!--部分背景颜色-->
+    <style name="Bg_none">
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="Bg_default">
+        <item name="android:background">@color/bg</item>
+    </style>
+
+    <style name="Bg_white">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!--部分背景layout样式-->
+    <style name="Bg_none.B_mm">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Bg_none.B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Bg_none.B_mw">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Bg_none.B_0w">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--    ////////-->
+
+    <style name="Bg_default.B_mm">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Bg_default.B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Bg_default.B_mw">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Bg_default.B_0w">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--    ////////////-->
+
+    <style name="Bg_white.B_mm">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Bg_white.B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Bg_white.B_mw">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Bg_white.B_0w">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--    /////////-->
+
+    <style name="Bg_white.B_mw.O_v_G_topcenter">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">top|center</item>
+    </style>
+
+    <style name="Bg_white.B_mw.Ov_G_center">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Bg_white.B_mw.O_h_G_center">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Bg_default.B_mm.O_v_G_center">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Bg_default.B_ww.O_v_G_center">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Bg_default.B_mm.O_v_G_topcenter">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">top|center</item>
+    </style>
+
+
+    <style name="Bg_none.B_mw.O_h_G_center">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+</resources>

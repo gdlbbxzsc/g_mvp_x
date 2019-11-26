@@ -1,0 +1,77 @@
+<resources>
+
+    <style name="font_large1.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_large2.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_medium1.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_medium2.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_normal1.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_normal2.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_small1.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_small2.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="font_small3.blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <!--/-->
+    <style name="font_large1.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_large2.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_medium1.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_medium2.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal1.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal2.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small1.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small2.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small3.blue.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,2 @@
+include ':app', ':lib_support', ':lib_base', ':applogic_annotation', ':applogic_api', ':applogic_compiler', ':lib_sp', ':global_application', ':lib_http', ':lib_rxbus', ':lib_mvp', ':lib_db', ':lib_update', ':module_main', ':module_login', ':lib_mvp_list', ':lib_weixin'
+rootProject.name='G_MVP_X'

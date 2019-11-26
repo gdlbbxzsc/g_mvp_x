@@ -1,0 +1,77 @@
+<resources>
+
+    <style name="font_large1.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_large2.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_medium1.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_medium2.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_normal1.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_normal2.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_small1.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_small2.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <style name="font_small3.black2">
+        <item name="android:textColor">@color/black2</item>
+    </style>
+
+    <!--/-->
+    <style name="font_large1.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_large2.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_medium1.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_medium2.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal1.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal2.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small1.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small2.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small3.black2.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+</resources>

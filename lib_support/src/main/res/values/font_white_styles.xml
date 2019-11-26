@@ -1,0 +1,77 @@
+<resources>
+
+    <style name="font_large1.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_large2.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_medium1.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_medium2.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_normal1.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_normal2.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_small1.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_small2.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="font_small3.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--/-->
+    <style name="font_large1.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_large2.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_medium1.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_medium2.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal1.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal2.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small1.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small2.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_small3.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+</resources>

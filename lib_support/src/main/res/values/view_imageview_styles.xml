@@ -1,0 +1,18 @@
+<resources>
+
+    <style name="Iv_B_00_S_fitxy">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="Iv_B_00_S_fitxy.R_h11">
+        <item name="layout_constraintDimensionRatio">h,1:1</item>
+    </style>
+
+
+    <style name="Iv_B_00_S_fitxy.R_h34">
+        <!--        <item name="android:src">@drawable/audittask_def</item>-->
+        <item name="layout_constraintDimensionRatio">h,3:4</item>
+    </style>
+</resources>

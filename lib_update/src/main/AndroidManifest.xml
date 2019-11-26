@@ -1,0 +1,23 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="c.g.a.x.lib_update">
+
+    <application>
+
+        <service android:name=".UpVersionService" />
+
+
+        <provider
+            android:name=".VersionUpFileProvider"
+            android:authorities="${placeholder_applicationId}.VersionUpFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/versionup_file_paths" />
+
+        </provider>
+    </application>
+
+
+</manifest>

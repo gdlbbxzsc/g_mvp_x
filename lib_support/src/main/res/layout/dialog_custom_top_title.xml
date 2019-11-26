@@ -1,0 +1,4 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/font_medium2.black1.Tv_B_mw"
+    android:text="提示"
+    android:gravity="center" />

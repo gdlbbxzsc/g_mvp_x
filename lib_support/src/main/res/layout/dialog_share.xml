@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Bg_white.B_mw">
+
+    <TextView
+        android:id="@+id/tv_share_life"
+        style="@style/font_small1.black1.Tv_B_ww"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        android:drawableTop="@drawable/share_wx"
+        android:drawablePadding="@dimen/dp5"
+        android:gravity="center"
+        android:text="微信"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintEnd_toStartOf="@+id/tv_share_timeline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_share_timeline"
+        style="@style/font_small1.black1.Tv_B_ww"
+        android:drawableTop="@drawable/share_pyq"
+        android:drawablePadding="@dimen/dp5"
+        android:gravity="center"
+        android:text="朋友圈"
+        app:layout_constraintEnd_toStartOf="@+id/tv_share_qq"
+        app:layout_constraintStart_toEndOf="@+id/tv_share_life"
+        app:layout_constraintTop_toTopOf="@+id/tv_share_life" />
+
+    <TextView
+        android:id="@+id/tv_share_qq"
+        style="@style/font_small1.black1.Tv_B_ww"
+        android:drawableTop="@drawable/share_qq"
+        android:drawablePadding="@dimen/dp5"
+        android:gravity="center"
+        android:text="QQ"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_share_timeline"
+        app:layout_constraintTop_toTopOf="@+id/tv_share_life" />
+
+    <View
+        android:id="@+id/line"
+        style="@style/Line.B_01px"
+        app:layout_constraintBottom_toTopOf="@+id/btn_share_esc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_share_esc"
+        style="@style/font_normal1.black2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:padding="@dimen/dp8"
+        android:text="取消"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

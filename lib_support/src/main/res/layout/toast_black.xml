@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Bg_default.B_ww.O_v_G_center"
+    android:background="@drawable/default_toast_bg"
+    android:padding="@dimen/dp12">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/font_normal1.white.Tv_B_ww"
+        tools:text="sdfsdf" />
+</LinearLayout>  

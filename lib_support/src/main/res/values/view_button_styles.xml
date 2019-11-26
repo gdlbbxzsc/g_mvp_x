@@ -1,0 +1,75 @@
+<resources>
+
+    <style name="font_normal1.black1.Btn_B_ww_pad_lr8_tb4">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dp3</item>
+        <item name="android:paddingBottom">@dimen/dp3</item>
+        <item name="android:paddingLeft">@dimen/dp8</item>
+        <item name="android:paddingRight">@dimen/dp8</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_ww_pad_lr16_tb6">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dp6</item>
+        <item name="android:paddingBottom">@dimen/dp6</item>
+        <item name="android:paddingLeft">@dimen/dp16</item>
+        <item name="android:paddingRight">@dimen/dp16</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default">
+        <item name="android:background">@drawable/default_btn_bg_selector</item>
+        <item name="android:textColor">@drawable/default_btn_tc_selector</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default1">
+        <item name="android:background">@drawable/default_btn_bg_selector1</item>
+        <item name="android:textColor">@drawable/default_btn_tc_selector1</item>
+    </style>
+
+
+    <style name="font_medium1.Btn_B_0w_pad_lr16_tb6">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dp6</item>
+        <item name="android:paddingBottom">@dimen/dp6</item>
+        <item name="android:paddingLeft">@dimen/dp16</item>
+        <item name="android:paddingRight">@dimen/dp16</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_0w_pad_lr16_tb6.Bg_Tc_default">
+        <item name="android:background">@drawable/default_btn_bg_selector</item>
+        <item name="android:textColor">@drawable/default_btn_tc_selector</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_0w_pad_lr16_tb6.Bg_Tc_default1">
+        <item name="android:background">@drawable/default_btn_bg_selector1</item>
+        <item name="android:textColor">@drawable/default_btn_tc_selector1</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_mw_pad_lr16_tb6">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dp6</item>
+        <item name="android:paddingBottom">@dimen/dp6</item>
+        <item name="android:paddingLeft">@dimen/dp16</item>
+        <item name="android:paddingRight">@dimen/dp16</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_mw_pad_lr16_tb6.Bg_Tc_default">
+        <item name="android:background">@drawable/default_btn_bg_selector</item>
+        <item name="android:textColor">@drawable/default_btn_tc_selector</item>
+    </style>
+
+    <style name="font_medium1.Btn_B_mw_pad_lr16_tb6.Bg_Tc_default1">
+        <item name="android:background">@drawable/default_btn_bg_selector1</item>
+        <item name="android:textColor">@drawable/default_btn_tc_selector1</item>
+    </style>
+
+
+</resources>

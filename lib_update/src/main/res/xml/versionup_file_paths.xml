@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="external_storage_root"
+        path="." />
+</paths>
+
+    <!--
+        < external-path /> 代表的根目录:  Environment.getExternalStorageDirectory()
+        < files-path /> 代表的根目录： Context.getFilesDir()
+        < cache-path /> 代表的根目录: getCacheDir()
+
+        path=”pictures”
+        means:根目录下的pictures目录(eg:/storage/emulated/0/pictures)
+        你向其它应用分享pictures目录范围之外的文件是不行的。
+    -->

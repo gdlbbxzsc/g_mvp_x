@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion build_versions.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion build_versions.minSdkVersion
+        targetSdkVersion build_versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        buildConfigField("boolean", "LOG", log_mode.debug)
+
+        resConfigs res_configs.configs
+
+        server_config.each { key, value ->
+            if (value instanceof Boolean) {
+                buildConfigField("boolean", (key), value.toString())
+            } else if (value instanceof GString || value instanceof String) {
+                buildConfigField("String", (key), "\"" + value + "\"")
+            } else if (value instanceof Number) {
+                buildConfigField("int", (key), value.toString())
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField("boolean", "LOG", log_mode.release)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation project(path: ':lib_support')
+    implementation project(path: ':lib_base')
+    implementation project(path: ':lib_mvp')
+
+
+}

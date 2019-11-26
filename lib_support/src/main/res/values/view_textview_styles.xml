@@ -1,0 +1,54 @@
+<resources>
+
+
+    <style name="point_num_style" parent="font_small2.white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/point_num_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:minHeight">@dimen/dp15</item>
+        <item name="android:minWidth">@dimen/dp15</item>
+        <item name="android:paddingBottom">@dimen/dp2</item>
+        <item name="android:paddingLeft">@dimen/dp3</item>
+        <item name="android:paddingRight">@dimen/dp3</item>
+        <item name="android:paddingTop">@dimen/dp2</item>
+    </style>
+
+    <style name="font_medium2.black1.Tv_B_mw">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="font_medium2.black1.Tv_B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="font_normal1.black1.Tv_B_mw">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="font_normal1.white.Tv_B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="font_small1.black1.Tv_B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="font_normal1.black1.Tv_B_mw.G_leftcenter">
+        <item name="android:gravity">left|center</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="font_normal1.black1.Tv_B_mw.G_leftcenter_maxLines2">
+        <item name="android:gravity">left|center</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+
+</resources>

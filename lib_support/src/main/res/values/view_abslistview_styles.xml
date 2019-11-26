@@ -1,0 +1,47 @@
+<resources>
+
+    <style name="Listview">
+        <item name="android:cacheColorHint">#00000000</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:listSelector">#00000000</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="Listview.D_0">
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+    </style>
+
+    <style name="Listview.D_1">
+        <item name="android:divider">@color/line</item>
+        <item name="android:dividerHeight">@dimen/dp1</item>
+    </style>
+
+    <style name="Listview.D_0.B_mm">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="Listview.D_1.B_mm">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="Listview.D_1.B_mw">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Listview.D_1.B_m0">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="Listview.D_1.B_mw.B_white">
+        <item name="android:background">#ffffff</item>
+    </style>
+
+</resources>

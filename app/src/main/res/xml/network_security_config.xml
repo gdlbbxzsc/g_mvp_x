@@ -1,0 +1,36 @@
+<network-security-config>
+    <!--默认的配置 不在 domain-config 范围内的所有连接所使用的配置 0-1个 -->
+    <!--cleartextTrafficPermitted:标识是否允许明文传输-->
+    <base-config cleartextTrafficPermitted="false">
+        <!--证书集合-->
+        <trust-anchors>
+            <!--证书
+            src="system|user|@raw/myname"
+            system：系統
+            user:用户
+            @raw/myname：资源文件中的
+
+            overridePins:标识是否绕过证书固定，默认值为 "false"
+            -->
+            <certificates
+                overridePins="false"
+                src="system" />
+            <!--<certificates src="user" />-->
+
+        </trust-anchors>
+    </base-config>
+
+    <!--满足domain规则所使用的配置，可配置任意多个，domain-config的嵌套表示继承外层的配置规则 -->
+    <domain-config cleartextTrafficPermitted="false">
+        <!--domain: 域名规则 -->
+        <!--includeSubdomains 配置是否支持子域名-->
+        <domain includeSubdomains="true">www.baidu.com</domain>
+        <trust-anchors />
+        <!--expiration:过期时间-->
+        <pin-set expiration="2018-01-01">
+            <pin digest="SHA-256">7HIpactkIAq2Y49orFOOQKurWxmmSFZhBCoQYcRhJ3Y=</pin>
+        </pin-set>
+
+    </domain-config>
+    <debug-overrides />
+</network-security-config>
