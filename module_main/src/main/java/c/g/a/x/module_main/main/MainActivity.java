@@ -42,33 +42,11 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //
 //        SpMnger.getDefault().putRemember(false);
 //        Logger.e(sp.isRemember());
-//        WaitDialog.show(context,"hhhh");
-//        WaitDialog.canceled();
 
 //        View tv = findViewById(R.id.textView);
 //        new SPClick<>(tv).subscribe(view -> {
 //            Logger.e("===");
-//
-//
 //        });
-
-
-//        SearchRecordDao dao = GlobalApplication.getInstances().getDaoSession().getSearchRecordDao();
-//
-//        SearchRecord vo = new SearchRecord();
-//        vo.setSearchText("bvbsdfsd");
-//        vo.setCreateTime(new Date());
-//        dao.insert(vo);
-//        List<SearchRecord> list = GlobalApplication.getInstances().getDaoSession().getSearchRecordDao()//
-//                .queryBuilder()//
-////                .where(SearchRecordDao.Properties.SearchType.eq(1))//
-//                .orderDesc(SearchRecordDao.Properties.CreateTime)//
-//                .limit(10)//
-//                .list();
-//
-//        for (SearchRecord record : list) {
-//            Logger.e(record.getSearchText() + "==============");
-//        }
 
 //        MoneyHelper helper = MoneyHelper.getInstance4Fen("1234567890");
 //        helper.change2Yuan();
