@@ -43,6 +43,8 @@
     <style name="font_normal1.black1.Tv_B_mw.G_leftcenter">
         <item name="android:gravity">left|center</item>
         <item name="android:maxLines">1</item>
+        <item name="android:minLines">1</item>
+        <item name="android:lines">1</item>
     </style>
 
     <style name="font_normal1.black1.Tv_B_mw.G_leftcenter_maxLines2">

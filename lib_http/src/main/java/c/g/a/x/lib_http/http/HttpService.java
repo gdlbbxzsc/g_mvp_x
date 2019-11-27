@@ -2,8 +2,11 @@ package c.g.a.x.lib_http.http;
 
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
@@ -43,5 +46,8 @@ public interface HttpService {
 //      如果用的 GetUrlPathRequest 要这样标注@Path(value = "path", encoded = true)
 //    @GET("tlcuser/login/sendLoginSMSValidateCode/{path}")
 //    Observable<SendLoginSMSValidateCodeResponse> sendLoginSMSValidateCode(@Path(value = "path", encoded = true) String path);
+
+//    @POST("tlcuser/myCentreManage/selectMyBalance")
+//    Observable<SelectMyBalanceResponse> selectMyBalance(@Body RequestBody requestBody);
 
 }
