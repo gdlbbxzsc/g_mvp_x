@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="c.g.a.x.module_login" >
+    package="c.g.a.x.module_login">
+
     <application>
         <activity
             android:name=".login.LoginActivity"
