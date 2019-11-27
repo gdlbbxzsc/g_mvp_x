@@ -4,11 +4,8 @@ buildscript {
 
     apply from: 'config.gradle'//这里是引入我们的配置文件
 
-    repositories {
-        google()
-        jcenter()
+    initRepositories(repositories)
 
-    }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.1'
 //        classpath "io.objectbox:objectbox-gradle-plugin:$dependencies_version.objectbox_version"
@@ -19,11 +16,7 @@ buildscript {
 }
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-
-    }
+    initRepositories(repositories)
 
 //    // 组件缓存更新时间设置（默认每次build都更新）
 //    configurations.all {
