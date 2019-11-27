@@ -22,7 +22,11 @@ app_versions.versionName = "1.0"
 ext.app_versions = app_versions
 /////////////////////////////////////////////////////////////////////
 //配置服务器地址第三方信息是正式版本还是测试版本
-def isDebug = true
+//************** **************记
+//*************   *************得
+def isDebug = true//<----------| 发布版本类型true 测试版本 false 正式版本
+//*************   *************修
+//************** **************改
 /////////////////////////////////////////////////////////////////////
 //服务器配置
 def server_config = [:]
@@ -79,6 +83,18 @@ log_mode.debug = "true"
 log_mode.release = "false"
 ext.log_mode = log_mode
 /////////////////////////////////////////////////////////////////////
+//**************************框架依赖配置**************************//
+def initRepositories(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    //Add the JitPack repository
+    handler.maven { url "https://jitpack.io" }
+//    handler.maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+}
+
+ext.initRepositories = this.&initRepositories
+/////////////////////////////////////////////////////////////////////
 //其他一些第三方框架版本号
 def dependencies_version = [:]
 //arouter  需要注意的是api要与compiler匹配使用，均使用最新版可以保证兼容
@@ -92,15 +108,5 @@ dependencies_version.room_version = "2.2.0"
 
 
 ext.dependencies_version = dependencies_version
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-def initRepositories(RepositoryHandler handler) {
-    handler.google()
-    handler.jcenter()
-    handler.mavenCentral()
-    //Add the JitPack repository
-    handler.maven { url "https://jitpack.io" }
-//    handler.maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-}
 
-ext.initRepositories = this.&initRepositories
+/////////////////////////////////////////////////////////////////////
