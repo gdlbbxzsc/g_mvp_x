@@ -88,7 +88,6 @@ public final class AliHelper {
 //                }, (throwable) -> SysToast.showToastShort(activity, "支付失败"));
 //    }
 
-
     public interface AliResultListener {
         void result(boolean succ, AliResult aliResult);
     }
