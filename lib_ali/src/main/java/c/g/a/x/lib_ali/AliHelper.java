@@ -13,7 +13,7 @@ import c.g.a.x.lib_support.views.toast.SysToast;
 
 
 public final class AliHelper {
- 
+
 //    private Activity activity;
 //    private AliResultListener aliResultListener;
 
