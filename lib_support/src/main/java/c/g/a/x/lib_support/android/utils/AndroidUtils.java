@@ -143,19 +143,19 @@ public final class AndroidUtils {
 
     ///////////////////////////////
     public static void copyText(Context context, String str) {
-        copy(context, ClipData.newPlainText("Label", str));
+        copy(context, ClipData.newPlainText("", str));
     }
 
     public static void copyUri(Context context, String str) {
-        copy(context, ClipData.newRawUri("Label", Uri.parse(str)));
+        copy(context, ClipData.newRawUri("", Uri.parse(str)));
     }
 
     public static void copyUri(Context context, Uri uri) {
-        copy(context, ClipData.newRawUri("Label", uri));
+        copy(context, ClipData.newRawUri("", uri));
     }
 
     public static void copyIntent(Context context, Intent intent) {
-        copy(context, ClipData.newIntent("Label", intent));
+        copy(context, ClipData.newIntent("", intent));
     }
 
     public static void copy(Context context, ClipData clipData) {
@@ -163,6 +163,19 @@ public final class AndroidUtils {
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         // 将ClipData内容放到系统剪贴板里。
         cm.setPrimaryClip(clipData);
+    }
+
+    public static String getPrimaryClipText(Context context) {
+        //获取剪贴板管理器：
+        ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        try {
+            ClipData data = cm.getPrimaryClip();
+            ClipData.Item item = data.getItemAt(0);
+            return item.getText().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     //////////////////////////

@@ -1,6 +1,9 @@
 package c.g.a.x.global_application;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
+import android.os.Bundle;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -40,6 +43,8 @@ public class GlobalApplication extends BaseApplication {
         Logger.e("GlobalApplication onCreate=2" + getPackageName());
 
         instances = this;
+
+        registerActivityLifecycleCallbacks(new MyActivityLifecycleCallbacks());
 
         userInfo = UserInfo.getInstance();
 
@@ -81,5 +86,45 @@ public class GlobalApplication extends BaseApplication {
     public boolean checkLogin() {
         return userInfo.isLogin();
     }
+
+
+    private class MyActivityLifecycleCallbacks implements ActivityLifecycleCallbacks{
+
+        @Override
+        public void onActivityCreated(Activity activity, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+
+        }
+    }
+
 
 }
