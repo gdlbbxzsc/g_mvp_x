@@ -22,9 +22,9 @@ public final class AliHelper {
 //        return new AliHelper(activity);
 //    }
 
-    private AliHelper(Activity activity) {
-//        this.activity = activity;
-    }
+//    private AliHelper(Activity activity) {
+////        this.activity = activity;
+//    }
 
     public static String getSDKVersion(Activity activity) {
         return new PayTask(activity).getVersion();
