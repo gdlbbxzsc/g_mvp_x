@@ -192,15 +192,10 @@ public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment i
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-//        String str = PermissionUtils.checkNotAllowPermissions2String(getContext(), strs);
-        String str = StringUtils.builder("\n", perms);
-//        toastShort("已拒绝:\n" + str + "\n权限");
-
-        if (!EasyPermissions.somePermissionPermanentlyDenied(this, perms)) return;
-
+    public final void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
 //            toastShort("已拒绝:\n" + str + "\n权限,并不再询问");
-        new AppSettingsDialog.Builder(this).build().show();
+            new AppSettingsDialog.Builder(this).build().show();
 //            new AppSettingsDialog
 //                    .Builder(this)
 //                    .setRationale("此功能需要" + str + "权限，否则无法正常使用，是否打开设置")
@@ -211,6 +206,16 @@ public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment i
 //
 //                    .build()
 //                    .show();
+            return;
+        }
+
+        //        String str = PermissionUtils.checkNotAllowPermissions2String(getContext(), strs);
+//        String str = StringUtils.builder("\n", perms);
+//        toastShort("已拒绝:\n" + str + "\n权限");
+        onPermissionsDeniedNormal(requestCode, perms);
+    }
+
+    public void onPermissionsDeniedNormal(int requestCode, List<String> perms) {
     }
 
     @Override

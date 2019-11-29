@@ -1,9 +1,12 @@
 package c.g.a.x.lib_support.utils;
 
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import c.g.a.x.lib_support.android.utils.Logger;
 
 public final class DateHelper {
 
@@ -64,13 +67,16 @@ public final class DateHelper {
         public static final String PATTERN_D3_T3_2 = "yyyy-MM-dd HH:mm:ss";
         public static final String PATTERN_D3_T3_3 = "yyyy|MM|dd HH:mm:ss";
         public static final String PATTERN_D3_T3_4 = "yyyy年MM月dd日 HH:mm:ss";
+        public static final String PATTERN_D3_T3_5 = "yyyy/MM/dd HH:mm:ss";
 
         //date3 time2
         public static final String PATTERN_D3_T2_1 = "yy/MM/dd HH:mm";
         public static final String PATTERN_D3_T2_2 = "yyyy-MM-dd HH:mm";
+        public static final String PATTERN_D3_T2_3 = "yyyyMMddHHmm";
 
         //date2 time3
         public static final String PATTERN_D2_T3_1 = "MMddHHmmss";
+        public static final String PATTERN_D2_T3_2 = "MM-dd HH:mm:ss";
 
         //date2 time2
         public static final String PATTERN_D2_T2_1 = "MM-dd HH:mm";
@@ -107,6 +113,9 @@ public final class DateHelper {
         ///////// otherwise
         //week
         public static final String PATTERN_D3_WEEK_1 = "yyyy.MM.dd EEEE";
+
+
+        public static final String PATTERN_DAY_HOUR_MIN = "d天H时m分";
 
 
     }
@@ -287,42 +296,191 @@ public final class DateHelper {
 //        return str.substring(str.length() - 2);
 //    }
 
-    public long getDvalue4Now() {
+    public LastTime getDvalue4Now() {
         return getDvalue(System.currentTimeMillis());
     }
 
-    public long getDvalue(long time) {
-        return Math.abs(time - this.getLong());
+    public LastTime getDvalue(DateHelper time) {
+        return getDvalue(time.getLong());
     }
 
-    public long getDvalue(DateHelper time) {
-        return Math.abs(time.getLong() - this.getLong());
+    public LastTime getDvalue(long time) {
+        return new LastTime(this.getLong() - time);
     }
 
-    public static String getAgoTime(long msec) {
+    public LastTime getDvalueAbs(long time) {
+        return new LastTime(Math.abs(this.getLong() - time));
+    }
 
-        long secs = msec / 1000;
-        //<1min
-        if (secs < 60) return "刚刚";
 
-        long mins = secs / 60;
-        //<1hour
-        if (mins < 60) return mins + "分钟前";
+//    public static String getAgoTime(long msec) {
+//
+//        long all_secs = msec / 1000;
+//        //<1min
+//        if (all_secs < 60) return "刚刚";
+//
+//        long all_mins = all_secs / 60;
+//        //<1hour
+//        if (all_mins < 60) return all_mins + "分钟前";
+//
+//        long all_hours = all_mins / 60;
+//        //<1 day
+//        if (all_hours < 24) return all_hours + "小时前";
+//
+//        long all_days = all_hours / 24;
+//        //<1 month
+//        if (all_days < 30) return all_days + "天前";
+//
+//        long all_months = all_days / 30;
+//        //<1 year
+//        if (all_months < 12) return all_months + "月前";
+//
+//        long all_years = all_months / 12;
+//        return all_years + "年前";
+//    }
 
-        long hours = mins / 60;
-        //<1 day
-        if (hours < 24) return hours + "小时前";
 
-        long days = hours / 24;
-        //<1 month
-        if (days < 30) return days + "天前";
+    public final class LastTime {
 
-        long months = days / 30;
-        //<1 year
-        if (months < 12) return months + "月前";
+        public long msec;
 
-        long years = months / 12;
-        return years + "年前";
+        public long all_secs;
+        public long all_mins;
+        public long all_hours;
+        public long all_days;
+        public long all_months;
+        public long all_years;
+
+        public long last_secs = -1;
+        public long last_mins = -1;
+        public long last_hours = -1;
+        public long last_days = -1;
+        public long last_months = -1;
+        public long last_years = -1;
+
+        public String time_ago_tag;
+
+        public LastTime(long msec) {
+            this.msec = msec;
+            Logger.e("d-value====>", msec);
+            getLastTime();
+        }
+
+        private void getLastTime() {
+
+            if (msec <= 0) return;
+
+            all_secs = msec / 1000;
+            last_secs = all_secs;
+            //<1min
+            if (all_secs < 60) {
+                time_ago_tag = "刚刚";
+                return;
+            }
+
+            last_mins = all_mins = all_secs / 60;
+            last_secs = all_secs % 60;
+            //<1hour
+            if (all_mins < 60) {
+                time_ago_tag = all_mins + "分钟前";
+                return;
+            }
+
+            last_hours = all_hours = all_mins / 60;
+            last_mins = all_mins % 60;
+            //<1 day
+            if (all_hours < 24) {
+                time_ago_tag = all_hours + "小时前";
+                return;
+            }
+
+            last_days = all_days = all_hours / 24;
+            last_hours = all_hours % 24;
+            //<1 month
+            if (all_days < 30) {
+                time_ago_tag = all_days + "天前";
+                return;
+            }
+
+            last_months = all_months = all_days / 30;
+            last_days = all_days % 30;
+            //<1 year
+            if (all_months < 12) {
+                time_ago_tag = all_months + "月前";
+                return;
+            }
+
+            last_years = all_years = all_months / 12;
+            last_months = all_months % 12;
+
+            time_ago_tag = all_years + "年前";
+        }
+
+        public String getString(String pattern) {
+            if (msec <= 0) return "";
+
+//            "yyyy-MM-dd_HH-mm-ss"
+
+//            if (last_years >= 0 && pattern.contains("y")) {
+//                pattern.replaceAll("y", " y");
+//                pattern.replaceAll("y ", "");
+//                pattern.replaceAll(" y", "y");
+//                pattern = pattern.replaceAll("y", String.valueOf(last_years));
+//            }
+//            if (last_months >= 0 && pattern.contains("M")) {
+//                pattern.replaceAll("M", " M");
+//                pattern.replaceAll("M ", "");
+//                pattern.replaceAll(" M", "M");
+//                pattern = pattern.replaceAll("M", String.valueOf(last_months));
+//            }
+//            if (last_days >= 0 && pattern.contains("d")) {
+//                pattern.replaceAll("d", " d");
+//                pattern.replaceAll("d ", "");
+//                pattern.replaceAll(" d", "d");
+//                pattern = pattern.replaceAll("d", String.valueOf(last_days));
+//            }
+//
+//            if (last_hours >= 0 && pattern.contains("H")) {
+//                pattern.replaceAll("H", " H");
+//                pattern.replaceAll("H ", "");
+//                pattern.replaceAll(" H", "H");
+//                pattern = pattern.replaceAll("H", String.valueOf(last_hours));
+//            }
+//            if (last_mins >= 0 && pattern.contains("m")) {
+//                pattern.replaceAll("m", " m");
+//                pattern.replaceAll("m ", "");
+//                pattern.replaceAll(" m", "m");
+//                pattern = pattern.replaceAll("m", String.valueOf(last_mins));
+//            }
+//            if (last_secs >= 0 && pattern.contains("s")) {
+//                pattern.replaceAll("s", " s");
+//                pattern.replaceAll("s ", "");
+//                pattern.replaceAll(" s", "s");
+//                pattern = pattern.replaceAll("s", String.valueOf(last_secs));
+//            }
+
+            if (last_years >= 0 && pattern.contains("y")) {
+                pattern = pattern.replaceAll("(y)+", String.valueOf(last_years));
+            }
+            if (last_months >= 0 && pattern.contains("M")) {
+                pattern = pattern.replaceAll("(M)+", String.valueOf(last_months));
+            }
+            if (last_days >= 0 && pattern.contains("d")) {
+                pattern = pattern.replaceAll("(d)+", String.valueOf(last_days));
+            }
+
+            if (last_hours >= 0 && pattern.contains("H")) {
+                pattern = pattern.replaceAll("(H)+", String.valueOf(last_hours));
+            }
+            if (last_mins >= 0 && pattern.contains("m")) {
+                pattern = pattern.replaceAll("(m)+", String.valueOf(last_mins));
+            }
+            if (last_secs >= 0 && pattern.contains("s")) {
+                pattern = pattern.replaceAll("(s)+", String.valueOf(last_secs));
+            }
+
+            return pattern;
+        }
     }
 
     public static void main(String[] args) {

@@ -178,6 +178,16 @@ public final class AndroidUtils {
         }
     }
 
+    private void addPrimaryClipChangedListener(Context context, ClipboardManager.OnPrimaryClipChangedListener listener) {
+        ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        cm.addPrimaryClipChangedListener(listener);
+    }
+
+    private void removePrimaryClipChangedListener(Context context, ClipboardManager.OnPrimaryClipChangedListener listener) {
+        ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        cm.removePrimaryClipChangedListener(listener);
+    }
+
     //////////////////////////
     public static void hideSoftInput(Activity context) {
         View view = context.getCurrentFocus();

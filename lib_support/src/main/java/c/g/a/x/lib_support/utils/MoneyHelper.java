@@ -5,6 +5,10 @@ import android.text.TextUtils;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import c.g.a.x.lib_support.android.utils.Logger;
 
 /**
  * Created by Administrator on 2018/7/20.
@@ -196,6 +200,7 @@ public final class MoneyHelper {
 
 
     public String format(String pattern) {
+        Logger.e("MoneyHelper MoneyUnit getPattern===>", pattern, " ", money);
         return new DecimalFormat(pattern).format(money);
     }
 
@@ -222,23 +227,24 @@ public final class MoneyHelper {
         }
 
         public final String getPattern() {
-            StringBuilder sb = new StringBuilder();
-
+            List<String> temps = new ArrayList<>(max);
             String replace = preTrim ? "#" : "0";
             for (int i = 0; i < max; i++) {
-                if (quantile && i % 3 == 0) sb.append(",");
-                sb.append(replace);
+                temps.add(0, replace);
+                if (!quantile) continue;
+
+                if ((i + 1) % 3 == 0) temps.add(0, ",");
             }
 
             if (dv > 0) {
-                sb.append(".");
+                temps.add(".");
 
                 replace = sufTrim ? "#" : "0";
                 for (int i = 0; i < dv; i++) {
-                    sb.append(replace);
+                    temps.add(replace);
                 }
             }
-            return sb.substring(1);
+            return StringUtils.builder(temps);
         }
     }
 
