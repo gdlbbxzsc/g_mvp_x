@@ -59,6 +59,19 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e(StringUtils.encryptMobile("12345678901"));
 //        Logger.e(StringUtils.encrypt("1234567890abc", 3, 3));
 //        Logger.e(StringUtils.encrypt("1234567890abc", 3, 3, "qw"));
+
+//        5时8分
+//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString("HHmmss"), " ", "HHmmss");
+//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
     }
 
 

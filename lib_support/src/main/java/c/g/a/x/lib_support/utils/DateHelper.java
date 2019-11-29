@@ -1,10 +1,11 @@
 package c.g.a.x.lib_support.utils;
 
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import c.g.a.x.lib_support.android.utils.Logger;
 
@@ -114,235 +115,237 @@ public final class DateHelper {
         //week
         public static final String PATTERN_D3_WEEK_1 = "yyyy.MM.dd EEEE";
 
-
         public static final String PATTERN_DAY_HOUR_MIN = "d天H时m分";
 
-
     }
 
-    //
-
-    private Calendar calendar;
-
-    public DateHelper(String dateStr, String pattern) throws Exception {
-        getCalendar().setTime(new SimpleDateFormat(pattern).parse(dateStr));
+    public static LastTimeMnger getLastTimeMnger(long msec) {
+        return new LastTimeMnger(msec);
     }
 
-    public DateHelper(Calendar calendar) {
-        this.calendar = calendar;
+    public static LastTimeMnger getLastTimeMnger(long frt, long sec) {
+        return new LastTimeMnger(frt - sec);
     }
 
-    public DateHelper(Date date) {
-        getCalendar().setTime(date);
+    public static LastTimeMnger getLastTimeMngerAbs(long frt, long sec) {
+        return new LastTimeMnger(Math.abs(frt - sec));
     }
 
-    public DateHelper(Timestamp timestamp) {
-        getCalendar().setTimeInMillis(timestamp.getTime());
+    public static DateMnger getDateMnger(String dateStr, String pattern) throws Exception {
+        return new DateMnger(dateStr, pattern);
     }
 
-    public DateHelper(java.sql.Date sqlDate) {
-        getCalendar().setTime(sqlDate);
+    public static DateMnger getDateMnger(Calendar calendar) {
+        return new DateMnger(calendar);
     }
 
-    public DateHelper(long longDate) {
-        getCalendar().setTimeInMillis(longDate);
+    public static DateMnger getDateMnger(Date date) {
+        return new DateMnger(date.getTime());
     }
 
-    public DateHelper(int year, int month, int day, int hour, int minute, int second) {
-        getCalendar().set(year, month - 1, day, hour, minute, second);
+    public static DateMnger getDateMnger(Timestamp timestamp) {
+        return new DateMnger(timestamp.getTime());
     }
 
-    public DateHelper() {
-        getCalendar();
+    public static DateMnger getDateMnger(java.sql.Date sqlDate) {
+        return new DateMnger(sqlDate.getTime());
     }
 
-    public Calendar getCalendar() {
-        if (calendar == null) {
-            calendar = Calendar.getInstance();
-        }
-        return calendar;
+    public static DateMnger getDateMnger(long longDate) {
+        return new DateMnger(longDate);
     }
 
-    public Date getDate() {
-        return getCalendar().getTime();
+    public static DateMnger getDateMnger(int year, int month, int day, int hour, int minute, int second) {
+        return new DateMnger(year, month - 1, day, hour, minute, second);
     }
 
-    public Date getTimestamp() {
-        return new Timestamp(getCalendar().getTimeInMillis());
+    public static DateMnger getDateMnger() {
+        return new DateMnger();
     }
 
-    public java.sql.Date getSqlDate() {
-        return new java.sql.Date(getCalendar().getTimeInMillis());
-    }
+    public static final class DateMnger {
+        private Calendar calendar;
 
-    public String getString(String pattern) {
-        return new SimpleDateFormat(pattern).format(getCalendar().getTime());
-    }
-
-    public long getLong() {
-        return getCalendar().getTimeInMillis();
-    }
-
-
-    public DateHelper calculate(int year, int month, int day, int hour, int minute, int second) {
-        getCalendar();
-        calendar.add(Calendar.YEAR, year);
-        calendar.add(Calendar.MONTH, month);
-        calendar.add(Calendar.DATE, day);
-        calendar.add(Calendar.HOUR_OF_DAY, hour);
-        calendar.add(Calendar.MINUTE, minute);
-        calendar.add(Calendar.SECOND, second);
-        return this;
-    }
-
-    public DateHelper calculateDay(int day) {
-        getCalendar().add(Calendar.DATE, day);
-        return this;
-    }
-
-    public DateHelper calculateMinute(int minute) {
-        getCalendar().add(Calendar.MINUTE, minute);
-        return this;
-    }
-
-    public DateHelper calculateHour(int hour) {
-        getCalendar().add(Calendar.HOUR_OF_DAY, hour);
-        return this;
-    }
-
-    public DateHelper setDateTime(int year, int month, int day, int hour,
-                                  int minute, int second) {
-
-        getCalendar();
-        if (year >= 0) {
-            calendar.set(Calendar.YEAR, year);
-        }
-        if (month >= 0) {
-            calendar.set(Calendar.MONTH, month - 1);
-        }
-        if (day >= 0) {
-            calendar.set(Calendar.DATE, day);
-        }
-        if (hour >= 0) {
-            calendar.set(Calendar.HOUR_OF_DAY, hour);
-        }
-        if (minute >= 0) {
-            calendar.set(Calendar.MINUTE, minute);
-        }
-        if (second >= 0) {
-            calendar.set(Calendar.SECOND, second);
-        }
-        return this;
-    }
-
-    public DateHelper setDate(int year, int month, int day) {
-
-        getCalendar();
-        if (year >= 0) {
-            calendar.set(Calendar.YEAR, year);
-        }
-        if (month >= 0) {
-            calendar.set(Calendar.MONTH, month - 1);
-        }
-        if (day >= 0) {
-            calendar.set(Calendar.DATE, day);
+        private DateMnger(String dateStr, String pattern) throws Exception {
+            getCalendar().setTime(new SimpleDateFormat(pattern).parse(dateStr));
         }
 
-        return this;
-    }
-
-    public DateHelper setTime(int hour, int minute, int second) {
-
-        getCalendar();
-        if (hour >= 0) {
-            calendar.set(Calendar.HOUR_OF_DAY, hour);
-        }
-        if (minute >= 0) {
-            calendar.set(Calendar.MINUTE, minute);
-        }
-        if (second >= 0) {
-            calendar.set(Calendar.SECOND, second);
+        private DateMnger(Calendar calendar) {
+            this.calendar = calendar;
         }
 
-        return this;
-    }
+        private DateMnger(long longDate) {
+            getCalendar().setTimeInMillis(longDate);
+        }
 
-    public int getDay() {
-        return getCalendar().get(Calendar.DATE);
-    }
+        private DateMnger(int year, int month, int day, int hour, int minute, int second) {
+            getCalendar().set(year, month - 1, day, hour, minute, second);
+        }
 
-    public int getHour() {
-        return getCalendar().get(Calendar.HOUR_OF_DAY);
-    }
+        private DateMnger() {
+            getCalendar();
+        }
 
-    public int getMinute() {
-        return getCalendar().get(Calendar.MINUTE);
-    }
+        public final Calendar getCalendar() {
+            if (calendar == null) {
+                calendar = Calendar.getInstance();
+            }
+            return calendar;
+        }
 
-    public int getSecond() {
-        return getCalendar().get(Calendar.SECOND);
-    }
+        public final Date getDate() {
+            return getCalendar().getTime();
+        }
 
-    public int getMonth() {
-        return getCalendar().get(Calendar.MONTH) + 1;
-    }
+        public final Date getTimestamp() {
+            return new Timestamp(getCalendar().getTimeInMillis());
+        }
 
-    public int getYear() {
-        return getCalendar().get(Calendar.YEAR);
-    }
+        public final java.sql.Date getSqlDate() {
+            return new java.sql.Date(getCalendar().getTimeInMillis());
+        }
+
+        public final String getString(String pattern) {
+            return new SimpleDateFormat(pattern).format(getCalendar().getTime());
+        }
+
+        public final long getLong() {
+            return getCalendar().getTimeInMillis();
+        }
+
+
+        public final DateMnger calculate(int year, int month, int day, int hour, int minute, int second) {
+            getCalendar();
+            calendar.add(Calendar.YEAR, year);
+            calendar.add(Calendar.MONTH, month);
+            calendar.add(Calendar.DATE, day);
+            calendar.add(Calendar.HOUR_OF_DAY, hour);
+            calendar.add(Calendar.MINUTE, minute);
+            calendar.add(Calendar.SECOND, second);
+            return this;
+        }
+
+        public final DateMnger calculateDay(int day) {
+            getCalendar().add(Calendar.DATE, day);
+            return this;
+        }
+
+        public final DateMnger calculateMinute(int minute) {
+            getCalendar().add(Calendar.MINUTE, minute);
+            return this;
+        }
+
+        public final DateMnger calculateHour(int hour) {
+            getCalendar().add(Calendar.HOUR_OF_DAY, hour);
+            return this;
+        }
+
+        public final DateMnger setDateTime(int year, int month, int day, int hour,
+                                           int minute, int second) {
+            getCalendar();
+            if (year >= 0) {
+                calendar.set(Calendar.YEAR, year);
+            }
+            if (month >= 0) {
+                calendar.set(Calendar.MONTH, month - 1);
+            }
+            if (day >= 0) {
+                calendar.set(Calendar.DATE, day);
+            }
+            if (hour >= 0) {
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+            }
+            if (minute >= 0) {
+                calendar.set(Calendar.MINUTE, minute);
+            }
+            if (second >= 0) {
+                calendar.set(Calendar.SECOND, second);
+            }
+            return this;
+        }
+
+        public final DateMnger setDate(int year, int month, int day) {
+            getCalendar();
+            if (year >= 0) {
+                calendar.set(Calendar.YEAR, year);
+            }
+            if (month >= 0) {
+                calendar.set(Calendar.MONTH, month - 1);
+            }
+            if (day >= 0) {
+                calendar.set(Calendar.DATE, day);
+            }
+
+            return this;
+        }
+
+        public final DateMnger setTime(int hour, int minute, int second) {
+            getCalendar();
+            if (hour >= 0) {
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+            }
+            if (minute >= 0) {
+                calendar.set(Calendar.MINUTE, minute);
+            }
+            if (second >= 0) {
+                calendar.set(Calendar.SECOND, second);
+            }
+
+            return this;
+        }
+
+        public final int getDay() {
+            return getCalendar().get(Calendar.DATE);
+        }
+
+        public final int getHour() {
+            return getCalendar().get(Calendar.HOUR_OF_DAY);
+        }
+
+        public final int getMinute() {
+            return getCalendar().get(Calendar.MINUTE);
+        }
+
+        public final int getSecond() {
+            return getCalendar().get(Calendar.SECOND);
+        }
+
+        public final int getMonth() {
+            return getCalendar().get(Calendar.MONTH) + 1;
+        }
+
+        public final int getYear() {
+            return getCalendar().get(Calendar.YEAR);
+        }
 
 //    public String getYear2() {
 //        String str = String.valueOf(getCalendar().get(Calendar.YEAR));
 //        return str.substring(str.length() - 2);
 //    }
 
-    public LastTime getDvalue4Now() {
-        return getDvalue(System.currentTimeMillis());
+        public final LastTimeMnger dValue() {
+            return dValue(System.currentTimeMillis());
+        }
+
+        public final LastTimeMnger dValue(DateMnger time) {
+            return dValue(time.getLong());
+        }
+
+        public final LastTimeMnger dValueAbs(long time) {
+            return dValue(Math.abs(this.getLong() - time));
+        }
+
+        public final LastTimeMnger dValue(long time) {
+            return new LastTimeMnger(this.getLong() - time);
+        }
     }
 
-    public LastTime getDvalue(DateHelper time) {
-        return getDvalue(time.getLong());
-    }
 
-    public LastTime getDvalue(long time) {
-        return new LastTime(this.getLong() - time);
-    }
+    public static final class LastTimeMnger {
 
-    public LastTime getDvalueAbs(long time) {
-        return new LastTime(Math.abs(this.getLong() - time));
-    }
+        private boolean retainZero = false;
 
-
-//    public static String getAgoTime(long msec) {
-//
-//        long all_secs = msec / 1000;
-//        //<1min
-//        if (all_secs < 60) return "刚刚";
-//
-//        long all_mins = all_secs / 60;
-//        //<1hour
-//        if (all_mins < 60) return all_mins + "分钟前";
-//
-//        long all_hours = all_mins / 60;
-//        //<1 day
-//        if (all_hours < 24) return all_hours + "小时前";
-//
-//        long all_days = all_hours / 24;
-//        //<1 month
-//        if (all_days < 30) return all_days + "天前";
-//
-//        long all_months = all_days / 30;
-//        //<1 year
-//        if (all_months < 12) return all_months + "月前";
-//
-//        long all_years = all_months / 12;
-//        return all_years + "年前";
-//    }
-
-
-    public final class LastTime {
-
-        public long msec;
+        public long all_milsecs;
 
         public long all_secs;
         public long all_mins;
@@ -351,26 +354,25 @@ public final class DateHelper {
         public long all_months;
         public long all_years;
 
-        public long last_secs = -1;
-        public long last_mins = -1;
-        public long last_hours = -1;
-        public long last_days = -1;
-        public long last_months = -1;
-        public long last_years = -1;
+        public long last_secs;
+        public long last_mins;
+        public long last_hours;
+        public long last_days;
+        public long last_months;
+        public long last_years;
 
         public String time_ago_tag;
 
-        public LastTime(long msec) {
-            this.msec = msec;
-            Logger.e("d-value====>", msec);
+        private LastTimeMnger(long msec) {
+            this.all_milsecs = msec;
+            Logger.e("LastTimeMnger d-value====>", msec);
             getLastTime();
         }
 
         private void getLastTime() {
+            if (all_milsecs <= 0) return;
 
-            if (msec <= 0) return;
-
-            all_secs = msec / 1000;
+            all_secs = all_milsecs / 1000;
             last_secs = all_secs;
             //<1min
             if (all_secs < 60) {
@@ -416,72 +418,132 @@ public final class DateHelper {
             time_ago_tag = all_years + "年前";
         }
 
-        public String getString(String pattern) {
-            if (msec <= 0) return "";
-
-//            "yyyy-MM-dd_HH-mm-ss"
-
-//            if (last_years >= 0 && pattern.contains("y")) {
-//                pattern.replaceAll("y", " y");
-//                pattern.replaceAll("y ", "");
-//                pattern.replaceAll(" y", "y");
-//                pattern = pattern.replaceAll("y", String.valueOf(last_years));
-//            }
-//            if (last_months >= 0 && pattern.contains("M")) {
-//                pattern.replaceAll("M", " M");
-//                pattern.replaceAll("M ", "");
-//                pattern.replaceAll(" M", "M");
-//                pattern = pattern.replaceAll("M", String.valueOf(last_months));
-//            }
-//            if (last_days >= 0 && pattern.contains("d")) {
-//                pattern.replaceAll("d", " d");
-//                pattern.replaceAll("d ", "");
-//                pattern.replaceAll(" d", "d");
-//                pattern = pattern.replaceAll("d", String.valueOf(last_days));
-//            }
-//
-//            if (last_hours >= 0 && pattern.contains("H")) {
-//                pattern.replaceAll("H", " H");
-//                pattern.replaceAll("H ", "");
-//                pattern.replaceAll(" H", "H");
-//                pattern = pattern.replaceAll("H", String.valueOf(last_hours));
-//            }
-//            if (last_mins >= 0 && pattern.contains("m")) {
-//                pattern.replaceAll("m", " m");
-//                pattern.replaceAll("m ", "");
-//                pattern.replaceAll(" m", "m");
-//                pattern = pattern.replaceAll("m", String.valueOf(last_mins));
-//            }
-//            if (last_secs >= 0 && pattern.contains("s")) {
-//                pattern.replaceAll("s", " s");
-//                pattern.replaceAll("s ", "");
-//                pattern.replaceAll(" s", "s");
-//                pattern = pattern.replaceAll("s", String.valueOf(last_secs));
-//            }
-
-            if (last_years >= 0 && pattern.contains("y")) {
-                pattern = pattern.replaceAll("(y)+", String.valueOf(last_years));
-            }
-            if (last_months >= 0 && pattern.contains("M")) {
-                pattern = pattern.replaceAll("(M)+", String.valueOf(last_months));
-            }
-            if (last_days >= 0 && pattern.contains("d")) {
-                pattern = pattern.replaceAll("(d)+", String.valueOf(last_days));
-            }
-
-            if (last_hours >= 0 && pattern.contains("H")) {
-                pattern = pattern.replaceAll("(H)+", String.valueOf(last_hours));
-            }
-            if (last_mins >= 0 && pattern.contains("m")) {
-                pattern = pattern.replaceAll("(m)+", String.valueOf(last_mins));
-            }
-            if (last_secs >= 0 && pattern.contains("s")) {
-                pattern = pattern.replaceAll("(s)+", String.valueOf(last_secs));
-            }
-
-            return pattern;
+        public final LastTimeMnger retainZero() {
+            retainZero = true;
+            return this;
         }
+
+        public final LastTimeMnger unRetainZero() {
+            retainZero = false;
+            return this;
+        }
+
+        //            "yyyy-MM-dd_HH-mm-ss"
+        public final String getString(String pattern) {
+            if (all_milsecs < 0) return "";
+
+            char[] array = pattern.toCharArray();
+            List<String> list = new ArrayList<>(array.length);
+            Character last = null;
+            boolean deleteNextChar = false;
+            for (char ch : array) {
+//                如果已经加过一样的字母就不在加了
+                if (last != null && last == ch) continue;
+                last = ch;    // 记录一下
+
+//                如果字母是如下类型获取对应类型时间值
+                Long temp_time = null;
+                switch (ch) {
+                    case 'y':
+                        temp_time = last_years;
+                        break;
+                    case 'M':
+                        temp_time = last_months;
+                        break;
+                    case 'd':
+                        temp_time = last_days;
+                        break;
+////
+                    case 'H':
+                        temp_time = last_hours;
+                        break;
+                    case 'm':
+                        temp_time = last_mins;
+                        break;
+                    case 's':
+                        temp_time = last_secs;
+                        break;
+                }
+
+                //非时间类型普通字母
+                if (temp_time == null) {
+                    //如果上一次循环判定对应的字母类型没有数据，则下一个循环的字母单位也不要了
+                    if (deleteNextChar) {
+                        deleteNextChar = false;
+                        continue;
+                    }
+                    //如果非时间类型字母原样添加
+                    list.add(String.valueOf(ch));
+                    continue;
+                }
+                boolean b = retainZero ? temp_time >= 0 : temp_time > 0;
+                if (b) {
+                    //如果是时间类型字母其有有效值，将当前时间替换到对应字母上
+                    list.add(String.valueOf(temp_time));
+                }
+//                当前字母类型可替换则下一个时间单位字母保留，否则删除
+                deleteNextChar = !b;
+            }
+            String res = StringUtils.builder(list);
+            Logger.e("LastTimeMnger getString====>", pattern, " ", res);
+            return res;
+        }
+
+//        public String getString1(String pattern) {
+//            if (all_milsecs < 0) return "";
+//
+//            pattern = replaceOrDeleteTime(pattern, "y", last_years);
+//            pattern = replaceOrDeleteTime(pattern, "M", last_months);
+//            pattern = replaceOrDeleteTime(pattern, "d", last_days);
+//
+//            pattern = replaceOrDeleteTime(pattern, "H", last_hours);
+//            pattern = replaceOrDeleteTime(pattern, "m", last_mins);
+//            pattern = replaceOrDeleteTime(pattern, "s", last_secs);
+//
+//            return pattern;
+//        }
+//
+//        private String replaceOrDeleteTime(String pattern, String regex, long time) {
+//            Logger.e("LastTimeMnger replaceOrDeleteTime 1====>", pattern, " ", regex, " ", time);
+//            if (pattern.contains(regex)) {
+//                if (time >= 0) {
+//                    pattern = pattern.replaceAll("(" + regex + ")+", String.valueOf(time));
+//                } else {
+//                    pattern = pattern.replaceAll("(" + regex + ")+", "@");
+//                    pattern = pattern.substring(pattern.indexOf("@") + 2);
+//                }
+//            }
+//            Logger.e("LastTimeMnger replaceOrDeleteTime 2====>", pattern, " ", regex, " ", time);
+//            return pattern;
+//        }
+
     }
+
+    //    public static String getAgoTime(long all_milsecs) {
+//
+//        long all_secs = all_milsecs / 1000;
+//        //<1min
+//        if (all_secs < 60) return "刚刚";
+//
+//        long all_mins = all_secs / 60;
+//        //<1hour
+//        if (all_mins < 60) return all_mins + "分钟前";
+//
+//        long all_hours = all_mins / 60;
+//        //<1 day
+//        if (all_hours < 24) return all_hours + "小时前";
+//
+//        long all_days = all_hours / 24;
+//        //<1 month
+//        if (all_days < 30) return all_days + "天前";
+//
+//        long all_months = all_days / 30;
+//        //<1 year
+//        if (all_months < 12) return all_months + "月前";
+//
+//        long all_years = all_months / 12;
+//        return all_years + "年前";
+//    }
 
     public static void main(String[] args) {
         // System.out.println(new DateHelper("11:11:11", PATTERN_7)
@@ -500,9 +562,9 @@ public final class DateHelper {
         // long a = dateHelper.getLong();
         // long b = dateHelper.calculateDay(-1).getLong();
         // System.out.println(a - b);
-        DateHelper dateHelper = new DateHelper(1000 * 90);
-
-        System.out.println(dateHelper.getString(Pattern.PATTERN_D3_T3_2));
+//        DateHelper dateHelper = new DateHelper(1000 * 90);
+//
+//        System.out.println(dateHelper.getString(Pattern.PATTERN_D3_T3_2));
     }
 
 }
