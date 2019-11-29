@@ -41,6 +41,7 @@ if (isDebug) {
     server_config.aaaa = 321
     server_config.bbbb = "ldg"
 }
+server_config.app_mode = isDebug
 //正式测试通用配置
 server_config.project_applicationId = app_versions.applicationId
 ext.server_config = server_config

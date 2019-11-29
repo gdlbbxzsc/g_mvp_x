@@ -102,7 +102,7 @@ public final class IDCardHelper {
 
     public Date getBirthday() {
         try {
-            return new DateHelper(idCard.substring(6, 14), DateHelper.Pattern.PATTERN_D3_2).getDate();
+            return   DateHelper.getDateMnger(idCard.substring(6, 14), DateHelper.Pattern.PATTERN_D3_2).getDate();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

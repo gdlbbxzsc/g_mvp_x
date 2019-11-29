@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
+import c.g.a.x.module_main.BuildConfig;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -72,6 +73,7 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " ", DateHelper.Pattern.PATTERN_D2_T2_2);
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
+      
     }
 
 
