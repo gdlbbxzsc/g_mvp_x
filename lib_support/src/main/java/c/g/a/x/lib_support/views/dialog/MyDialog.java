@@ -53,6 +53,8 @@ public final class MyDialog extends Dialog {
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        setCancelable(builder.cancelable);
+
         int dp20 = (int) context.getResources().getDimension(R.dimen.dp20);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -62,64 +64,68 @@ public final class MyDialog extends Dialog {
         rootView.setPadding(dp20, dp20, dp20, dp20);
         rootView.setBackgroundResource(R.drawable.default_dialog_bg);
 
+        //
         TextView title = (TextView) inflater.inflate(R.layout.dialog_custom_top_title, null);
         if (!StringUtils.isEmpty(builder.title)) title.setText(builder.title);
+        if (builder.titleColor != null)
+            title.setTextColor(getContext().getResources().getColor(builder.titleColor));
         rootView.addView(title);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) title.getLayoutParams();
         params.bottomMargin = dp20;
         title.setLayoutParams(params);
 
+
+//
         rootView.addView(builder.contentView);
 
-        View bottom_buttons;
-        TextView negativeButton = null;
-        switch (builder.buttonStyle) {
-            case style_two: {
-                bottom_buttons = inflater.inflate(R.layout.dialog_custom_bottom_button_two, null);
-                negativeButton = bottom_buttons.findViewById(R.id.btn_dialog_no);
-            }
-            break;
-            default: {
-                bottom_buttons = inflater.inflate(R.layout.dialog_custom_bottom_button_one, null);
-            }
-        }
-        TextView positiveButton = bottom_buttons.findViewById(R.id.btn_dialog_yes);
-
+//
+        LinearLayout bottom_buttons = new LinearLayout(context);
+        rootView.setGravity(Gravity.CENTER);
+        rootView.setOrientation(LinearLayout.HORIZONTAL);
         rootView.addView(bottom_buttons);
         params = (LinearLayout.LayoutParams) bottom_buttons.getLayoutParams();
         params.topMargin = dp20;
         bottom_buttons.setLayoutParams(params);
 
-        if (negativeButton != null) {
-            if (!StringUtils.isEmpty(builder.negativeButtonText))
-                negativeButton.setText(builder.negativeButtonText);
-            negativeButton.setOnClickListener(new OnSPClickListener() {
 
-                @Override
-                public void onClickSucc(View v) {
-                    boolean b = true;
-                    if (builder.onClickListener != null)
-                        b = builder.onClickListener.onClick(MyDialog.this, 0);
-                    if (b) dismiss();
-                }
-            });
+        TextView positiveButton = (TextView) inflater.inflate(R.layout.dialog_custom_bottom_button_yes, null);
+        initButton(positiveButton, builder.positiveButtonText, builder.onClickListener, 1);
+        bottom_buttons.addView(positiveButton);
+
+        if (builder.buttonStyle == ButtonStyle.style_two) {
+            TextView negativeButton = (TextView) inflater.inflate(R.layout.dialog_custom_bottom_button_no, null);
+            initButton(negativeButton, builder.negativeButtonText, builder.onClickListener, 0);
+            bottom_buttons.addView(negativeButton);
+
+            LinearLayout.LayoutParams paramsPos = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+            LinearLayout.LayoutParams paramsNeg = (LinearLayout.LayoutParams) negativeButton.getLayoutParams();
+            paramsPos.weight = paramsNeg.weight = 1;
+
+            positiveButton.setLayoutParams(paramsPos);
+            negativeButton.setLayoutParams(paramsNeg);
         }
 
-        if (!StringUtils.isEmpty(builder.positiveButtonText))
-            positiveButton.setText(builder.positiveButtonText);
-        positiveButton.setOnClickListener(new OnSPClickListener() {
-
-            @Override
-            public void onClickSucc(View v) {
-                boolean b = true;
-                if (builder.onClickListener != null)
-                    b = builder.onClickListener.onClick(MyDialog.this, 1);
-                if (b) dismiss();
-            }
+        setOnCancelListener(dialog -> {
+            if (builder.onClickListener != null)
+                builder.onClickListener.onClick(MyDialog.this, -1);
         });
 
         setContentView(rootView);
+
     }
+
+    private void initButton(TextView button, String text, OnClickListener listener, int which) {
+        if (!StringUtils.isEmpty(text)) button.setText(text);
+        button.setOnClickListener(new OnSPClickListener() {
+            @Override
+            public void onClickSucc(View v) {
+                boolean b = true;
+                if (listener != null) b = listener.onClick(MyDialog.this, which);
+                if (b) dismiss();
+            }
+        });
+    }
+
 
     @Override
     public void show() {
@@ -142,6 +148,7 @@ public final class MyDialog extends Dialog {
         private Context context;
 
         private String title;
+        private Integer titleColor;
 
         private ButtonStyle buttonStyle;
         private String negativeButtonText;
@@ -151,6 +158,8 @@ public final class MyDialog extends Dialog {
 
         private View contentView;
 
+        private boolean cancelable = true;
+
         private Builder(Context context) {
             this.context = context;
         }
@@ -158,6 +167,11 @@ public final class MyDialog extends Dialog {
 
         public Builder setTitle(String title) {
             this.title = title;
+            return this;
+        }
+
+        public Builder setTitleColor(int color) {
+            this.titleColor = color;
             return this;
         }
 
@@ -189,14 +203,14 @@ public final class MyDialog extends Dialog {
             return this;
         }
 
+
         public Builder setContentView(View contentView) {
             this.contentView = contentView;
             return this;
         }
 
-        public final MyDialog show(OnClickListener onClickListener) {
-            this.onClickListener = onClickListener;
-            return show();
+        public void setCancelable(boolean cancelable) {
+            this.cancelable = cancelable;
         }
 
         public final MyDialog show() {

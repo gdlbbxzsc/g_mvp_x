@@ -90,7 +90,7 @@ public final class WechatHelper {
     public final void pay(Class key, MyPayInfo payInfo, OnPayResultListener listener) {
         pay(key.toString() + PayResultMsg.class.getName(), payInfo, listener);
     }
- 
+
     public final void pay(String key, MyPayInfo payInfo, OnPayResultListener listener) {
         if (!wxApi.isWXAppInstalled()) {
             SysToast.showToastShort(context, "您未安装微信");
