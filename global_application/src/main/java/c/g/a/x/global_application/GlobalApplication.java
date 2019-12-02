@@ -1,9 +1,13 @@
 package c.g.a.x.global_application;
 
 import android.app.Activity;
-import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -13,9 +17,11 @@ import java.util.Map;
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_base.BaseApplication;
 import c.g.a.x.lib_sp.SpMnger;
+import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.FileHelper;
 import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.SystemUtils;
+import c.g.a.x.lib_support.views.dialog.MyDialog;
 
 
 //这里继承 dbapp的话 就有数据库 如果调用baseapp的话就没有数据库
@@ -28,7 +34,7 @@ public class GlobalApplication extends BaseApplication {
     }
 
     //用于界面间数据透传--by gdl key the Class.getname value the data you want
-    private static Map<String, Object> dataMap = new HashMap();
+    private static Map<String, Object> dataMap = new HashMap<>();
 
     public UserInfo userInfo;
 
@@ -44,7 +50,7 @@ public class GlobalApplication extends BaseApplication {
 
         instances = this;
 
-        registerActivityLifecycleCallbacks(new MyActivityLifecycleCallbacks());
+        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
 
         userInfo = UserInfo.getInstance();
 
@@ -60,6 +66,15 @@ public class GlobalApplication extends BaseApplication {
             ARouter.openDebug();   // Turn on debugging mode (If you are running in InstantRun mode, you must turn on debug mode! Online version needs to be closed, otherwise there is a security risk)
         }
         ARouter.init(this); // As early as possible, it is recommended to initialize in the Application
+
+        AndroidUtils.addPrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
+
+    }
+
+    @Override
+    public void onTerminate() {
+        AndroidUtils.removePrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
+        super.onTerminate();
     }
 
 
@@ -87,44 +102,62 @@ public class GlobalApplication extends BaseApplication {
         return userInfo.isLogin();
     }
 
+    public String primaryClipText;
 
-    private class MyActivityLifecycleCallbacks implements ActivityLifecycleCallbacks{
+    private final ClipboardManager.OnPrimaryClipChangedListener onPrimaryClipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
+
 
         @Override
-        public void onActivityCreated(Activity activity, Bundle bundle) {
+        public void onPrimaryClipChanged() {
+            // 获取剪贴板数据
+            primaryClipText = AndroidUtils.getPrimaryClipText(instances);
+            Logger.e("onPrimaryClipChanged primaryClipText===>", primaryClipText);
+        }
+    };
+
+    private final ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
+        @Override
+        public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
 
         }
 
         @Override
-        public void onActivityStarted(Activity activity) {
+        public void onActivityStarted(@NonNull Activity activity) {
 
         }
 
         @Override
-        public void onActivityResumed(Activity activity) {
+        public void onActivityResumed(@NonNull Activity activity) {
+
+            if (TextUtils.isEmpty(primaryClipText)) return;
+
+            String content = primaryClipText;
+            primaryClipText = null;
+
+            Logger.e("onActivityResumed primaryClipText===>", content);
+
+            MyDialog.toast(activity, "primaryClipText:" + content);
+        }
+
+        @Override
+        public void onActivityPaused(@NonNull Activity activity) {
 
         }
 
         @Override
-        public void onActivityPaused(Activity activity) {
+        public void onActivityStopped(@NonNull Activity activity) {
 
         }
 
         @Override
-        public void onActivityStopped(Activity activity) {
+        public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
 
         }
 
         @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+        public void onActivityDestroyed(@NonNull Activity activity) {
 
         }
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-
-        }
-    }
-
+    };
 
 }
