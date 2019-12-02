@@ -12,17 +12,16 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
 import c.g.a.x.lib_support.views.toast.SysToast;
-import c.g.a.x.lib_weixin.PayResultMsg;
-import c.g.a.x.lib_weixin.WechatHelper;
+import c.g.a.x.lib_weixin.WeChatHelper;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
-    private WechatHelper wechatHelper;
+    private WeChatHelper wechatHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        wechatHelper = WechatHelper.getInstance(this);
+        wechatHelper = WeChatHelper.getInstance(this);
         wechatHelper.handleIntent(getIntent(), this);
     }
 
@@ -44,7 +43,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             String respString = null;
             if (resp.errCode == 0) {
                 respString = "支付成功";
-                RxBus.post0(new PayResultMsg());
+                RxBus.post0(new WeChatHelper.PayResultMsg());
             } else if (resp.errCode == -1) {
                 respString = "支付错误";
             } else if (resp.errCode == -2) {

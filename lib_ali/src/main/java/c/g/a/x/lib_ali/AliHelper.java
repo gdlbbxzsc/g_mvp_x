@@ -16,12 +16,9 @@ public final class AliHelper {
 
 //    private Activity activity;
 //    private AliResultListener aliResultListener;
-
-
 //    public static final AliHelper getInstance(Activity activity) {
 //        return new AliHelper(activity);
 //    }
-
 //    private AliHelper(Activity activity) {
 ////        this.activity = activity;
 //    }
