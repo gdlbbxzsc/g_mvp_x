@@ -91,7 +91,7 @@ public final class WeChatHelper {
         return wxApi.sendReq(req);
     }
 
-    protected final void accessTokenToUserInfo(String state, String code) {
+    public final void accessTokenToUserInfo(String state, String code) {
         if (!state.equals(APP_NAME)) {
             RxBus.post0(new WxUserInfo(false, null));
             return;
