@@ -98,10 +98,10 @@ public final class WeChatHelper {
         }
         WxHttpHelper httpHelper = new WxHttpHelper();
         httpHelper.accessToken(WeChatHelper.APP_ID, WeChatHelper.APP_SECRET, code, "authorization_code")
+                .flatMap((Function<WxAccessTokenResponse, ObservableSource<ResponseBody>>) wxAccessTokenResponse -> httpHelper.userinfo(wxAccessTokenResponse.getAccess_token(), wxAccessTokenResponse.getOpenid()))
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap((Function<WxAccessTokenResponse, ObservableSource<ResponseBody>>) wxAccessTokenResponse -> httpHelper.userinfo(wxAccessTokenResponse.getAccess_token(), wxAccessTokenResponse.getOpenid()))
                 .subscribe(responseBody -> {
                     RxBus.post0(new WxUserInfo(true, responseBody.string()));
                 }, throwable -> {
@@ -119,7 +119,7 @@ public final class WeChatHelper {
         pay(key.toString() + PayResultMsg.class.getName(), payInfo, listenerr);
     }
 
-    public final void pay(Class key, MyPayInfo payInfo, OnPayResultListener listener) {
+    public final void pay(Object key, MyPayInfo payInfo, OnPayResultListener listener) {
         pay(key.toString() + PayResultMsg.class.getName(), payInfo, listener);
     }
 
