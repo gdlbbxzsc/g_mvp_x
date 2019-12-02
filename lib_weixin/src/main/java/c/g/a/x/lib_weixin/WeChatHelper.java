@@ -79,7 +79,7 @@ public final class WeChatHelper {
     }
 
 
-    public final boolean loginForResult(OnAccessTokenToUserinfoListener listener) {
+    public final boolean loginForUserInfo(OnAccessTokenToUserinfoListener listener) {
         RxBus.register0(this, WxUserInfo.class, wxUserInfo -> listener.onAccessTokenToUserinfoListener(wxUserInfo));
 
         boolean b = login();
