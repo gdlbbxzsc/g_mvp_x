@@ -37,14 +37,14 @@ import okhttp3.ResponseBody;
 
 public final class WeChatHelper {
 
-    public static final String APP_ID = BuildConfig.wx_app_id;
-    public static final String APP_SECRET = BuildConfig.wx_app_secret;
-    public static final String APP_NAME = "toutoule";
+    private static final String APP_ID = BuildConfig.wx_app_id;
+    private static final String APP_SECRET = BuildConfig.wx_app_secret;
+    private static final String APP_NAME = "toutoule";
 
     private static final int THUMB_SIDE_LENGTH = 150;
     private static final int THUMB_MAX_SIZE_KB = 31;
 
-    private Context context;
+    public static Context context;
     private IWXAPI wxApi;
 
     private WXMediaMessage wxMediaMessage = new WXMediaMessage();
@@ -52,14 +52,22 @@ public final class WeChatHelper {
 
     private String msgType;
 
-    public static final WeChatHelper getInstance(Context context) {
-        return new WeChatHelper(context);
+    private static volatile WeChatHelper weChatHelper;
+
+    public static synchronized WeChatHelper getInstance() {
+        if (weChatHelper == null) weChatHelper = new WeChatHelper();
+        return weChatHelper;
     }
 
-    private WeChatHelper(Context context) {
-        this.context = context;
+    private WeChatHelper() {
         wxApi = WXAPIFactory.createWXAPI(context, APP_ID, false);
         wxApi.registerApp(APP_ID);
+    }
+
+    public synchronized final void close() {
+        wxApi.unregisterApp();
+        wxApi = null;
+        weChatHelper = null;
     }
 
     public final void handleIntent(Intent var1, IWXAPIEventHandler var2) {

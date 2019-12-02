@@ -21,7 +21,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        wechatHelper = WeChatHelper.getInstance(this);
+        wechatHelper = WeChatHelper.getInstance();
         wechatHelper.handleIntent(getIntent(), this);
     }
 

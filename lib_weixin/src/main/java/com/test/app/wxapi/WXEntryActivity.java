@@ -26,7 +26,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        wechatHelper = WeChatHelper.getInstance(this);
+        wechatHelper = WeChatHelper.getInstance();
         wechatHelper.handleIntent(getIntent(), this);
     }
 

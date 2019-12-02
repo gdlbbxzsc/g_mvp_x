@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import c.g.a.x.applogic_annotation.AppLogic;
 import c.g.a.x.applogic_api.base.BaseAppLogic;
 import c.g.a.x.lib_support.android.utils.Logger;
+import c.g.a.x.lib_weixin.WeChatHelper;
 
 
 /**
@@ -19,6 +20,7 @@ public class WxApplication extends BaseAppLogic {
     public void onCreate() {
         super.onCreate();
         Logger.e("WxApplication onCreate");
+        WeChatHelper.context = getApplication().getApplicationContext();
     }
 
     @Override
@@ -37,6 +39,7 @@ public class WxApplication extends BaseAppLogic {
     public void onTerminate() {
         super.onTerminate();
         Logger.e("WxApplication onTerminate");
+        WeChatHelper.getInstance().close();
     }
 
     @Override
