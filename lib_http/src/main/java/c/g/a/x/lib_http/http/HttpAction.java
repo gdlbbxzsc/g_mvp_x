@@ -108,7 +108,7 @@ public final class HttpAction {
                 boolean isStatic = Modifier.isStatic(field.getModifiers());
                 if (isStatic) continue;
 
-                Object v = field.get(this);
+                Object v = field.get(request);
                 if (v == null) continue;
 
                 String k = field.getName();
