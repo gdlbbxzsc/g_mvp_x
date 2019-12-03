@@ -108,15 +108,15 @@ public final class ApkVersionHelper {
         }
     }
 
-    private final boolean checkVersionCode() throws Exception {
+    private boolean checkVersionCode() throws Exception {
         return versionCode > AndroidUtils.getVersionCode(context);
     }
 
-    private final boolean checkVersionName() throws Exception {
+    private boolean checkVersionName() throws Exception {
         return !StringUtils.isEqual(versionName, AndroidUtils.getVersionName(context));
     }
 
-    private final void showNoticeDialog() {
+    private void showNoticeDialog() {
 
         List<String> upgradeInformation = new ArrayList<>(3);
         if (mustInstall)
