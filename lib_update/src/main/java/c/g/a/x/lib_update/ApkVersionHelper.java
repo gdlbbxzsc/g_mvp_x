@@ -129,7 +129,7 @@ public final class ApkVersionHelper {
         builder.setPositiveButton("马上更新", (dialog, which) -> {
                     switch (installType) {
                         case Dialog: {
-                            installDialog();
+                            downloadDialog();
                             progressDialog.show();
                             RxBus.register0(ApkVersionHelper.this, VUProgressMsg.class, vuProgressMsg -> {
                                 progressBar.setProgress(vuProgressMsg.progress);
@@ -159,7 +159,7 @@ public final class ApkVersionHelper {
     private Dialog progressDialog;
     private ProgressBar progressBar;
 
-    private final void installDialog() {
+    private final void downloadDialog() {
 
         progressDialog = new Dialog(context);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
