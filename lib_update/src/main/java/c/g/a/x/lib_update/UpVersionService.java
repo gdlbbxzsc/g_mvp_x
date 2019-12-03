@@ -19,7 +19,6 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.UUID;
 
 import c.g.a.x.lib_http.http.HttpMgr;
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
@@ -38,12 +37,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public final class UpVersionService extends Service {
 
-    private final int NOTIFICATION_ID = 0x12321 + (int) Long.parseLong(UUID.randomUUID().toString().replace("-", ""));
-    private final int NOTIFICATION_REQUESTCODE = 0x12221 + (int) Long.parseLong(UUID.randomUUID().toString().replace("-", ""));
+//    Long.parseLong(UUID.randomUUID().toString().replace("-", ""));
+
     private final int PROGRESS_MAX = 100;
 
-    final String CHANNEL_ID = "channel_id_" + getPackageName().toLowerCase();
-    final String CHANNEL_NAME = "channel_name_xag" + getPackageName().toLowerCase();
+    private final int NOTIFICATION_ID = (int) (0x12321 + System.currentTimeMillis());
+    private final int NOTIFICATION_REQUESTCODE = (int) (0x12221 + +System.currentTimeMillis());
+
+    private final String CHANNEL_ID = "channel_id_" + System.currentTimeMillis();
+    private final String CHANNEL_NAME = "channel_name_" + System.currentTimeMillis();
 
     //true it will be auto start install activity and cancel the notification.otherwise nothing.
     private boolean AUTO_GO_INSTALL = true;
@@ -119,6 +121,10 @@ public final class UpVersionService extends Service {
 
         if (succ && AUTO_GO_INSTALL) installApk();
 
+        VUProgressMsg msg = new VUProgressMsg();
+        msg.state = succ ? 1 : -1;
+        RxBus.post0(msg);
+
         stopSelf();
     }
 
@@ -135,6 +141,7 @@ public final class UpVersionService extends Service {
             mNotificationManager.notify(NOTIFICATION_ID, buildNotificationCompat(progress, pendingIntent).build());
         } else {
             VUProgressMsg msg = new VUProgressMsg();
+            msg.state = 0;
             msg.progress = progress;
             RxBus.post0(msg);
         }
@@ -143,16 +150,16 @@ public final class UpVersionService extends Service {
     private final void createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //只在Android O之上需要渠道
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,
-                    CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID + context.getPackageName(),
+                    CHANNEL_NAME + context.getPackageName(), NotificationManager.IMPORTANCE_LOW);
             mNotificationManager.createNotificationChannel(notificationChannel);
         }
     }
 
     private final NotificationCompat.Builder buildNotificationCompat(int progress, PendingIntent pendingIntent) {
         return new NotificationCompat
-                .Builder(context, context.getPackageName())
-                .setChannelId(CHANNEL_ID)
+                .Builder(context, CHANNEL_ID + context.getPackageName())
+                .setChannelId(CHANNEL_ID + context.getPackageName())
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(getString(R.string.app_name))

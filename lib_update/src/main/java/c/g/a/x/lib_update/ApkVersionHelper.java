@@ -1,13 +1,9 @@
 package c.g.a.x.lib_update;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -15,9 +11,15 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.utils.StringUtils;
+import c.g.a.x.lib_support.views.dialog.MyDialog;
+import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
+import c.g.a.x.lib_support.views.toast.SysToast;
 
 
 /**
@@ -115,73 +117,141 @@ public final class ApkVersionHelper {
     }
 
     private final void showNoticeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("软件更新");
 
-        String message;
+        List<String> upgradeInformation = new ArrayList<>(3);
         if (mustInstall)
-            message = "发现新版本,请立即更新!";
+            upgradeInformation.add("发现新版本,请立即更新!");
         else
-            message = "发现新版本,是否更新?";
+            upgradeInformation.add("发现新版本,是否更新?");
 
-        builder.setMessage(message);
-        // 更新
-        builder.setPositiveButton("马上更新", (dialog, which) -> {
-                    switch (installType) {
-                        case Dialog: {
-                            downloadDialog();
-                            progressDialog.show();
-                            RxBus.register0(ApkVersionHelper.this, VUProgressMsg.class, vuProgressMsg -> {
-                                progressBar.setProgress(vuProgressMsg.progress);
-                                if (vuProgressMsg.progress == 100) {
-                                    progressDialog.dismiss();
-                                    RxBus.removeDisposable0(ApkVersionHelper.this, VUProgressMsg.class);
-                                }
-                            });
-                            UpVersionService.start(context, url, savePath, false);
+        new NoticeDialog(context, upgradeInformation, mustInstall, onClickListener).show();
+    }
+
+    private final MyDialog.OnClickListener onClickListener = new MyDialog.OnClickListener() {
+        @Override
+        public boolean onClick(DialogInterface dialog, int which) {
+
+            switch (installType) {
+                case Dialog: {
+                    progressDialog = new ProgressDialog(context);
+                    progressDialog.show();
+                    RxBus.register0(ApkVersionHelper.this, VUProgressMsg.class, vuProgressMsg -> {
+                        switch (vuProgressMsg.state) {
+                            case 0:
+                                progressDialog.progressBar.setProgress(vuProgressMsg.progress);
+                                break;
+                            case 1:
+                                SysToast.showToastShort(context, "下载成功");
+
+                                progressDialog.dismiss();
+                                RxBus.removeDisposable0(ApkVersionHelper.this, VUProgressMsg.class);
+                                break;
+                            default:
+                                SysToast.showToastShort(context, "下载失败");
+
+                                progressDialog.dismiss();
+                                RxBus.removeDisposable0(ApkVersionHelper.this, VUProgressMsg.class);
+                                break;
                         }
-                        break;
-                        case Notification: {
-                            UpVersionService.start(context, url, savePath, true);
-                        }
-                        break;
-                    }
+                    });
+                    UpVersionService.start(context, url, savePath, false);
                 }
-        );
-        if (!mustInstall) {
-            builder.setNegativeButton("稍后更新", null);
+                break;
+                case Notification: {
+                    UpVersionService.start(context, url, savePath, true);
+                }
+                break;
+            }
+            return true;
         }
-        builder.setOnKeyListener((DialogInterface dialog, int keyCode, KeyEvent event) -> true);
-        builder.setCancelable(false);
-        builder.show();
-    }
-
-    private Dialog progressDialog;
-    private ProgressBar progressBar;
-
-    private final void downloadDialog() {
-
-        progressDialog = new Dialog(context);
-        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        progressDialog.setCancelable(false);
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_progress_layout, null);
-
-        TextView title = view.findViewById(R.id.tv_dialog_progress_title);
-        progressBar = view.findViewById(R.id.pb_dialog_progress);
-
-        progressDialog.setContentView(view);
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        Window dialogWindow = progressDialog.getWindow();
-        WindowManager.LayoutParams p = dialogWindow.getAttributes();
-        p.width = displayMetrics.widthPixels / 10 * 9;
-        // p.width = (int) (d.getWidth() * 0.65);
-        dialogWindow.setAttributes(p);
-//		view.getLayoutParams().width = width / 4 * 3;
-    }
+    };
 
     public enum InstallType {
         Notification, Dialog
+    }
+
+
+    private final class NoticeDialog extends Dialog {
+
+        public TextView textView2;
+        public TextView btn_dialog_no;
+        public TextView btn_dialog_yes;
+
+        public NoticeDialog(Context context, List<String> list, boolean mustInstall, MyDialog.OnClickListener listener) {
+            super(context, R.style.DialogTheme);
+            getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            this.setCancelable(false);
+
+            View rootView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_update_notice, null);
+
+            this.textView2 = (TextView) rootView.findViewById(R.id.textView2);
+            textView2.setText("");
+            if (list != null && !list.isEmpty()) {
+                for (String str : list) {
+                    textView2.append(str);
+                    textView2.append("\n");
+                }
+            }
+
+            this.btn_dialog_no = (TextView) rootView.findViewById(R.id.btn_dialog_no);
+            btn_dialog_no.setOnClickListener(new OnSPClickListener() {
+                @Override
+                public void onClickSucc(View v) {
+//                    listener.onClick(NoticeDialog.this, 0);
+                    dismiss();
+                }
+            });
+
+            this.btn_dialog_yes = (TextView) rootView.findViewById(R.id.btn_dialog_yes);
+            btn_dialog_yes.setOnClickListener(new OnSPClickListener() {
+                @Override
+                public void onClickSucc(View v) {
+                    boolean b = listener.onClick(NoticeDialog.this, 1);
+                    if (b) dismiss();
+                }
+            });
+            btn_dialog_no.setVisibility(mustInstall ? View.GONE : View.VISIBLE);
+            setContentView(rootView);
+        }
+
+        @Override
+        public void show() {
+            super.show();
+            Window dialogWindow = this.getWindow();
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.width = lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            dialogWindow.setAttributes(lp);
+        }
+    }
+
+    private ProgressDialog progressDialog;
+
+    private final class ProgressDialog extends Dialog {
+
+        public ProgressBar progressBar;
+
+        public ProgressDialog(Context context) {
+            super(context, R.style.DialogTheme);
+            getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            this.setCancelable(false);
+
+            View rootView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_update_progress, null);
+
+            progressBar = rootView.findViewById(R.id.pb_dialog_progress);
+
+            setContentView(rootView);
+        }
+
+
+        @Override
+        public void show() {
+            super.show();
+            Window dialogWindow = this.getWindow();
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.width = lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            dialogWindow.setAttributes(lp);
+        }
     }
 }
