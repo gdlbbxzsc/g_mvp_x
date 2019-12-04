@@ -1,11 +1,17 @@
 package c.g.a.x.module_main.main;
 
+import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
-import c.g.a.x.module_main.BuildConfig;
+import c.g.a.x.lib_support.views.toast.SysToast;
+import c.g.a.x.lib_support.views.view.FlowLayout;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -73,7 +79,31 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " ", DateHelper.Pattern.PATTERN_D2_T2_2);
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
-      
+
+        viewDataBinding.FlowLayout.setLayoutItemCreater(new FlowLayout.FlowLayoutItemCreater<TextView, String>() {
+            @Override
+            public int getLayoutId() {
+                return R.layout.layout_tv;
+            }
+
+            @Override
+            public void initItem(int i, TextView view, String vo) {
+                view.setText(vo);
+            }
+
+            @Override
+            public void onFlowLayoutItemClick(int i, TextView view, String vo, boolean click) {
+                SysToast.showToastShort(context, vo);
+            }
+
+
+        });
+        viewDataBinding.FlowLayout.setMaxLines(3);
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list.add("abc" + i);
+        }
+        viewDataBinding.FlowLayout.setDatas(list);
     }
 
 

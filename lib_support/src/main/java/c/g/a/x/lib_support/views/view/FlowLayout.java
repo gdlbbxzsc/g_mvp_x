@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,23 +15,24 @@ import java.util.Map;
 
 
 @SuppressWarnings("unused")
-public class FlowLayout extends RelativeLayout {
+public final class FlowLayout extends ViewGroup {
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
     // 存储所有子View
     private List<List<View>> mAllChildViews = new ArrayList<List<View>>();
     // 每一行的高度
     private List<Integer> mLineHeight = new ArrayList<Integer>();
 
-    View choose_view;
-    public Map<View, Boolean> choose_map;
+    private View choose_view;
+    private Map<View, Boolean> choose_map;
 
-    ViewChooseMode mode = ViewChooseMode.None;
+    private ViewChooseMode mode = ViewChooseMode.None;
 
+    private FlowLayoutItemCreater layoutItemCreater;
 
-    public FlowLayoutItemCreater layoutItemCreater;
+    private MarginLayoutParams layoutParams;
 
-    LayoutParams layoutParams;
+    private int maxLines;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -47,7 +48,7 @@ public class FlowLayout extends RelativeLayout {
 
         inflater = LayoutInflater.from(context);
 
-        layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams = new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutParams.leftMargin = layoutParams.rightMargin = layoutParams.topMargin = layoutParams.bottomMargin = 10;
     }
 
@@ -56,10 +57,13 @@ public class FlowLayout extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         // 父控件传进来的宽度和高度以及对应的测量模式
+//        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+
         int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
         int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-//        sizeHeight=0;
+        boolean heightType = modeHeight == MeasureSpec.EXACTLY;
 
         // 自己测量的宽度
         int max_width = 0;
@@ -72,13 +76,10 @@ public class FlowLayout extends RelativeLayout {
         mAllChildViews.clear();
         mLineHeight.clear();
 
-        List<View> lineViews = new ArrayList<View>();
+        List<View> lineViews = new ArrayList<>();
         // 获取子view的个数
-        for (int i = 0, childCount = getChildCount(); i < childCount; i++) {
+        for (int i = 0, childCount = getChildCount() - 1; i <= childCount; i++) {
             View child = getChildAt(i);
-
-            if (child.getVisibility() == GONE) continue;
-
             // 测量子View的宽和高
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
@@ -93,39 +94,38 @@ public class FlowLayout extends RelativeLayout {
                 mLineHeight.add(line_height);
                 // 记录当前行的Views
                 mAllChildViews.add(lineViews);
-                lineViews = new ArrayList();
+                lineViews = new ArrayList<>();
 
                 line_width = 0;
                 line_height = 0;
             }
 
+
             line_width += childWidth;  // 叠加行宽
 
-            max_width = Math.max(line_width, max_width); // 得到最大行高
-
+            max_width = Math.max(line_width, max_width); // 得到最大行宽
             line_height = Math.max(line_height, childHeight); // 得到最大行高
 
             lineViews.add(child);
+
+            if (i >= childCount && lineViews.size() > 0) {
+                max_height += line_height;
+
+                mLineHeight.add(line_height);
+                // 记录当前行的Views
+                mAllChildViews.add(lineViews);
+            }
+
+//            max_height + line_height这个判断 是考虑到了 循环后的  max_height += line_height;
+            if (heightType && max_height > sizeHeight) {
+                child.setVisibility(GONE);
+            }
+            if (maxLines > 0 && mAllChildViews.size() >= maxLines) {
+                child.setVisibility(GONE);
+            }
         }
 
-        if (lineViews.size() > 0) {
-
-            max_height += line_height;
-
-            mLineHeight.add(line_height);
-            // 记录当前行的Views
-            mAllChildViews.add(lineViews);
-
-        }
-
-//        // 父控件传进来的宽度和高度以及对应的测量模式
-//        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
-//        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
-
-        setMeasuredDimension(sizeWidth > max_width ? sizeWidth : max_width, sizeHeight > max_height ? sizeHeight : max_height);
-//        setMeasuredDimension(sizeWidth, sizeHeight > max_height ? sizeHeight : max_height);
-//        setMeasuredDimension(sizeWidth, modeHeight == MeasureSpec.EXACTLY ? max_height : sizeHeight);
-
+        setMeasuredDimension(sizeWidth, heightType ? sizeHeight : max_height);
     }
 
     @Override
@@ -142,9 +142,7 @@ public class FlowLayout extends RelativeLayout {
             List<View> lineViews = mAllChildViews.get(i);
             for (int j = 0; j < lineViews.size(); j++) {
                 View child = lineViews.get(j);
-
-                // 判断是否显示
-                if (child.getVisibility() == View.GONE) continue;
+                if (child.getVisibility() == View.GONE) continue;            // 判断是否显示
 
                 MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
                 int cLeft = left + lp.leftMargin;
@@ -162,33 +160,29 @@ public class FlowLayout extends RelativeLayout {
 
     }
 
-    public void setMargins(int... ints) {
-        if (ints == null || ints.length <= 0) return;
-
-        if (ints.length == 1) {
-            layoutParams.leftMargin = layoutParams.rightMargin = layoutParams.topMargin = layoutParams.bottomMargin = ints[0];
-            return;
-        }
-
-        for (int i = 0; i < ints.length; i++) {
-            switch (i) {
-                case 0:
-                    layoutParams.leftMargin = ints[i];
-                    break;
-                case 1:
-                    layoutParams.rightMargin = ints[i];
-                    break;
-                case 2:
-                    layoutParams.topMargin = ints[i];
-                    break;
-                case 3:
-                    layoutParams.bottomMargin = ints[i];
-                    break;
-            }
-        }
+    public final FlowLayout setMaxLines(int maxLines) {
+        this.maxLines = maxLines;
+        return this;
     }
 
-    public void setChooseMode(ViewChooseMode mode) {
+    public final FlowLayout setMargins(int... ints) {
+        if (ints == null || ints.length <= 0) return this;
+
+        if (ints.length >= 4) {
+            layoutParams.leftMargin = ints[0];
+            layoutParams.rightMargin = ints[1];
+            layoutParams.topMargin = ints[2];
+            layoutParams.bottomMargin = ints[3];
+        } else if (ints.length >= 2) {
+            layoutParams.leftMargin = layoutParams.rightMargin = ints[0];
+            layoutParams.topMargin = layoutParams.bottomMargin = ints[1];
+        } else {
+            layoutParams.leftMargin = layoutParams.rightMargin = layoutParams.topMargin = layoutParams.bottomMargin = ints[0];
+        }
+        return this;
+    }
+
+    public final FlowLayout setChooseMode(ViewChooseMode mode) {
         this.mode = mode;
         switch (mode) {
             case None:
@@ -199,14 +193,15 @@ public class FlowLayout extends RelativeLayout {
                 choose_map = new HashMap<>();
                 break;
         }
+        return this;
     }
 
-    private void addViewByLayoutParams(View view) {
-        this.addView(view, layoutParams);
+    public final FlowLayout setLayoutItemCreater(FlowLayoutItemCreater layoutItemCreater) {
+        this.layoutItemCreater = layoutItemCreater;
+        return this;
     }
 
-
-    public void setDatas(List<? extends Object> list) {
+    public final void setDatas(List<? extends Object> list) {
         removeAllViews();
         if (list == null || list.size() <= 0) return;
 
@@ -223,16 +218,18 @@ public class FlowLayout extends RelativeLayout {
             view.setFocusable(true);
             view.setFocusableInTouchMode(true);
 
-            layoutItemCreater.onFlowLayoutItemClick(mode, view, false);
-
             layoutItemCreater.initItem(i, view, vo);
 
             view.setOnTouchListener(onTouchListener);
         }
     }
 
+    private void addViewByLayoutParams(View view) {
+        this.addView(view, layoutParams);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
-    OnTouchListener onTouchListener = new OnTouchListener() {
+    private final OnTouchListener onTouchListener = new OnTouchListener() {
 
         long lastTime;
         int lastX, lastY;
@@ -266,28 +263,28 @@ public class FlowLayout extends RelativeLayout {
     };
 
 
-    public void putChoice(View v) {
+    private void putChoice(View v) {
         switch (mode) {
             case None:
-                layoutItemCreater.onFlowLayoutItemClick(mode, v, true);
+                layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), true);
                 break;
             case Single: {
                 if (choose_view == v) return;
 
                 if (choose_view != null)
-                    layoutItemCreater.onFlowLayoutItemClick(mode, choose_view, false);
+                    layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), false);
 
                 choose_view = v;
-                layoutItemCreater.onFlowLayoutItemClick(mode, choose_view, true);
+                layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), true);
             }
             break;
             case Multiple: {
                 Boolean b = choose_map.get(v);
                 if (b == null) {
-                    layoutItemCreater.onFlowLayoutItemClick(mode, v, true);
+                    layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), true);
                     choose_map.put(v, true);
                 } else {
-                    layoutItemCreater.onFlowLayoutItemClick(mode, v, false);
+                    layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), false);
                     choose_map.remove(v);
                 }
             }
@@ -295,13 +292,13 @@ public class FlowLayout extends RelativeLayout {
         }
     }
 
-    public interface FlowLayoutItemCreater {
+    public interface FlowLayoutItemCreater<V extends View, O extends Object> {
 
         int getLayoutId();
 
-        void initItem(int i, View view, Object vo);
+        void initItem(int i, V view, O vo);
 
-        void onFlowLayoutItemClick(ViewChooseMode mode, View view, boolean click);
+        void onFlowLayoutItemClick(int i, V view, O vo, boolean click);
     }
 
     public enum ViewChooseMode {

@@ -467,21 +467,20 @@ public final class DateHelper {
 
                 //非时间类型普通字母
                 if (temp_time == null) {
-                    //如果上一次循环判定对应的字母类型没有数据，则下一个循环的字母单位也不要了
-                    if (deleteNextChar) {
+                    if (deleteNextChar) {  //如果上一次循环判定对应的字母类型没有数据，则下一个循环的字母"单位"也不要了
                         deleteNextChar = false;
-                        continue;
+                    } else { //如果非时间类型字母原样添加
+                        list.add(String.valueOf(ch));
                     }
-                    //如果非时间类型字母原样添加
-                    list.add(String.valueOf(ch));
                     continue;
                 }
+
                 boolean b = retainZero ? temp_time >= 0 : temp_time > 0;
                 if (b) {
                     //如果是时间类型字母其有有效值，将当前时间替换到对应字母上
                     list.add(String.valueOf(temp_time));
                 }
-//                当前字母类型可替换则下一个时间单位字母保留，否则删除
+                // 当前字母类型可替换则下一个时间单位字母保留，否则删除
                 deleteNextChar = !b;
             }
             String res = StringUtils.builder(list);

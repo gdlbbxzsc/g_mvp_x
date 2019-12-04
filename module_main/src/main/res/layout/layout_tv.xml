@@ -1,0 +1,4 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/font_normal1.white.Tv_B_ww"
+    android:background="#00f"
+    android:padding="@dimen/dp5" />
