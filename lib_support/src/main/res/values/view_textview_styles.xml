@@ -30,6 +30,11 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="font_normal1.black1.Tv_B_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="font_normal1.white.Tv_B_ww">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

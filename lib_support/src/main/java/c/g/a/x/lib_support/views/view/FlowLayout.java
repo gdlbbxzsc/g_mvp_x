@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import c.g.a.x.lib_support.R;
+
 
 @SuppressWarnings("unused")
 public final class FlowLayout extends ViewGroup {
@@ -33,6 +35,8 @@ public final class FlowLayout extends ViewGroup {
     private MarginLayoutParams layoutParams;
 
     private int maxLines;
+
+    private int layoutId;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -100,6 +104,15 @@ public final class FlowLayout extends ViewGroup {
                 continue;
             }
 
+            if (heightType && max_height + line_height > sizeHeight) {
+                child.setVisibility(GONE);
+                for (View temp : lineViews) {
+                    temp.setVisibility(GONE);
+                }
+                lineViews.clear();
+                continue;
+            }
+
             line_width += childWidth;  // 叠加行宽
             if (line_width <= sizeWidth) {
 
@@ -110,27 +123,20 @@ public final class FlowLayout extends ViewGroup {
                     line_width = Integer.MAX_VALUE;
                     i -= 1;//回退一位,重新计算
                 }
-
                 continue;
             }
             // 换行时候
             max_height += line_height;
-            if (heightType && max_height > sizeHeight) {
-                for (View temp : lineViews) {
-                    temp.setVisibility(GONE);
-                }
-            } else {
-                // 记录LineHeight
-                mLineHeight.add(line_height);
-                // 记录当前行的Views
-                mAllChildViews.add(lineViews);
-                lineViews = new ArrayList<>();
-                line_width = 0;
-                line_height = 0;
-                i -= 1;//回退一位,重新计算
-            }
-        }
+            // 记录LineHeight
+            mLineHeight.add(line_height);
+            // 记录当前行的Views
+            mAllChildViews.add(lineViews);
+            lineViews = new ArrayList<>();
+            line_width = 0;
+            line_height = 0;
+            i -= 1;//回退一位,重新计算
 
+        }
         setMeasuredDimension(sizeWidth, heightType ? sizeHeight : max_height);
     }
 
@@ -167,6 +173,11 @@ public final class FlowLayout extends ViewGroup {
             top += lineHeight;
         }
 
+    }
+
+    public FlowLayout setLayoutId(int layoutId) {
+        this.layoutId = layoutId;
+        return this;
     }
 
     public final FlowLayout setMaxLines(int maxLines) {
@@ -214,12 +225,13 @@ public final class FlowLayout extends ViewGroup {
         removeAllViews();
         if (list == null || list.size() <= 0) return;
 
+        if (layoutId == 0) layoutId = R.layout.layout_tv;
         for (int i = 0, count = list.size(); i < count; i++) {
 
             Object vo = list.get(i);
 
-            View view = inflater.inflate(layoutItemCreater.getLayoutId(), null);
-            addViewByLayoutParams(view);
+            View view = inflater.inflate(layoutId, null);
+            this.addView(view, layoutParams);
 
             view.setId(i);
             view.setTag(vo);
@@ -231,10 +243,6 @@ public final class FlowLayout extends ViewGroup {
 
             view.setOnTouchListener(onTouchListener);
         }
-    }
-
-    private void addViewByLayoutParams(View view) {
-        this.addView(view, layoutParams);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -302,8 +310,6 @@ public final class FlowLayout extends ViewGroup {
     }
 
     public interface FlowLayoutItemCreater<V extends View, O extends Object> {
-
-        int getLayoutId();
 
         void initItem(int i, V view, O vo);
 

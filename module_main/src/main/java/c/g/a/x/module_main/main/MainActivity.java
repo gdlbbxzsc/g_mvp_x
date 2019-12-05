@@ -83,11 +83,6 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 
         FlowLayout.FlowLayoutItemCreater<TextView, String> a = new FlowLayout.FlowLayoutItemCreater<TextView, String>() {
             @Override
-            public int getLayoutId() {
-                return R.layout.layout_tv;
-            }
-
-            @Override
             public void initItem(int i, TextView view, String vo) {
                 view.setText(vo);
             }
@@ -96,17 +91,27 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
             public void onFlowLayoutItemClick(int i, TextView view, String vo, boolean click) {
                 SysToast.showToastShort(context, vo);
             }
-
-
         };
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             list.add("abcd" + i);
         }
 
+        viewDataBinding.FlowLayout1.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout1.setMaxLines(0);
+        viewDataBinding.FlowLayout1.setDatas(list);
+
         viewDataBinding.FlowLayout2.setLayoutItemCreater(a);
         viewDataBinding.FlowLayout2.setMaxLines(0);
         viewDataBinding.FlowLayout2.setDatas(list);
+
+        viewDataBinding.FlowLayout3.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout3.setMaxLines(3);
+        viewDataBinding.FlowLayout3.setDatas(list);
+
+        viewDataBinding.FlowLayout4.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout4.setMaxLines(3);
+        viewDataBinding.FlowLayout4.setDatas(list);
 
 
     }
