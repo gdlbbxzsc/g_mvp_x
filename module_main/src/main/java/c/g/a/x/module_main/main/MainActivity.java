@@ -80,7 +80,8 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
 
-        viewDataBinding.FlowLayout.setLayoutItemCreater(new FlowLayout.FlowLayoutItemCreater<TextView, String>() {
+
+        FlowLayout.FlowLayoutItemCreater<TextView, String> a = new FlowLayout.FlowLayoutItemCreater<TextView, String>() {
             @Override
             public int getLayoutId() {
                 return R.layout.layout_tv;
@@ -97,13 +98,17 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
             }
 
 
-        });
-        viewDataBinding.FlowLayout.setMaxLines(3);
+        };
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("abc" + i);
+        for (int i = 0; i < 50; i++) {
+            list.add("abcd" + i);
         }
-        viewDataBinding.FlowLayout.setDatas(list);
+
+        viewDataBinding.FlowLayout2.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout2.setMaxLines(0);
+        viewDataBinding.FlowLayout2.setDatas(list);
+
+
     }
 
 

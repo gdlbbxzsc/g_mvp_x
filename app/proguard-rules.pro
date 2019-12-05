@@ -133,13 +133,14 @@
 -keep class * extends c.g.a.x.lib_http.base.BaseResponse{ *; }
 -keep class * extends c.g.a.x.lib_rxbus.base.BaseMsg{ *; }
 
-
-
 -keep class c.g.a.x.lib_http.model.** {*;}
-
 
 -keep interface c.g.a.x.lib_http.http.HttpService{ *; }
 
+-keep class c.g.a.x.lib_http.model.** {*;}
+
+-keep class c.g.a.x.lib_weixin.http.WxAccessTokenResponse{*;}
+-keep interface c.g.a.x.lib_weixin.http.HttpService{ *; }
 
 #---------------------------------第三方包-------------------------------
 

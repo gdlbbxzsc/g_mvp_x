@@ -22,6 +22,7 @@ import c.g.a.x.lib_support.android.utils.FileHelper;
 import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.SystemUtils;
 import c.g.a.x.lib_support.views.dialog.MyDialog;
+import c.g.a.x.lib_support.views.toast.SysToast;
 
 
 //这里继承 dbapp的话 就有数据库 如果调用baseapp的话就没有数据库
@@ -69,6 +70,8 @@ public class GlobalApplication extends BaseApplication {
 
         AndroidUtils.addPrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
 
+        if (BuildConfig.app_mode)
+            SysToast.showToastLong(getApplicationContext(), "已连接测试服务器!\n connected test server!");
     }
 
     @Override

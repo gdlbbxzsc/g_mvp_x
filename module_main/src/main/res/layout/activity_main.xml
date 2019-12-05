@@ -12,14 +12,17 @@
         android:gravity="top"
         android:orientation="vertical">
 
+
         <c.g.a.x.lib_support.views.view.FlowLayout
-            android:id="@+id/FlowLayout"
+            android:id="@+id/FlowLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="@dimen/dp5"
             android:background="#f00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
     </LinearLayout>
 </layout>
