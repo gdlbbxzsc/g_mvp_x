@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import c.g.a.x.lib_support.R;
+import c.g.a.x.lib_support.android.utils.Logger;
+import c.g.a.x.lib_support.views.toast.SysToast;
 
 
 @SuppressWarnings("unused")
@@ -29,7 +32,7 @@ public final class FlowLayout extends ViewGroup {
     private View choose_view;
     private Map<View, Boolean> choose_map;
 
-    private ViewChooseMode mode = ViewChooseMode.None;
+    private ChooseMode mode = ChooseMode.None;
 
     private OnItemInitListener onItemInitListener;
     private OnItemClickListener onItemClickListener;
@@ -149,7 +152,6 @@ public final class FlowLayout extends ViewGroup {
         int top = 0;
 
         for (int i = 0; i < mAllChildViews.size(); i++) {
-
             // 当前行的views和高度
             int lineHeight = mLineHeight.get(i);
 
@@ -174,7 +176,6 @@ public final class FlowLayout extends ViewGroup {
             left = 0;
             top += lineHeight;
         }
-
     }
 
     public FlowLayout setLayoutId(int layoutId) {
@@ -204,7 +205,7 @@ public final class FlowLayout extends ViewGroup {
         return this;
     }
 
-    public final FlowLayout setChooseMode(ViewChooseMode mode) {
+    public final FlowLayout setChooseMode(ChooseMode mode) {
         this.mode = mode;
         switch (mode) {
             case None:
@@ -256,6 +257,7 @@ public final class FlowLayout extends ViewGroup {
         }
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     private final OnTouchListener onTouchListener = new OnTouchListener() {
 
@@ -287,7 +289,6 @@ public final class FlowLayout extends ViewGroup {
         }
     };
 
-
     private void putChoice(View v) {
         switch (mode) {
             case None:
@@ -316,6 +317,63 @@ public final class FlowLayout extends ViewGroup {
         }
     }
 
+    public final void clearChoice() {
+        switch (mode) {
+            case Single: {
+                onItemClick(choose_view, false);
+                choose_view = null;
+            }
+            break;
+            case Multiple: {
+                Iterator<View> iterator = choose_map.keySet().iterator();
+                while (iterator.hasNext()) {
+                    View item = iterator.next();
+                    onItemClick(item, false);
+                }
+                choose_map.clear();
+            }
+            break;
+        }
+    }
+
+    public final void choiceAll() {
+        switch (mode) {
+            case Multiple: {
+                for (int i = 0; i < getChildCount(); i++) {
+                    View item = getChildAt(i);
+                    if (item.getVisibility() == GONE) continue;
+                    onItemClick(item, true);
+                    choose_map.put(item, true);
+                }
+            }
+            break;
+        }
+    }
+
+    public final Object getResultSingle() {
+        if (mode != ChooseMode.Single) {
+            Logger.e("this mode can not use getResultSingle");
+            SysToast.showToastShort(getContext(), "this mode can not use getResultSingle");
+            return null;
+        }
+        if (choose_view == null) return null;
+
+        return choose_view.getTag();
+    }
+
+    public final List<Object> getResultMultiple() {
+        if (mode != ChooseMode.Multiple) {
+            Logger.e("this mode can not use getResultMultiple");
+            SysToast.showToastShort(getContext(), "this mode can not use getResultMultiple");
+            return null;
+        }
+
+        List<Object> list = new ArrayList<>(choose_map.size());
+        for (View view : choose_map.keySet()) {
+            list.add(view.getTag());
+        }
+        return list;
+    }
 
     private void onItemClick(View v, boolean b) {
         if (onItemClickListener != null)
@@ -330,7 +388,7 @@ public final class FlowLayout extends ViewGroup {
         void onItemClick(int i, V view, O vo, boolean click);
     }
 
-    public enum ViewChooseMode {
+    public enum ChooseMode {
         None, Single, Multiple
     }
 }
