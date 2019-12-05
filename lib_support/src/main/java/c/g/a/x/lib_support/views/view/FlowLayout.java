@@ -350,6 +350,23 @@ public final class FlowLayout extends ViewGroup {
         }
     }
 
+    public final List<Object> getResult() {
+        List<Object> list = new ArrayList<>();
+        switch (mode) {
+            case Single: {
+                if (choose_view != null) list.add(choose_view.getTag());
+            }
+            break;
+            case Multiple: {
+                for (View view : choose_map.keySet()) {
+                    list.add(view.getTag());
+                }
+            }
+            break;
+        }
+        return list;
+    }
+
     public final Object getResultSingle() {
         if (mode != ChooseMode.Single) {
             Logger.e("this mode can not use getResultSingle");
