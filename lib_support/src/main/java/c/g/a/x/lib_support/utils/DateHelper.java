@@ -342,8 +342,13 @@ public final class DateHelper {
 
 
     public static final class LastTimeMnger {
-
+        //是否保留时间中多余的前缀0,全为0至少保留一个,例如：
+        // true：    05-08-22    00-08-22
+        // false：   5-8-22      0-8-22
         private boolean retainZeroValue = true;
+        //是否保留一个时间单位组 例如：
+        // true：0000-00-00_05-08-22
+        // false：05-08-22
         private boolean retainZeroTerm = true;
 
         public long all_milsecs;
@@ -362,7 +367,7 @@ public final class DateHelper {
         public long last_months;
         public long last_years;
 
-        public String time_ago_tag;
+        private String time_ago_tag;
 
         private LastTimeMnger(long msec) {
             this.all_milsecs = msec;
@@ -437,6 +442,10 @@ public final class DateHelper {
         public final LastTimeMnger unRetainZeroTerm() {
             retainZeroTerm = false;
             return this;
+        }
+
+        public final String getTimeTag() {
+            return time_ago_tag;
         }
 
         //            "yyyy-MM-dd_HH-mm-ss"
