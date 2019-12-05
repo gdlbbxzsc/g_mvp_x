@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,8 @@ public final class FlowLayout extends ViewGroup {
 
     private ViewChooseMode mode = ViewChooseMode.None;
 
-    private FlowLayoutItemCreater layoutItemCreater;
+    private OnItemInitListener onItemInitListener;
+    private OnItemClickListener onItemClickListener;
 
     private MarginLayoutParams layoutParams;
 
@@ -216,8 +218,13 @@ public final class FlowLayout extends ViewGroup {
         return this;
     }
 
-    public final FlowLayout setLayoutItemCreater(FlowLayoutItemCreater layoutItemCreater) {
-        this.layoutItemCreater = layoutItemCreater;
+    public final FlowLayout setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+        return this;
+    }
+
+    public final FlowLayout setOnItemInitListener(OnItemInitListener onItemInitListener) {
+        this.onItemInitListener = onItemInitListener;
         return this;
     }
 
@@ -225,7 +232,7 @@ public final class FlowLayout extends ViewGroup {
         removeAllViews();
         if (list == null || list.size() <= 0) return;
 
-        if (layoutId == 0) layoutId = R.layout.layout_tv;
+        if (layoutId == 0) layoutId = R.layout.layout_default_flowlayout_item;
         for (int i = 0, count = list.size(); i < count; i++) {
 
             Object vo = list.get(i);
@@ -239,7 +246,11 @@ public final class FlowLayout extends ViewGroup {
             view.setFocusable(true);
             view.setFocusableInTouchMode(true);
 
-            layoutItemCreater.initItem(i, view, vo);
+            if (onItemInitListener != null) {
+                onItemInitListener.onItemInit(i, view, vo);
+            } else if (view instanceof TextView) {
+                ((TextView) view).setText(vo.toString());
+            }
 
             view.setOnTouchListener(onTouchListener);
         }
@@ -258,9 +269,6 @@ public final class FlowLayout extends ViewGroup {
                     lastTime = System.currentTimeMillis();
                     lastX = (int) event.getRawX();
                     lastY = (int) event.getRawY();
-                }
-                break;
-                case MotionEvent.ACTION_MOVE: {
                 }
                 break;
                 case MotionEvent.ACTION_UP: {
@@ -283,37 +291,43 @@ public final class FlowLayout extends ViewGroup {
     private void putChoice(View v) {
         switch (mode) {
             case None:
-                layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), true);
+                onItemClick(v, true);
                 break;
             case Single: {
                 if (choose_view == v) return;
 
-                if (choose_view != null)
-                    layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), false);
+                if (choose_view != null) onItemClick(v, false);
 
                 choose_view = v;
-                layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), true);
+                onItemClick(v, true);
             }
             break;
             case Multiple: {
                 Boolean b = choose_map.get(v);
                 if (b == null) {
-                    layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), true);
                     choose_map.put(v, true);
+                    onItemClick(v, true);
                 } else {
-                    layoutItemCreater.onFlowLayoutItemClick(v.getId(), v, v.getTag(), false);
                     choose_map.remove(v);
+                    onItemClick(v, false);
                 }
             }
             break;
         }
     }
 
-    public interface FlowLayoutItemCreater<V extends View, O extends Object> {
 
-        void initItem(int i, V view, O vo);
+    private void onItemClick(View v, boolean b) {
+        if (onItemClickListener != null)
+            onItemClickListener.onItemClick(v.getId(), v, v.getTag(), b);
+    }
 
-        void onFlowLayoutItemClick(int i, V view, O vo, boolean click);
+    public interface OnItemInitListener<V extends View, O extends Object> {
+        void onItemInit(int i, V view, O vo);
+    }
+
+    public interface OnItemClickListener<V extends View, O extends Object> {
+        void onItemClick(int i, V view, O vo, boolean click);
     }
 
     public enum ViewChooseMode {

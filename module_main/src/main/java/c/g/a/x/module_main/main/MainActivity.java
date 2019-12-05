@@ -10,7 +10,6 @@ import java.util.List;
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
-import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.lib_support.views.view.FlowLayout;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
@@ -81,38 +80,31 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
 
 
-        FlowLayout.FlowLayoutItemCreater<TextView, String> a = new FlowLayout.FlowLayoutItemCreater<TextView, String>() {
-            @Override
-            public void initItem(int i, TextView view, String vo) {
-                view.setText(vo);
-            }
-
-            @Override
-            public void onFlowLayoutItemClick(int i, TextView view, String vo, boolean click) {
-                SysToast.showToastShort(context, vo);
-            }
-        };
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             list.add("abcd" + i);
         }
+        FlowLayout.OnItemClickListener<TextView, String> a = new FlowLayout.OnItemClickListener<TextView, String>() {
+            @Override
+            public void onItemClick(int i, TextView view, String vo, boolean click) {
 
-        viewDataBinding.FlowLayout1.setLayoutItemCreater(a);
+            }
+        };
+        viewDataBinding.FlowLayout1.setOnItemClickListener(a);
         viewDataBinding.FlowLayout1.setMaxLines(0);
         viewDataBinding.FlowLayout1.setDatas(list);
 
-        viewDataBinding.FlowLayout2.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout2.setOnItemClickListener(a);
         viewDataBinding.FlowLayout2.setMaxLines(0);
         viewDataBinding.FlowLayout2.setDatas(list);
 
-        viewDataBinding.FlowLayout3.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout3.setOnItemClickListener(a);
         viewDataBinding.FlowLayout3.setMaxLines(3);
         viewDataBinding.FlowLayout3.setDatas(list);
 
-        viewDataBinding.FlowLayout4.setLayoutItemCreater(a);
+        viewDataBinding.FlowLayout4.setOnItemClickListener(a);
         viewDataBinding.FlowLayout4.setMaxLines(3);
         viewDataBinding.FlowLayout4.setDatas(list);
-
 
     }
 

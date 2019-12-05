@@ -65,7 +65,7 @@ public final class MyDialog extends Dialog {
         rootView.setBackgroundResource(R.drawable.default_dialog_bg);
 
         //
-        TextView title = (TextView) inflater.inflate(R.layout.dialog_custom_top_title, null);
+        TextView title = (TextView) inflater.inflate(R.layout.dialog_common_top_title, null);
         if (!StringUtils.isEmpty(builder.title)) title.setText(builder.title);
         if (builder.titleColor != null)
             title.setTextColor(getContext().getResources().getColor(builder.titleColor));
@@ -88,12 +88,12 @@ public final class MyDialog extends Dialog {
         bottom_buttons.setLayoutParams(params);
 
 
-        TextView positiveButton = (TextView) inflater.inflate(R.layout.dialog_custom_bottom_button_yes, null);
+        TextView positiveButton = (TextView) inflater.inflate(R.layout.dialog_common_bottom_button_yes, null);
         initButton(positiveButton, builder.positiveButtonText, builder.onClickListener, 1);
         bottom_buttons.addView(positiveButton);
 
         if (builder.buttonStyle == ButtonStyle.style_two) {
-            TextView negativeButton = (TextView) inflater.inflate(R.layout.dialog_custom_bottom_button_no, null);
+            TextView negativeButton = (TextView) inflater.inflate(R.layout.dialog_common_bottom_button_no, null);
             initButton(negativeButton, builder.negativeButtonText, builder.onClickListener, 0);
             bottom_buttons.addView(negativeButton);
 

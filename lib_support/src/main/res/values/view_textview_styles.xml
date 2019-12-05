@@ -1,5 +1,15 @@
 <resources>
 
+    <style name="default_flowlayout_item_style" parent="font_normal1.black1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/default_flowlayout_item_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">@dimen/dp2</item>
+        <item name="android:paddingLeft">@dimen/dp5</item>
+        <item name="android:paddingRight">@dimen/dp5</item>
+        <item name="android:paddingTop">@dimen/dp2</item>
+    </style>
 
     <style name="point_num_style" parent="font_small2.white">
         <item name="android:layout_width">wrap_content</item>
