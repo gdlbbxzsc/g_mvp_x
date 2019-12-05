@@ -343,7 +343,8 @@ public final class DateHelper {
 
     public static final class LastTimeMnger {
 
-        private boolean retainZero = false;
+        private boolean retainZeroValue = true;
+        private boolean retainZeroTerm = true;
 
         public long all_milsecs;
 
@@ -418,131 +419,95 @@ public final class DateHelper {
             time_ago_tag = all_years + "年前";
         }
 
-        public final LastTimeMnger retainZero() {
-            retainZero = true;
+        public final LastTimeMnger retainZeroValue() {
+            retainZeroValue = true;
             return this;
         }
 
-        public final LastTimeMnger unRetainZero() {
-            retainZero = false;
+        public final LastTimeMnger unRetainZeroValue() {
+            retainZeroValue = false;
+            return this;
+        }
+
+        public final LastTimeMnger retainZeroTerm() {
+            retainZeroTerm = true;
+            return this;
+        }
+
+        public final LastTimeMnger unRetainZeroTerm() {
+            retainZeroTerm = false;
             return this;
         }
 
         //            "yyyy-MM-dd_HH-mm-ss"
         public final String getString(String pattern) {
-            if (all_milsecs < 0) return "";
 
             char[] array = pattern.toCharArray();
             List<String> list = new ArrayList<>(array.length);
+
             Character last = null;
-            boolean deleteNextChar = false;
-            for (char ch : array) {
-//                如果已经加过一样的字母就不在加了
-                if (last != null && last == ch) continue;
-                last = ch;    // 记录一下
+            int times = 0;
 
-//                如果字母是如下类型获取对应类型时间值
-                Long temp_time = null;
-                switch (ch) {
-                    case 'y':
-                        temp_time = last_years;
-                        break;
-                    case 'M':
-                        temp_time = last_months;
-                        break;
-                    case 'd':
-                        temp_time = last_days;
-                        break;
-////
-                    case 'H':
-                        temp_time = last_hours;
-                        break;
-                    case 'm':
-                        temp_time = last_mins;
-                        break;
-                    case 's':
-                        temp_time = last_secs;
-                        break;
-                }
+            Character ch;
+            boolean delete = false;
+            for (int i = 0, c = pattern.length(); i <= c; i++) {
 
-                //非时间类型普通字母
-                if (temp_time == null) {
-                    if (deleteNextChar) {  //如果上一次循环判定对应的字母类型没有数据，则下一个循环的字母"单位"也不要了
-                        deleteNextChar = false;
-                    } else { //如果非时间类型字母原样添加
-                        list.add(String.valueOf(ch));
-                    }
+                ch = i < c ? pattern.charAt(i) : null;
+
+                if (last != null && last == ch) {
+                    times++;
                     continue;
                 }
 
-                boolean b = retainZero ? temp_time >= 0 : temp_time > 0;
-                if (b) {
-                    //如果是时间类型字母其有有效值，将当前时间替换到对应字母上
-                    list.add(String.valueOf(temp_time));
+
+                if (last == null) {
+                    last = ch;
+                    times = 1;
+                    continue;
                 }
-                // 当前字母类型可替换则下一个时间单位字母保留，否则删除
-                deleteNextChar = !b;
+
+                switch (last) {
+                    case 'y':
+                        delete = addTime(list, last_years, times);
+                        break;
+                    case 'M':
+                        delete = addTime(list, last_months, times);
+                        break;
+                    case 'd':
+                        delete = addTime(list, last_days, times);
+                        break;
+                    ////
+                    case 'H':
+                        delete = addTime(list, last_hours, times);
+                        break;
+                    case 'm':
+                        delete = addTime(list, last_mins, times);
+                        break;
+                    case 's':
+                        delete = addTime(list, last_secs, times);
+                        break;
+                    ////
+                    default:
+                        if (!delete) list.add(String.valueOf(last));
+                        delete = false;
+                        break;
+                }
+                last = ch;
+                times = 1;
             }
             String res = StringUtils.builder(list);
             Logger.e("LastTimeMnger getString====>", pattern, " ", res);
             return res;
         }
 
-//        public String getString1(String pattern) {
-//            if (all_milsecs < 0) return "";
-//
-//            pattern = replaceOrDeleteTime(pattern, "y", last_years);
-//            pattern = replaceOrDeleteTime(pattern, "M", last_months);
-//            pattern = replaceOrDeleteTime(pattern, "d", last_days);
-//
-//            pattern = replaceOrDeleteTime(pattern, "H", last_hours);
-//            pattern = replaceOrDeleteTime(pattern, "m", last_mins);
-//            pattern = replaceOrDeleteTime(pattern, "s", last_secs);
-//
-//            return pattern;
-//        }
-//
-//        private String replaceOrDeleteTime(String pattern, String regex, long time) {
-//            Logger.e("LastTimeMnger replaceOrDeleteTime 1====>", pattern, " ", regex, " ", time);
-//            if (pattern.contains(regex)) {
-//                if (time >= 0) {
-//                    pattern = pattern.replaceAll("(" + regex + ")+", String.valueOf(time));
-//                } else {
-//                    pattern = pattern.replaceAll("(" + regex + ")+", "@");
-//                    pattern = pattern.substring(pattern.indexOf("@") + 2);
-//                }
-//            }
-//            Logger.e("LastTimeMnger replaceOrDeleteTime 2====>", pattern, " ", regex, " ", time);
-//            return pattern;
-//        }
+        private boolean addTime(List<String> list, long lastTime, int times) {
+            if (!retainZeroTerm && lastTime == 0) return true;
 
+            list.add(retainZeroValue ? StringUtils.formatLong2String(lastTime, times) : String.valueOf(lastTime));
+            return false;
+        }
     }
 
-    //    public static String getAgoTime(long all_milsecs) {
-//
-//        long all_secs = all_milsecs / 1000;
-//        //<1min
-//        if (all_secs < 60) return "刚刚";
-//
-//        long all_mins = all_secs / 60;
-//        //<1hour
-//        if (all_mins < 60) return all_mins + "分钟前";
-//
-//        long all_hours = all_mins / 60;
-//        //<1 day
-//        if (all_hours < 24) return all_hours + "小时前";
-//
-//        long all_days = all_hours / 24;
-//        //<1 month
-//        if (all_days < 30) return all_days + "天前";
-//
-//        long all_months = all_days / 30;
-//        //<1 year
-//        if (all_months < 12) return all_months + "月前";
-//
-//        long all_years = all_months / 12;
-//        return all_years + "年前";
-//    }
 
     public static void main(String[] args) {
         // System.out.println(new DateHelper("11:11:11", PATTERN_7)

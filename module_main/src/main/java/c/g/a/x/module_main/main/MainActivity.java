@@ -1,16 +1,12 @@
 package c.g.a.x.module_main.main;
 
-import android.widget.TextView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
+import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
-import c.g.a.x.lib_support.views.view.FlowLayout;
+import c.g.a.x.lib_support.utils.DateHelper;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -67,44 +63,59 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e(StringUtils.encrypt("1234567890abc", 3, 3, "qw"));
 
 //        5时8分
-//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " ", DateHelper.Pattern.PATTERN_D3_T3_1);
-//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " ", DateHelper.Pattern.PATTERN_D2_T3_2);
-//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " ", DateHelper.Pattern.PATTERN_D2_T2_2);
-//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
-//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
-//        Logger.e("sssss=====>", new DateHelper(18502922).getDvalue(0).getString("HHmmss"), " ", "HHmmss");
-//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " ", DateHelper.Pattern.PATTERN_D3_T3_1);
-//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " ", DateHelper.Pattern.PATTERN_D2_T3_2);
-//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " ", DateHelper.Pattern.PATTERN_D2_T2_2);
-//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_2), " ", DateHelper.Pattern.PATTERN_T2_2);
-//        Logger.e("sssss=====>", new DateHelper().getDvalue(0).getString(DateHelper.Pattern.PATTERN_T2_1), " ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", "========================");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", "========================");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", "========================");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
 
-
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            list.add("abcd" + i);
-        }
-        FlowLayout.OnItemClickListener<TextView, String> a = new FlowLayout.OnItemClickListener<TextView, String>() {
-            @Override
-            public void onItemClick(int i, TextView view, String vo, boolean click) {
-
-            }
-        };
-        viewDataBinding.FlowLayout1.setOnItemClickListener(a);
-        viewDataBinding.FlowLayout1.setMaxLines(0);
-        viewDataBinding.FlowLayout1.setDatas(list);
-
-        viewDataBinding.FlowLayout2.setOnItemClickListener(a);
-        viewDataBinding.FlowLayout2.setMaxLines(0);
-        viewDataBinding.FlowLayout2.setDatas(list);
-
-        viewDataBinding.FlowLayout3.setOnItemClickListener(a);
-        viewDataBinding.FlowLayout3.setMaxLines(3);
-        viewDataBinding.FlowLayout3.setDatas(list);
-
-        viewDataBinding.FlowLayout4.setOnItemClickListener(a);
-        viewDataBinding.FlowLayout4.setMaxLines(3);
-        viewDataBinding.FlowLayout4.setDatas(list);
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < 50; i++) {
+//            list.add("abcd" + i);
+//        }
+//        FlowLayout.OnItemClickListener<TextView, String> a = new FlowLayout.OnItemClickListener<TextView, String>() {
+//            @Override
+//            public void onItemClick(int i, TextView view, String vo, boolean click) {
+//
+//            }
+//        };
+//        viewDataBinding.FlowLayout1.setOnItemClickListener(a);
+//        viewDataBinding.FlowLayout1.setMaxLines(0);
+//        viewDataBinding.FlowLayout1.setDatas(list);
+//
+//        viewDataBinding.FlowLayout2.setOnItemClickListener(a);
+//        viewDataBinding.FlowLayout2.setMaxLines(0);
+//        viewDataBinding.FlowLayout2.setDatas(list);
+//
+//        viewDataBinding.FlowLayout3.setOnItemClickListener(a);
+//        viewDataBinding.FlowLayout3.setMaxLines(3);
+//        viewDataBinding.FlowLayout3.setDatas(list);
+//
+//        viewDataBinding.FlowLayout4.setOnItemClickListener(a);
+//        viewDataBinding.FlowLayout4.setMaxLines(3);
+//        viewDataBinding.FlowLayout4.setDatas(list);
 
     }
 
