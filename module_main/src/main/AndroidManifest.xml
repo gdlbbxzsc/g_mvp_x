@@ -5,16 +5,26 @@
     <application>
 
         <activity
-            android:name=".main.MainActivity"
-            android:label="@string/app_name"
+            android:name=".welcome.WelcomeActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/FirstTheme"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".guide.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FirstTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".main.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
 
 </manifest>

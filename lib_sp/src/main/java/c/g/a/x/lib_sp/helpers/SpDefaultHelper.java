@@ -66,4 +66,15 @@ public class SpDefaultHelper extends BaseSpHelper {
     public int getUserId() {
         return getSp().getInt("userId", 0);
     }
+
+
+    public void putFirstUse(boolean firstUse) {
+        SharedPreferences.Editor editor = getSp().edit();//
+        editor.putBoolean("FirstUse", firstUse);//
+        editor.commit();
+    }
+
+    public boolean isFirstUse() {
+        return getSp().getBoolean("FirstUse", true);
+    }
 }

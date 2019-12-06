@@ -11,6 +11,8 @@ public final class Constant {
 
     /////////
     public static final String MAIN_ACTIVITY = "/module_main/MainActivity";
+    public static final String WELCOME_ACTIVITY = "/module_main/WelcomeActivity";
+    public static final String GUIDE_ACTIVITY = "/module_main/GuideActivity";
 
     public static final String LOGIN_ACTIVITY = "/module_login/LoginActivity";
 
