@@ -17,6 +17,7 @@ import java.util.Map;
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_base.BaseApplication;
 import c.g.a.x.lib_sp.SpMnger;
+import c.g.a.x.lib_support.aliyun.AliOssHelper;
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.FileHelper;
 import c.g.a.x.lib_support.android.utils.Logger;
@@ -58,10 +59,8 @@ public class GlobalApplication extends BaseApplication {
         Logger.e("=======GlobalApplication's  getPackageName:" + getPackageName());
         FileHelper.init(getPackageName());
 
-
         SpMnger.getInstance().init(this);
-
-
+ 
         if (BuildConfig.DEBUG) {           // These two lines must be written before init, otherwise these configurations will be invalid in the init process
             ARouter.openLog();     // Print log
             ARouter.openDebug();   // Turn on debugging mode (If you are running in InstantRun mode, you must turn on debug mode! Online version needs to be closed, otherwise there is a security risk)
@@ -69,6 +68,8 @@ public class GlobalApplication extends BaseApplication {
         ARouter.init(this); // As early as possible, it is recommended to initialize in the Application
 
         AndroidUtils.addPrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
+
+        AliOssHelper.context(getApplicationContext());
 
         if (BuildConfig.app_mode)
             SysToast.showToastLong(getApplicationContext(), "已连接测试服务器!\n connected test server!");
