@@ -31,7 +31,7 @@ public final class AlbumNotifyHelper {
     }
 
 
-    public AlbumNotifyHelper insertPhoto(String path) {
+    public final AlbumNotifyHelper insertPhoto(String path) {
         load(path);
 
         if (!fileExists()) return this;
@@ -45,7 +45,7 @@ public final class AlbumNotifyHelper {
         return this;
     }
 
-    public AlbumNotifyHelper insertVideo(String path) {
+    public final AlbumNotifyHelper insertVideo(String path) {
         load(path);
 
         if (!fileExists()) return this;
@@ -56,7 +56,7 @@ public final class AlbumNotifyHelper {
         return this;
     }
 
-    public AlbumNotifyHelper notifyByBroadcast() {
+    public final AlbumNotifyHelper notifyByBroadcast() {
         if (!fileExists()) return this;
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(uri);
@@ -91,18 +91,18 @@ public final class AlbumNotifyHelper {
         uri = Uri.fromFile(file);
     }
 
-    private final String getMimeType(String sfx) {
+    private String getMimeType(String sfx) {
         return mimeTypeMap.get(sfx);
     }
 
-    private final void initmimeType() {
+    private void initmimeType() {
         initMimeTypePhoto();
         initmimeTypeVidio();
     }
 
     private Map<String, String> mimeTypeMap = new HashMap<>();
 
-    private final void initMimeTypePhoto() {
+    private void initMimeTypePhoto() {
         mimeTypeMap.put("jpg", "image/jpeg");
         mimeTypeMap.put("jpeg", "image/jpeg");
         mimeTypeMap.put("png", "image/png");
@@ -110,22 +110,22 @@ public final class AlbumNotifyHelper {
     }
 
 
-    private final void initmimeTypeVidio() {
+    private void initmimeTypeVidio() {
         mimeTypeMap.put("mp4", "video/mp4");
         mimeTypeMap.put("mpeg4", "video/mp4");
         mimeTypeMap.put("3gp", "video/3gp");
     }
 
 
-    private final long getTime() {
+    private long getTime() {
         return System.currentTimeMillis();
     }
 
-    private final boolean fileExists() {
+    private boolean fileExists() {
         return file.exists();
     }
 
-    private final String getSuffix() {
+    private String getSuffix() {
         return path.substring(path.lastIndexOf(".") + 1).toLowerCase().trim();
     }
 

@@ -6,6 +6,7 @@ import android.util.ArrayMap;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -19,9 +20,17 @@ import c.g.a.x.lib_http.base.GetUrlPathRequest;
 import c.g.a.x.lib_http.constant.Constant;
 import c.g.a.x.lib_http.rxjava2.Rx2Helper;
 import c.g.a.x.lib_http.rxjava2.filterobserver.BaseObserver;
+import c.g.a.x.lib_support.android.utils.AlbumNotifyHelper;
+import c.g.a.x.lib_support.android.utils.FileHelper;
+import c.g.a.x.lib_support.utils.FileUtils;
+import c.g.a.x.lib_support.utils.IOUtils;
+import c.g.a.x.lib_support.views.toast.SysToast;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 
 /**
@@ -164,4 +173,19 @@ public final class HttpAction {
     }
 
 
+    public final void download(Context context, String url) {
+        Observable<ResponseBody> observable = HttpAction.context(context).url(url).toObservable();
+        observable.observeOn(Schedulers.computation()) // 用于计算任务
+                .doOnNext(body -> {
+                    File file = FileHelper.getInstance().toCameraPath().fileName(FileUtils.makeNameByMD5(url)).creat();
+                    IOUtils.writeData2File(body.byteStream(), file);
+                    AlbumNotifyHelper.getInstance(context).insertPhoto(file.getAbsolutePath()).notifyByBroadcast();
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        body -> SysToast.showToastShort(context, "下载成功"),
+                        throwable -> {
+                            throwable.printStackTrace();
+                            SysToast.showToastShort(context, "下载失败");
+                        });
+    }
 }

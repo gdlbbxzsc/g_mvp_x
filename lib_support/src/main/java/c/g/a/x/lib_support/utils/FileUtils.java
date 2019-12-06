@@ -124,15 +124,8 @@ public class FileUtils {
     }
 
     public static String makeFileSuffix(String url) {
-        String sfx;
-
         int lp = url.lastIndexOf(".");
-        if (lp != -1) {
-            sfx = url.substring(lp).toLowerCase().trim();
-        } else {
-            sfx = "";
-        }
-
-        return sfx;
+        if (lp == -1) return "";
+        return url.substring(lp).toLowerCase().trim();
     }
 }
