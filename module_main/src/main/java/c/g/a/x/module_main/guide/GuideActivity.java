@@ -21,7 +21,7 @@ import c.g.a.x.module_main.databinding.ActivityGuideBinding;
 @Route(path = Constant.GUIDE_ACTIVITY)
 public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> implements Contract.View {
 
-    private final int[] resId = {R.drawable.left_arrow_black, R.drawable.left_arrow_white};
+    private final int[] resIds = {R.drawable.left_arrow_black, R.drawable.left_arrow_white};
 
     @Override
     protected int layoutResID() {
@@ -41,12 +41,33 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
         viewDataBinding.btnGuide.setOnClickListener(new OnSPClickListener() {
             @Override
             public void onClickSucc(View v) {
+                SpMnger.getDefaultHelper().putFirstUse(false);
                 ARouter.getInstance().build(Constant.MAIN_ACTIVITY).navigation();
                 finish();
             }
         });
+
+
+//        viewDataBinding.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//            @Override
+//            public void onViewAttachedToWindow(View v) {
+//            }
+//
+//            @Override
+//            public void onViewDetachedFromWindow(View v) {
+//            }
+//        });
+    }
+
+
+    @Override
+    protected void initData() {
         LayoutInflater inflater = LayoutInflater.from(context);
-        for (int i = 0; i < resId.length; i++) {
+        for (int i = 0; i < resIds.length; i++) {
+            ImageView iv = new ImageView(context);
+            iv.setBackgroundResource(resIds[i]);
+            viewDataBinding.vfGuide.addView(iv);
+
             RadioButton rb = (RadioButton) inflater.inflate(R.layout.rb_guide, null);
             rb.setId(i);
             viewDataBinding.rgGuide.addView(rb);
@@ -55,34 +76,12 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
             layoutParams.setMargins(20, 0, 20, 0);//4个参数按顺序分别是左上右下
             rb.setLayoutParams(layoutParams);
         }
-
         viewDataBinding.rgGuide.check(0);
-        viewDataBinding.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View v) {
-            }
-
-            @Override
-            public void onViewDetachedFromWindow(View v) {
-            }
-        });
-    }
-
-
-    @Override
-    protected void initData() {
-        SpMnger.getDefaultHelper().putFirstUse(false);
-
-        for (int i = 0; i < resId.length; i++) {
-            ImageView iv = new ImageView(context);
-            iv.setBackgroundResource(resId[i]);
-            viewDataBinding.vfGuide.addView(iv);
-        }
     }
 
     private float startX;
     private int indicatorPos = 0;
-    private int max = resId.length - 1;
+    private int max = resIds.length - 1;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -99,7 +98,6 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
                     viewDataBinding.vfGuide.setInAnimation(this, R.anim.guide_left_in);
                     viewDataBinding.vfGuide.showNext();
                     indicatorPos--;
-
                 } else if (startX - event.getX() > 100) {  //向左滑动
                     if (indicatorPos >= max) break;
 
@@ -107,7 +105,6 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
                     viewDataBinding.vfGuide.setInAnimation(this, R.anim.guide_right_in);
                     viewDataBinding.vfGuide.showPrevious();
                     indicatorPos++;
-
                 }
 
                 viewDataBinding.rgGuide.check(indicatorPos);
@@ -122,8 +119,6 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
             }
             break;
         }
-
         return super.onTouchEvent(event);
-
     }
 }
