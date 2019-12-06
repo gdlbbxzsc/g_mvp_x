@@ -47,7 +47,6 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
             }
         });
 
-
 //        viewDataBinding.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
 //            @Override
 //            public void onViewAttachedToWindow(View v) {
