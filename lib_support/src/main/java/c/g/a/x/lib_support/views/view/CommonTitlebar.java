@@ -47,7 +47,7 @@ public class CommonTitlebar {
 
     private ConstraintLayout layout;
     public ImageButton titlebar_left;
-    private TextView titlebar_center;
+    public TextView titlebar_center;
     private View titlebar_bottom_line;
 
     public View titlebar_right;

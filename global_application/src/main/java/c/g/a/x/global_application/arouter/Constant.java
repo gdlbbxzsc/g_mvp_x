@@ -16,5 +16,7 @@ public final class Constant {
 
     public static final String LOGIN_ACTIVITY = "/module_login/LoginActivity";
 
+    public static final String WEBVIEW_ACTIVITY = "/module_web/WebViewActivity";
+
 
 }
