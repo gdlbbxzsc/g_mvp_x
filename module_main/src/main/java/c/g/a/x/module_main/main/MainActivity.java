@@ -1,5 +1,7 @@
 package c.g.a.x.module_main.main;
 
+import android.widget.CheckBox;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.List;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
+import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.lib_support.views.view.FlowLayout;
 import c.g.a.x.module_main.R;
@@ -94,21 +97,23 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
 
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 20; i++) {
             list.add("abcd" + i);
         }
 
-        viewDataBinding.FlowLayout1.setChooseMode(FlowLayout.ChooseMode.Single);
-        viewDataBinding.FlowLayout1.setMaxLines(0);
-        viewDataBinding.FlowLayout1.setDatas(list);
+        FlowLayout.SingleChoiceDataHelper<CheckBox, String> c = new FlowLayout.SingleChoiceDataHelper<>(viewDataBinding.FlowLayout1.setMaxLines(0));
+        c.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
+        c.setDatas(list);
 
-        viewDataBinding.FlowLayout2.setChooseMode(FlowLayout.ChooseMode.Multiple);
-        viewDataBinding.FlowLayout2.setMaxLines(0);
-        viewDataBinding.FlowLayout2.setDatas(list);
+        FlowLayout.MultipleChoiceDataHelper<CheckBox, String> b = new FlowLayout.MultipleChoiceDataHelper<>(viewDataBinding.FlowLayout2.setMaxLines(0));
+        b.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
+        b.setDatas(list);
 
-        viewDataBinding.FlowLayout3.setChooseMode(FlowLayout.ChooseMode.None);
-        viewDataBinding.FlowLayout3.setMaxLines(3);
-        viewDataBinding.FlowLayout3.setDatas(list);
+        FlowLayout.ClickDataHelper<CheckBox, String> a = new FlowLayout.ClickDataHelper<>(viewDataBinding.FlowLayout3.setMaxLines(0));
+        a.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
+        a.setDatas(list);
+
+
     }
 
 
