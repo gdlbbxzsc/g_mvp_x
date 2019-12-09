@@ -1,17 +1,10 @@
 package c.g.a.x.module_main.main;
 
-import android.widget.CheckBox;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
-import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
-import c.g.a.x.lib_support.views.view.FlowLayout;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
 import pub.devrel.easypermissions.AfterPermissionGranted;
