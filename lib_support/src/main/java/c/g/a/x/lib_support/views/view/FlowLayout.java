@@ -26,9 +26,9 @@ public final class FlowLayout extends ViewGroup {
 
     private LayoutInflater inflater;
     // 存储所有子View
-    private List<List<View>> mAllChildViews = new ArrayList<List<View>>();
+    private List<List<View>> mAllChildViews = new ArrayList<>();
     // 每一行的高度
-    private List<Integer> mLineHeight = new ArrayList<Integer>();
+    private List<Integer> mLineHeight = new ArrayList<>();
 
     private View choose_view;
     private Map<View, Boolean> choose_map;
@@ -208,15 +208,7 @@ public final class FlowLayout extends ViewGroup {
 
     public final FlowLayout setChooseMode(ChooseMode mode) {
         this.mode = mode;
-        switch (mode) {
-            case None:
-                break;
-            case Single:
-                break;
-            case Multiple:
-                choose_map = new HashMap<>();
-                break;
-        }
+        if (mode == ChooseMode.Multiple) choose_map = new HashMap<>();
         return this;
     }
 
@@ -275,11 +267,8 @@ public final class FlowLayout extends ViewGroup {
                 }
                 break;
                 case MotionEvent.ACTION_UP: {
-
                     if (System.currentTimeMillis() - lastTime > 500) break;
-
                     if (Math.abs(lastX - event.getRawX()) > 50) break;
-
                     if (Math.abs(lastY - event.getRawY()) > 50) break;
 
                     putChoice(v);
@@ -338,16 +327,13 @@ public final class FlowLayout extends ViewGroup {
     }
 
     public final void choiceAll() {
-        switch (mode) {
-            case Multiple: {
-                for (int i = 0; i < getChildCount(); i++) {
-                    View item = getChildAt(i);
-                    if (item.getVisibility() == GONE) continue;
-                    onItemClick(item, true);
-                    choose_map.put(item, true);
-                }
+        if (mode == ChooseMode.Multiple) {
+            for (int i = 0; i < getChildCount(); i++) {
+                View item = getChildAt(i);
+                if (item.getVisibility() == GONE) continue;
+                onItemClick(item, true);
+                choose_map.put(item, true);
             }
-            break;
         }
     }
 
@@ -409,7 +395,8 @@ public final class FlowLayout extends ViewGroup {
     }
 
 
-    public static final class DataHelper{}
+    public static final class DataHelper {
+    }
 
     public interface OnItemInitListener<V extends View, O extends Object> {
         void onItemInit(int i, V view, O vo);
