@@ -96,22 +96,22 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
 //        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
 
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("abcd" + i);
-        }
-
-        FlowLayout.SingleChoiceDataHelper<CheckBox, String> c = new FlowLayout.SingleChoiceDataHelper<>(viewDataBinding.FlowLayout1.setMaxLines(0));
-        c.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
-        c.setDatas(list);
-
-        FlowLayout.MultipleChoiceDataHelper<CheckBox, String> b = new FlowLayout.MultipleChoiceDataHelper<>(viewDataBinding.FlowLayout2.setMaxLines(0));
-        b.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
-        b.setDatas(list);
-
-        FlowLayout.ClickDataHelper<CheckBox, String> a = new FlowLayout.ClickDataHelper<>(viewDataBinding.FlowLayout3.setMaxLines(0));
-        a.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
-        a.setDatas(list);
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            list.add("abcd" + i);
+//        }
+//
+//        FlowLayout.SingleChoiceDataHelper<CheckBox, String> c = new FlowLayout.SingleChoiceDataHelper<>(viewDataBinding.FlowLayout1.setMaxLines(0));
+//        c.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
+//        c.setDatas(list);
+//
+//        FlowLayout.MultipleChoiceDataHelper<CheckBox, String> b = new FlowLayout.MultipleChoiceDataHelper<>(viewDataBinding.FlowLayout2.setMaxLines(0));
+//        b.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
+//        b.setDatas(list);
+//
+//        FlowLayout.ClickDataHelper<CheckBox, String> a = new FlowLayout.ClickDataHelper<>(viewDataBinding.FlowLayout3.setMaxLines(0));
+//        a.setOnItemClickListener((i, view, vo) -> Logger.e(vo));
+//        a.setDatas(list);
 
 
     }

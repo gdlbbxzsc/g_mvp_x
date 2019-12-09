@@ -422,7 +422,7 @@ public final class FlowLayout extends ViewGroup {
                 onItemClickListener.onItemClick(v.getId(), v, (O) v.getTag());
             }
         }
- 
+
         @Override
         public List<O> getResult() {
             List<O> list = new ArrayList<>();
