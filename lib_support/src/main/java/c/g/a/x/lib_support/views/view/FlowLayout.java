@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -297,10 +298,10 @@ public final class FlowLayout extends ViewGroup {
             case Single: {
                 if (choose_view == v) return;
 
-                if (choose_view != null) onItemClick(v, false);
+                if (choose_view != null) onItemClick(choose_view, false);
 
                 choose_view = v;
-                onItemClick(v, true);
+                onItemClick(choose_view, true);
             }
             break;
             case Multiple: {
@@ -393,9 +394,22 @@ public final class FlowLayout extends ViewGroup {
     }
 
     private void onItemClick(View v, boolean b) {
-        if (onItemClickListener != null)
+        if (onItemClickListener != null) {
             onItemClickListener.onItemClick(v.getId(), v, v.getTag(), b);
+        } else if (v instanceof CheckBox) {
+            CheckBox cb = (CheckBox) v;
+            switch (mode) {
+                case Single:
+                case Multiple: {
+                    cb.setChecked(b);
+                }
+                break;
+            }
+        }
     }
+
+
+    public static final class DataHelper{}
 
     public interface OnItemInitListener<V extends View, O extends Object> {
         void onItemInit(int i, V view, O vo);
