@@ -249,14 +249,15 @@ public final class MoneyHelper {
     }
 
     public static void main(String[] args) {
-        MoneyHelper helper = MoneyHelper.getInstance4Fen("1234567890");
+//        MoneyHelper helper = MoneyHelper.getInstance4Fen("1234567890");
+//
+//        helper.change2Yuan();
+//        System.out.println(helper.getDouble());
+//        System.out.println(helper.getLong().toString());
+//        System.out.println(helper.getStringNormal());
+//        System.out.println(helper.getStringNormalTrimZero());
+//        System.out.println(helper.getStringQuantile());
 
-        helper.change2Yuan();
-        System.out.println(helper.getDouble());
-        System.out.println(helper.getLong().toString());
-        System.out.println(helper.getStringNormal());
-        System.out.println(helper.getStringNormalTrimZero());
-        System.out.println(helper.getStringQuantile());
 
     }
 }

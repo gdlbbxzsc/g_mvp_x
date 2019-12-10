@@ -518,26 +518,50 @@ public final class DateHelper {
     }
 
 
-    public static void main(String[] args) {
-        // System.out.println(new DateHelper("11:11:11", PATTERN_7)
-        // .getString(PATTERN_1));
-        // System.out.println(new DateHelper().getString(PATTERN_1));
-        // System.out.println(new DateHelper().getDay());
-        // System.out.println(new DateHelper().getMonth());
-        // System.out.println("=====");
-        // System.out.println(new DateHelper().calculate(0, 1, 0, 0, 0, 0)
-        // .getString(PATTERN_1));
-        // System.out
-        // .println(new DateHelper().calculate(0, 1, 0, 0, 0, 0).getDay());
-        // System.out.println(new DateHelper().calculate(0, 1, 0, 0, 0, 0)
-        // .getMonth());
-        // DateHelper dateHelper = new DateHelper();
-        // long a = dateHelper.getLong();
-        // long b = dateHelper.calculateDay(-1).getLong();
-        // System.out.println(a - b);
-//        DateHelper dateHelper = new DateHelper(1000 * 90);
+    public static void main(String[] args) throws Exception {
 //
-//        System.out.println(dateHelper.getString(Pattern.PATTERN_D3_T3_2));
+//        System.out.println(DateHelper.getDateMnger("1234-12-21_09-08-07", Pattern.PATTERN_D3_T3_1).getString(Pattern.PATTERN_D2_T2_1));
+//        System.out.println(DateHelper.getDateMnger().getString(Pattern.PATTERN_D2_T2_1));
+//        System.out.println(DateHelper.getDateMnger().getDay());
+//        System.out.println(DateHelper.getDateMnger().getMonth());
+//        System.out.println("=====");
+//        System.out.println(DateHelper.getDateMnger().calculate(0, 1, 0, 0, 0, 0).getString(Pattern.PATTERN_D3_T3_1));
+//        System.out.println(DateHelper.getDateMnger().calculate(0, 1, 0, 0, 0, 0).getDay());
+//        System.out.println(DateHelper.getDateMnger().calculate(0, 1, 0, 0, 0, 0).getMonth());
+//        DateMnger dateMnger = DateHelper.getDateMnger();
+//        long a = dateMnger.getLong();
+//        long b = dateMnger.calculateDay(-1).getLong();
+//        System.out.println(a - b);
+
+        //        5时8分
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", "========================");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", "========================");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", "========================");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
+
     }
 
 }
