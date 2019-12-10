@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
     </data>
+
 
     <LinearLayout
         style="@style/Bg_default.B_mm"
@@ -12,37 +12,37 @@
         android:gravity="top"
         android:orientation="vertical">
 
-
-        <c.g.a.x.lib_support.views.view.FlowLayout
-            android:id="@+id/FlowLayout1"
+        <FrameLayout
+            android:id="@+id/fl_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp5"
-            android:background="#ff0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <c.g.a.x.lib_support.views.view.FlowLayout
-            android:id="@+id/FlowLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="@dimen/dp5"
-            android:background="#ff0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <View style="@style/Line.B_m1px" />
 
-        <c.g.a.x.lib_support.views.view.FlowLayout
-            android:id="@+id/FlowLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp5"
-            android:background="#ff0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <RadioGroup
+            android:id="@+id/rg_main"
+            style="@style/Rg_B_mw_O_h_G_center"
+            android:background="@color/white">
 
+            <RadioButton
+                android:id="@+id/rb_home"
+                style="@style/main_bottom_rb_style"
+                android:drawableTop="@drawable/share_pyq" />
 
+            <ImageView
+                android:id="@+id/iv_main_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-15dp"
+                android:layout_weight="1"
+                android:src="@drawable/share_pyq" />
+            <!--            android:adjustViewBounds="true"-->
+
+            <RadioButton
+                android:id="@+id/rb_mine"
+                style="@style/main_bottom_rb_style"
+                android:drawableTop="@drawable/share_pyq" />
+        </RadioGroup>
     </LinearLayout>
 </layout>
