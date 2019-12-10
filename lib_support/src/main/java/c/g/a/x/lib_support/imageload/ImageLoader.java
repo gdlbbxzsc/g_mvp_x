@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import c.g.a.x.lib_support.R;
+import c.g.a.x.lib_support.imageload.glide.GlideCircleTransform;
 
 public final class ImageLoader {
     public static void loadPhoto(Context context, ImageView imageView, String url) {

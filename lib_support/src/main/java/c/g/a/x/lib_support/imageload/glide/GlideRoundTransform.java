@@ -1,4 +1,4 @@
-package c.g.a.x.lib_support.imageload;
+package c.g.a.x.lib_support.imageload.glide;
 
 import android.content.Context;
 import android.content.res.Resources;

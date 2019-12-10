@@ -1,4 +1,4 @@
-package c.g.a.x.lib_support.imageload;
+package c.g.a.x.lib_support.imageload.glide;
 
 /**
  * Created by Administrator on 2018/5/15.
