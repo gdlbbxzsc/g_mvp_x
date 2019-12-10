@@ -39,7 +39,7 @@ public final class WeChatHelper {
 
     private static final String APP_ID = BuildConfig.wx_app_id;
     private static final String APP_SECRET = BuildConfig.wx_app_secret;
-    private static final String APP_NAME = "toutoule";
+    private static final String APP_NAME = BuildConfig.wx_app_name;
 
     private static final int THUMB_SIDE_LENGTH = 150;
     private static final int THUMB_MAX_SIZE_KB = 31;

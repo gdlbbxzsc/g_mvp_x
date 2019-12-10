@@ -30,16 +30,14 @@ def isDebug = true//<----------| 发布版本类型true 测试版本 false 正�
 /////////////////////////////////////////////////////////////////////
 //服务器配置
 def server_config = [:]
-if (isDebug) {
-//测试下配置
+if (isDebug) {//测试下配置
     server_config.base_url = "https://39.96.132.92:32443/"
-    server_config.aaaa = 123
-    server_config.bbbb = "gdl"
-} else {
-//正式下配置
+//    server_config.aaaa = 123
+//    server_config.bbbb = "gdl"
+} else {//正式下配置
     server_config.base_url = "https://39.96.132.92:32443/"
-    server_config.aaaa = 321
-    server_config.bbbb = "ldg"
+//    server_config.aaaa = 321
+//    server_config.bbbb = "ldg"
 }
 server_config.app_mode = isDebug
 //正式测试通用配置
@@ -55,11 +53,13 @@ ext.third_config = third_config
 
 def weixin_config = [:]
 if (isDebug) {
-    weixin_config.wx_app_id = "http://pbpb88.com/api/"
-    weixin_config.wx_app_secret = "http://pbpb88.com/api/"
+    weixin_config.wx_app_id = "wxe6a4d73e2d482d86"
+    weixin_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
+    weixin_config.wx_app_name = "toutoule"
 } else {
-    weixin_config.wx_app_id = "http://pbpb88.com/api/"
-    weixin_config.wx_app_secret = "http://pbpb88.com/api/"
+    weixin_config.wx_app_id = "wxe6a4d73e2d482d86"
+    weixin_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
+    weixin_config.wx_app_name = "toutoule"
 }
 ext.weixin_config = weixin_config
 /////////////////////////////////////////////////////////////////////
