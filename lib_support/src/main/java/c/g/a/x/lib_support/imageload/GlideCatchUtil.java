@@ -1,4 +1,4 @@
-package c.g.a.x.global_application.utils.glide;
+package c.g.a.x.lib_support.imageload;
 
 /**
  * Created by Administrator on 2018/5/15.
@@ -18,7 +18,6 @@ public final class GlideCatchUtil {
 
     // 获取Glide磁盘缓存大小
     public static String getCacheSize(Context context) {
-
         return getCacheSize(Glide.getPhotoCacheDir(context).getAbsolutePath());
     }
 
