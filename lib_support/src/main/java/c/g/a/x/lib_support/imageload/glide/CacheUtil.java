@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import c.g.a.x.lib_support.utils.FileUtils;
 
 
-public final class GlideCatchUtil {
+public final class CacheUtil {
 
     // 获取Glide磁盘缓存大小
     public static String getCacheSize(Context context) {
