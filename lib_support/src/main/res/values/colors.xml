@@ -5,6 +5,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--主题颜色-->
+    <color name="maincolor">#ff2741</color>
+
     <!--自定义颜色-->
     <color name="bantouming">#55000000</color>
     <color name="touming">#00000000</color>
