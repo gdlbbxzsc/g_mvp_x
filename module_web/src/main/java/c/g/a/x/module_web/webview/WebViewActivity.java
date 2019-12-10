@@ -44,29 +44,29 @@ public class WebViewActivity extends MvpActivity<ActivityWebviewBinding, Present
     protected void initView() {
         commonTitlebar = new CommonTitlebar(this).setStyleWhite().setTitle(title);
 
-        viewDataBinding.webview.getSettings().setDefaultTextEncodingName("utf-8");
-        viewDataBinding.webview.getSettings().setSupportZoom(false);
-        viewDataBinding.webview.getSettings().setBuiltInZoomControls(false);
-        viewDataBinding.webview.setWebViewClient(new MyWebViewClient());
-        viewDataBinding.webview.setWebChromeClient(new MyWebChromeClient());
-        viewDataBinding.webview.getSettings().setJavaScriptEnabled(true);
-        viewDataBinding.webview.getSettings().setDomStorageEnabled(true);
+        databind.webview.getSettings().setDefaultTextEncodingName("utf-8");
+        databind.webview.getSettings().setSupportZoom(false);
+        databind.webview.getSettings().setBuiltInZoomControls(false);
+        databind.webview.setWebViewClient(new MyWebViewClient());
+        databind.webview.setWebChromeClient(new MyWebChromeClient());
+        databind.webview.getSettings().setJavaScriptEnabled(true);
+        databind.webview.getSettings().setDomStorageEnabled(true);
 //        webview.getSettings()
 //                .setUserAgentString(
 //                        "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; Nexus One Build/FRF50) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile
 //                        Safari/533.1");
 //        webview.getSettings()
 //                .setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        viewDataBinding.webview.getSettings().setUseWideViewPort(true);
-        viewDataBinding.webview.getSettings().setLoadWithOverviewMode(true);
-        viewDataBinding.webview.addJavascriptInterface(new JsUtils(getActivity(), viewDataBinding.webview), "callClass");
+        databind.webview.getSettings().setUseWideViewPort(true);
+        databind.webview.getSettings().setLoadWithOverviewMode(true);
+        databind.webview.addJavascriptInterface(new JsUtils(getActivity(), databind.webview), "callClass");
 
     }
 
 
     @Override
     protected void initData() {
-        viewDataBinding.webview.loadUrl(url);
+        databind.webview.loadUrl(url);
     }
 
     private class MyWebViewClient extends WebViewClient {

@@ -29,6 +29,8 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
     protected void initView() {
         NotificationHelper.checkEnabledDialog(context);
 
+//        ImageLoader.loadHead(context, databind.iv1, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
+//        ImageLoader.load(context, databind.iv2, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
     }
 
 

@@ -26,7 +26,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     public BaseActivity activity;
     public Context context;
 
-    public T viewDataBinding;
+    public T databind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
         int layout_id = layoutResID();
         if (layout_id > 0) {
 //            setContentView(layout_id);
-            viewDataBinding = DataBindingUtil.setContentView(this, layout_id);
+            databind = DataBindingUtil.setContentView(this, layout_id);
         }
 
         initView();

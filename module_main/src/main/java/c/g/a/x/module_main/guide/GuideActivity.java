@@ -36,9 +36,9 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
 
     @Override
     protected void initView() {
-        viewDataBinding.btnGuide.setVisibility(View.INVISIBLE);
-        viewDataBinding.btnGuide.setEnabled(false);
-        viewDataBinding.btnGuide.setOnClickListener(new OnSPClickListener() {
+        databind.btnGuide.setVisibility(View.INVISIBLE);
+        databind.btnGuide.setEnabled(false);
+        databind.btnGuide.setOnClickListener(new OnSPClickListener() {
             @Override
             public void onClickSucc(View v) {
                 SpMnger.getDefaultHelper().putFirstUse(false);
@@ -47,7 +47,7 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
             }
         });
 
-//        viewDataBinding.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//        databind.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
 //            @Override
 //            public void onViewAttachedToWindow(View v) {
 //            }
@@ -65,17 +65,17 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
         for (int i = 0; i < resIds.length; i++) {
             ImageView iv = new ImageView(context);
             iv.setBackgroundResource(resIds[i]);
-            viewDataBinding.vfGuide.addView(iv);
+            databind.vfGuide.addView(iv);
 
             RadioButton rb = (RadioButton) inflater.inflate(R.layout.rb_guide, null);
             rb.setId(i);
-            viewDataBinding.rgGuide.addView(rb);
+            databind.rgGuide.addView(rb);
             RadioGroup.LayoutParams layoutParams = (RadioGroup.LayoutParams) rb.getLayoutParams();
             layoutParams.width = layoutParams.height = 20;
             layoutParams.setMargins(20, 0, 20, 0);//4个参数按顺序分别是左上右下
             rb.setLayoutParams(layoutParams);
         }
-        viewDataBinding.rgGuide.check(0);
+        databind.rgGuide.check(0);
     }
 
     private float startX;
@@ -93,27 +93,27 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
                 if (event.getX() - startX > 100) { //向右滑动
                     if (indicatorPos <= 0) break;
 
-                    viewDataBinding.vfGuide.setOutAnimation(this, R.anim.guide_right_out);
-                    viewDataBinding.vfGuide.setInAnimation(this, R.anim.guide_left_in);
-                    viewDataBinding.vfGuide.showNext();
+                    databind.vfGuide.setOutAnimation(this, R.anim.guide_right_out);
+                    databind.vfGuide.setInAnimation(this, R.anim.guide_left_in);
+                    databind.vfGuide.showNext();
                     indicatorPos--;
                 } else if (startX - event.getX() > 100) {  //向左滑动
                     if (indicatorPos >= max) break;
 
-                    viewDataBinding.vfGuide.setOutAnimation(this, R.anim.guide_left_out);
-                    viewDataBinding.vfGuide.setInAnimation(this, R.anim.guide_right_in);
-                    viewDataBinding.vfGuide.showPrevious();
+                    databind.vfGuide.setOutAnimation(this, R.anim.guide_left_out);
+                    databind.vfGuide.setInAnimation(this, R.anim.guide_right_in);
+                    databind.vfGuide.showPrevious();
                     indicatorPos++;
                 }
 
-                viewDataBinding.rgGuide.check(indicatorPos);
+                databind.rgGuide.check(indicatorPos);
 
                 if (indicatorPos == max) {
-                    viewDataBinding.btnGuide.setVisibility(View.VISIBLE);
-                    viewDataBinding.btnGuide.setEnabled(true);
+                    databind.btnGuide.setVisibility(View.VISIBLE);
+                    databind.btnGuide.setEnabled(true);
                 } else {
-                    viewDataBinding.btnGuide.setVisibility(View.INVISIBLE);
-                    viewDataBinding.btnGuide.setEnabled(false);
+                    databind.btnGuide.setVisibility(View.INVISIBLE);
+                    databind.btnGuide.setEnabled(false);
                 }
             }
             break;
