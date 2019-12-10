@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/btn_dialog_yes"
-        style="@style/font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default"
+        style="@style/font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default_btn_rect_sltr"
         android:layout_marginBottom="@dimen/dp10"
         android:gravity="center"
         android:text="立即更新" />

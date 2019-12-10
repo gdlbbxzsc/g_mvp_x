@@ -20,7 +20,7 @@
     </style>
 
 
-    <style name="font_normal1.Rb_B_ww_pad_Bg_Tc_choice_sltr">
+    <style name="font_normal1.Rb_B_ww_pad_Bg_Tc_default_choice_sltr">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">@dimen/dp4</item>
@@ -29,8 +29,8 @@
         <item name="android:paddingRight">@dimen/dp10</item>
         <item name="android:gravity">center</item>
         <item name="android:button">@null</item>
-        <item name="android:background">@drawable/choice_rb_bg_selector</item>
-        <item name="android:textColor">@drawable/choice_rb_tc_selector</item>
+        <item name="android:background">@drawable/default_choice_rb_bg_selector</item>
+        <item name="android:textColor">@drawable/default_choice_rb_tc_selector</item>
     </style>
 
 

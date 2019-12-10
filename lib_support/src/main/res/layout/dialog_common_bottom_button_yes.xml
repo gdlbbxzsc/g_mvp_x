@@ -1,4 +1,4 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btn_dialog_yes"
-    style="@style/font_medium1.Btn_B_mw_pad_lr16_tb6.Bg_Tc_default"
+    style="@style/font_medium1.Btn_B_mw_pad_lr16_tb6.Bg_Tc_default_btn_rect_sltr"
     android:text="确认" />
