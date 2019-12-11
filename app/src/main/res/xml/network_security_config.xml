@@ -34,3 +34,35 @@
     </domain-config>
     <debug-overrides />
 </network-security-config>
+
+
+<!--<network-security-config>-->
+<!--<base-config cleartextTrafficPermitted="true">-->
+<!--    <trust-anchors>-->
+<!--        <certificates src="system" />-->
+<!--    </trust-anchors>-->
+<!--</base-config>-->
+
+
+<!--<domain-config cleartextTrafficPermitted="false">-->
+<!--    <domain includeSubdomains="true">https://39.96.132.92:32443/</domain>-->
+<!--    <trust-anchors >-->
+<!--        <certificates-->
+<!--            overridePins="false"-->
+<!--            src="@raw/server" />-->
+<!--    </trust-anchors>-->
+<!--    &lt;!&ndash;        <pin-set expiration="2018-01-01">&ndash;&gt;-->
+<!--    &lt;!&ndash;            <pin digest="SHA-256">7HIpactkIAq2Y49orFOOQKurWxmmSFZhBCoQYcRhJ3Y=</pin>&ndash;&gt;-->
+
+<!--    &lt;!&ndash;        </pin-set>&ndash;&gt;-->
+<!--</domain-config>-->
+
+<!--<domain-config cleartextTrafficPermitted="true">-->
+<!--    <domain includeSubdomains="true">http://47.94.151.155:8081/</domain>-->
+<!--</domain-config>-->
+
+<!--<debug-overrides />-->
+<!--</network-security-config>-->
+
+
+
