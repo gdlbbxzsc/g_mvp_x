@@ -17,7 +17,7 @@ public class SpDefaultHelper extends BaseSpHelper {
         super(context, sp_name);
     }
 
-    public boolean putAccountPassword(String account, String password) {
+    public void putAccountPassword(String account, String password) {
 
         if (TextUtils.isEmpty(account)) account = "";
         if (TextUtils.isEmpty(password)) password = "";
@@ -25,16 +25,16 @@ public class SpDefaultHelper extends BaseSpHelper {
         SharedPreferences.Editor editor = getSp().edit();//
         editor.putString("account", account);//
         editor.putString("password", password);//
-        return editor.commit();
+        editor.apply();
     }
 
-    public boolean putPassword(String password) {
+    public void putPassword(String password) {
 
         if (TextUtils.isEmpty(password)) password = "";
 
         SharedPreferences.Editor editor = getSp().edit();//
         editor.putString("password", password);//
-        return editor.commit();
+        editor.apply();
     }
 
     public String getAccount() {
@@ -46,10 +46,10 @@ public class SpDefaultHelper extends BaseSpHelper {
     }
 
     //
-    public boolean putRemember(boolean isRemember) {
+    public void putRemember(boolean isRemember) {
         SharedPreferences.Editor editor = getSp().edit();//
         editor.putBoolean("isRemember", isRemember);//
-        return editor.commit();
+        editor.apply();
     }
 
     public boolean isRemember() {
@@ -57,10 +57,10 @@ public class SpDefaultHelper extends BaseSpHelper {
     }
 
     //
-    public boolean putUserId(int userId) {
+    public void putUserId(int userId) {
         SharedPreferences.Editor editor = getSp().edit();//
         editor.putInt("userId", userId);//
-        return editor.commit();
+        editor.apply();
     }
 
     public int getUserId() {
@@ -71,7 +71,7 @@ public class SpDefaultHelper extends BaseSpHelper {
     public void putFirstUse(boolean firstUse) {
         SharedPreferences.Editor editor = getSp().edit();//
         editor.putBoolean("FirstUse", firstUse);//
-        editor.commit();
+        editor.apply();
     }
 
     public boolean isFirstUse() {

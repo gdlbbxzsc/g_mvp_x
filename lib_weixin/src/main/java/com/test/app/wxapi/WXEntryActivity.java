@@ -16,7 +16,6 @@ import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.lib_weixin.WeChatHelper;
 
-@SuppressWarnings("deprecation")
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     Context context;

@@ -44,7 +44,7 @@ public final class MyDialog extends Dialog {
         return builder(context).setButtonStyleTwo().setContentView(toastView).setOnClickListener(onClickListener).show();
     }
 
-    public static final Builder builder(Context context) {
+    public static Builder builder(Context context) {
         return new Builder(context);
     }
 
@@ -145,7 +145,7 @@ public final class MyDialog extends Dialog {
 
     public static final class Builder {
 
-        private Context context;
+        private final Context context;
 
         private String title;
         private Integer titleColor;

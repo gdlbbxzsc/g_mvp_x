@@ -39,13 +39,13 @@ import okhttp3.ResponseBody;
 
 public final class HttpAction {
 
-    Context context;
+    final Context context;
 
     Observable observable;
 
-    HttpService service = HttpMgr.createService();
+    final HttpService service = HttpMgr.createService();
 
-    public static final HttpAction context(Context context) {
+    public static HttpAction context(Context context) {
         return new HttpAction(context);
     }
 
@@ -72,7 +72,7 @@ public final class HttpAction {
         try {
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(request));
 
-            creatObservable(request.getRequestPath(), body);
+            createObservable(request.getRequestPath(), body);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +81,7 @@ public final class HttpAction {
 
     public final HttpAction get(BaseRequest request) {
         try {
-            creatObservable(request.getRequestPath(), toMap(request));
+            createObservable(request.getRequestPath(), toMap(request));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,14 +90,14 @@ public final class HttpAction {
 
     public final HttpAction get(GetUrlPathRequest request) {
         try {
-            creatObservable(request.getRequestPath(), joinUrlPath(request));
+            createObservable(request.getRequestPath(), joinUrlPath(request));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return this;
     }
 
-    private <O extends Object> void creatObservable(String methodName, O o) throws Exception {
+    private <O> void createObservable(String methodName, O o) throws Exception {
 
         Method method = service.getClass().getMethod(methodName, o.getClass());
         observable = (Observable) method.invoke(service, o);
@@ -133,11 +133,11 @@ public final class HttpAction {
 
         Field[] fields = request.getClass().getFields();
 
-        if (fields == null || fields.length <= 0) return "";
+        if (fields.length <= 0) return "";
 
 
         Arrays.sort(fields, new FieldComparator());
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (Field f : fields) {
             if (f.getAnnotation(FieldOrder.class) == null)
                 throw new Exception(f.getName() + "need to annotate at head like @FieldOrder(order = 1)");
@@ -151,11 +151,7 @@ public final class HttpAction {
 
     private class FieldComparator implements Comparator<Field> {
         public int compare(Field o1, Field o2) {
-            int fst = o1.getAnnotation(FieldOrder.class).order();
-            int scd = o2.getAnnotation(FieldOrder.class).order();
-            if (fst < scd) return -1;
-            if (fst > scd) return 1;
-            return 0;
+            return Integer.compare(o1.getAnnotation(FieldOrder.class).order(), o2.getAnnotation(FieldOrder.class).order());
         }
     }
 
@@ -177,7 +173,7 @@ public final class HttpAction {
         Observable<ResponseBody> observable = HttpAction.context(context).url(url).toObservable();
         observable.observeOn(Schedulers.computation()) // 用于计算任务
                 .doOnNext(body -> {
-                    File file = FileHelper.getInstance().toCameraPath().fileName(FileUtils.makeNameByMD5(url)).creat();
+                    File file = FileHelper.getInstance().toCameraPath().fileName(FileUtils.makeNameByMD5(url)).create();
                     IOUtils.writeData2File(body.byteStream(), file);
                     AlbumNotifyHelper.getInstance(context).insertPhoto(file.getAbsolutePath()).notifyByBroadcast();
                 }).observeOn(AndroidSchedulers.mainThread())

@@ -18,7 +18,7 @@ public class MoneyInputFilter implements InputFilter {
 //    private int pre_point_num_length;
 //    private int suf_point_num_length;
 
-    private Pattern pattern;
+    private final Pattern pattern;
 
     public MoneyInputFilter(int pre_point_num_length) {
         this(pre_point_num_length, 0, true, false);

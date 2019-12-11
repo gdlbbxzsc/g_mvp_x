@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 
 import c.g.a.x.lib_support.utils.FileUtils;
-import c.g.a.x.lib_support.utils.MD5Utils;
 
 /**
  * file=ROOT+appPath+fileSubPath+fileName
@@ -39,9 +38,7 @@ public final class FileHelper {
     }
 
     public FileHelper toCameraPath() {
-        rootMainPath = new StringBuilder()
-                .append(Environment.DIRECTORY_DCIM).append(File.separator)
-                .append("Camera").append(File.separator).toString();
+        rootMainPath = Environment.DIRECTORY_DCIM + File.separator + "Camera" + File.separator;
         return this;
     }
 
@@ -55,11 +52,11 @@ public final class FileHelper {
         return this;
     }
 
-    public File creat() {
-        return creat(true);
+    public File create() {
+        return create(true);
     }
 
-    public File creat(boolean delIfExists) {
+    public File create(boolean delIfExists) {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append(ROOT);

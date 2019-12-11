@@ -54,7 +54,7 @@ public abstract class ListPresenter<T extends IListActivityView> extends BasePre
         getBaseView().onRefreshedDatas();
     }
 
-    public void afterLoadSucc(int page, List<? extends Object> list) {
+    public void afterLoadSucc(int page, List<?> list) {
 
         getBaseView().onRefreshedDatas();
 

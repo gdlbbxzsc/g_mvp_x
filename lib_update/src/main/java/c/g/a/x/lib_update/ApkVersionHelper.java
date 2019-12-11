@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
@@ -28,7 +29,7 @@ import c.g.a.x.lib_support.views.toast.SysToast;
 
 public final class ApkVersionHelper {
 
-    private Context context;
+    private final Context context;
 
     private InstallType installType = InstallType.Dialog;
     private boolean mustInstall;
@@ -38,7 +39,7 @@ public final class ApkVersionHelper {
     private String url;
     private String savePath;
 
-    public static final ApkVersionHelper getInstance(Context context) {
+    public static ApkVersionHelper getInstance(Context context) {
         return new ApkVersionHelper(context);
     }
 
@@ -173,19 +174,19 @@ public final class ApkVersionHelper {
 
     private final class NoticeDialog extends Dialog {
 
-        public TextView textView2;
-        public TextView btn_dialog_no;
-        public TextView btn_dialog_yes;
+        public final TextView textView2;
+        public final TextView btn_dialog_no;
+        public final TextView btn_dialog_yes;
 
         public NoticeDialog(Context context, List<String> list, boolean mustInstall, MyDialog.OnClickListener listener) {
             super(context, R.style.DialogTheme);
-            getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            Objects.requireNonNull(getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.setCancelable(false);
 
             View rootView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_update_notice, null);
 
-            this.textView2 = (TextView) rootView.findViewById(R.id.textView2);
+            this.textView2 = rootView.findViewById(R.id.textView2);
             textView2.setText("");
             if (list != null && !list.isEmpty()) {
                 for (String str : list) {
@@ -194,7 +195,7 @@ public final class ApkVersionHelper {
                 }
             }
 
-            this.btn_dialog_no = (TextView) rootView.findViewById(R.id.btn_dialog_no);
+            this.btn_dialog_no = rootView.findViewById(R.id.btn_dialog_no);
             btn_dialog_no.setOnClickListener(new OnSPClickListener() {
                 @Override
                 public void onClickSucc(View v) {
@@ -203,7 +204,7 @@ public final class ApkVersionHelper {
                 }
             });
 
-            this.btn_dialog_yes = (TextView) rootView.findViewById(R.id.btn_dialog_yes);
+            this.btn_dialog_yes = rootView.findViewById(R.id.btn_dialog_yes);
             btn_dialog_yes.setOnClickListener(new OnSPClickListener() {
                 @Override
                 public void onClickSucc(View v) {
@@ -229,7 +230,7 @@ public final class ApkVersionHelper {
 
     private final class ProgressDialog extends Dialog {
 
-        public ProgressBar progressBar;
+        public final ProgressBar progressBar;
 
         public ProgressDialog(Context context) {
             super(context, R.style.DialogTheme);

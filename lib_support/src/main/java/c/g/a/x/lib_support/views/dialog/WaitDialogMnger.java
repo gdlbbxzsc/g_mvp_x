@@ -17,8 +17,8 @@ import c.g.a.x.lib_support.android.utils.Logger;
 
 public final class WaitDialogMnger {
 
-    private Map<Context, ProgressDialog> contextMap = new HashMap<>(2);
-    private Map<ProgressDialog, Integer> countMap = new HashMap<>(2);
+    private final Map<Context, ProgressDialog> contextMap = new HashMap<>(2);
+    private final Map<ProgressDialog, Integer> countMap = new HashMap<>(2);
 
 
     public static WaitDialogMnger getInstance() {
@@ -26,7 +26,7 @@ public final class WaitDialogMnger {
     }
 
     private static class InnerInstance {
-        private static WaitDialogMnger INSTANCE = new WaitDialogMnger();
+        private static final WaitDialogMnger INSTANCE = new WaitDialogMnger();
     }
 
     private WaitDialogMnger() {

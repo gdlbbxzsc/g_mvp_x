@@ -2,6 +2,7 @@ package c.g.a.x.lib_support.views.adapter.v2.abslistview;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,18 @@ import c.g.a.x.lib_support.views.adapter.v2.abslistview.choicehelper.SingleChoic
 
 public class DataAdapter extends BaseAdapter {
 
-    public Context context;
-    public LayoutInflater inflater;
+    public final Context context;
+    public final LayoutInflater inflater;
 
-    public AbsListView view;// adapter 持有者控件
+    public final AbsListView view;// adapter 持有者控件
 
     //
-    protected Class viewholder;
-    protected HashMap<Integer, Class> typeViewMap;    //num from 0    value viewholder.class
+    protected Class viewHolder;
+    protected SparseArray<Class> typeViewMap;    //num from 0    value viewHolder.class
     protected HashMap<String, Integer> dataTypeMap;  //key:vo.class    value num from 0
 
     // vo
-    public List<Object> viewDataList = new ArrayList<Object>(10);
+    public final List<Object> viewDataList = new ArrayList<>(10);
     //
 
     public Bundle bundle = new Bundle();
@@ -47,9 +48,9 @@ public class DataAdapter extends BaseAdapter {
 
 
         if (viewHolderClz.length == 1) {
-            this.viewholder = viewHolderClz[0];
+            this.viewHolder = viewHolderClz[0];
         } else {
-            typeViewMap = new HashMap<>(viewHolderClz.length, 1f);
+            typeViewMap = new SparseArray<>(viewHolderClz.length);
             dataTypeMap = new HashMap<>(viewHolderClz.length, 1f);
 
             for (Class clz : viewHolderClz) {
@@ -61,24 +62,24 @@ public class DataAdapter extends BaseAdapter {
     }
 
     public DataAdapter singleChoice() {
-        choiceHelper = new SingleChoiceHelper(this);
+        choiceHelper = new SingleChoiceHelper<>(this);
         return this;
     }
 
     public DataAdapter multipleChoice() {
-        choiceHelper = new MultipleChoiceHelper(this);
+        choiceHelper = new MultipleChoiceHelper<>(this);
         return this;
     }
 
 
     @Override
     public int getViewTypeCount() {
-        return viewholder == null ? typeViewMap.size() : 1;
+        return viewHolder == null ? typeViewMap.size() : 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return viewholder == null ? dataTypeMap.get(getDataType(position)) : 0;
+        return viewHolder == null ? dataTypeMap.get(getDataType(position)) : 0;
     }
 
     @Override
@@ -130,7 +131,7 @@ public class DataAdapter extends BaseAdapter {
     }
 
     public Class getItemViewTypeClass(int position) {
-        return viewholder == null ? typeViewMap.get(getItemViewType(position)) : viewholder;
+        return viewHolder == null ? typeViewMap.get(getItemViewType(position)) : viewHolder;
     }
 
     @Override
@@ -170,23 +171,23 @@ public class DataAdapter extends BaseAdapter {
     public void onShowView(ViewHolder holder) {
     }
 
-    public <T extends Object> void setDatas(List<T> datas) {
+    public <T> void setDatas(List<T> datas) {
         clearDatas();
         addDatas(datas);
     }
 
     //
-    public <T extends Object> void addDatas(List<T> datas) {
+    public <T> void addDatas(List<T> datas) {
         if (datas == null || datas.size() <= 0) return;
         viewDataList.addAll(datas);
         notifyDataSetChanged();
     }
 
-    public <T extends Object> void addData(T data) {
+    public <T> void addData(T data) {
         viewDataList.add(data);
     }
 
-    public <T extends Object> void addData(int pos, T data) {
+    public <T> void addData(int pos, T data) {
         if (pos >= viewDataList.size()) {
             pos = viewDataList.size();
         }
@@ -194,7 +195,7 @@ public class DataAdapter extends BaseAdapter {
     }
 
     //
-    public <T extends Object> void removeData(T vo) {
+    public <T> void removeData(T vo) {
         int pos = viewDataList.indexOf(vo);
         if (pos < 0) {
             return;

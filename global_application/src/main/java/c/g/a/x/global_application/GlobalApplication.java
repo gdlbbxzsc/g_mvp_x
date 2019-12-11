@@ -26,7 +26,6 @@ import c.g.a.x.lib_support.views.dialog.MyDialog;
 import c.g.a.x.lib_support.views.toast.SysToast;
 
 
-//这里继承 dbapp的话 就有数据库 如果调用baseapp的话就没有数据库
 public class GlobalApplication extends BaseApplication {
 
     public static GlobalApplication instances;
@@ -36,7 +35,7 @@ public class GlobalApplication extends BaseApplication {
     }
 
     //用于界面间数据透传--by gdl key the Class.getname value the data you want
-    private static Map<String, Object> dataMap = new HashMap<>();
+    private static final Map<String, Object> dataMap = new HashMap<>();
 
     public UserInfo userInfo;
 
@@ -60,7 +59,7 @@ public class GlobalApplication extends BaseApplication {
         FileHelper.init(getPackageName());
 
         SpMnger.getInstance().init(this);
- 
+
         if (BuildConfig.DEBUG) {           // These two lines must be written before init, otherwise these configurations will be invalid in the init process
             ARouter.openLog();     // Print log
             ARouter.openDebug();   // Turn on debugging mode (If you are running in InstantRun mode, you must turn on debug mode! Online version needs to be closed, otherwise there is a security risk)

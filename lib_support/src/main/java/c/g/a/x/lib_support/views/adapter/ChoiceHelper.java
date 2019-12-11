@@ -4,9 +4,9 @@ package c.g.a.x.lib_support.views.adapter;
  * Created by Administrator on 2018/7/10.
  */
 
-public abstract class ChoiceHelper<T extends Object, R> {
+public abstract class ChoiceHelper<T, R> {
 
-    protected T adapter;
+    protected final T adapter;
 
     public ChoiceHelper(T adapter) {
         this.adapter = adapter;

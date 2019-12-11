@@ -14,7 +14,7 @@
             android:id="@+id/titlebar_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginStart="@dimen/dp5"
             android:layout_marginTop="@dimen/dp5"
             android:layout_marginBottom="@dimen/dp5"
             android:background="@null"

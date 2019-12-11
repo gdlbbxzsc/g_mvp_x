@@ -15,7 +15,7 @@ public abstract class BaseFilter {
 
     private Context mContext;
 
-    private Map<Object, Error> filterMap = new HashMap<>();
+    private final Map<Object, Error> filterMap = new HashMap<>();
 
     public BaseFilter(Context context) {
         this.mContext = context;
@@ -81,11 +81,11 @@ public abstract class BaseFilter {
 
     public static class Error {
 
-        public Context context;
+        public final Context context;
 
-        public Class cls;
+        public final Class cls;
 
-        public String msg;
+        public final String msg;
 
         public Error(Context context, String msg, Class cls) {
 

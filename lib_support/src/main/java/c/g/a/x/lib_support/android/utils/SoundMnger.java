@@ -5,10 +5,8 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
@@ -24,9 +22,9 @@ public final class SoundMnger {
 
     SoundPool soundPool;
 
-    Map<Integer, Integer> rawid_soundid_map;
+    SparseIntArray rawid_soundid_map;
 
-    Map<Integer, SoundInfo> soundid_info_map;
+    SparseArray<SoundInfo> soundid_info_map;
 
     public static SoundMnger getInstance() {
         return InnerInstance.INSTANCE;
@@ -34,7 +32,7 @@ public final class SoundMnger {
 
 
     private static class InnerInstance {
-        private static SoundMnger INSTANCE = new SoundMnger();
+        private static final SoundMnger INSTANCE = new SoundMnger();
     }
 
     private SoundMnger() {
@@ -47,8 +45,8 @@ public final class SoundMnger {
     public SoundMnger init(Context applicationcontext, int size) {
         this.context = applicationcontext;
 
-        rawid_soundid_map = new HashMap<>(size);
-        soundid_info_map = new HashMap<>(size);
+        rawid_soundid_map = new SparseIntArray(size);
+        soundid_info_map = new SparseArray<>(size);
 
         if (Build.VERSION.SDK_INT >= LOLLIPOP) {
             SoundPool.Builder builder = new SoundPool.Builder();
@@ -84,7 +82,7 @@ public final class SoundMnger {
 
     public synchronized void load(int rawId) {
 
-        Integer soundId = rawid_soundid_map.get(rawId);
+        int soundId = rawid_soundid_map.get(rawId);
         SoundInfo info = soundid_info_map.get(soundId);
 
         if (info != null) return;
@@ -125,16 +123,13 @@ public final class SoundMnger {
         if (soundId == null) return;
         soundPool.unload(soundId);
         soundid_info_map.remove(soundId);
-        rawid_soundid_map.remove(rawId);
+        rawid_soundid_map.delete(rawId);
     }
 
 
     public synchronized void unloadAll() {
-        Iterator<Integer> iterator = soundid_info_map.keySet().iterator();
-        while (iterator.hasNext()) {
-            Integer id = iterator.next();
-            if (id == null) return;
-            soundPool.unload(id);
+        for (int i = 0; i < soundid_info_map.size(); i++) {
+            soundPool.unload(soundid_info_map.keyAt(i));
         }
         rawid_soundid_map.clear();
         soundid_info_map.clear();

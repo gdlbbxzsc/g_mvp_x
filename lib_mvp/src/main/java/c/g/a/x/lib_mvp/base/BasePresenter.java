@@ -2,7 +2,7 @@ package c.g.a.x.lib_mvp.base;
 
 public abstract class BasePresenter<T extends IBaseView> {
 
-    private T baseView;
+    private final T baseView;
 
     public BasePresenter(T baseView) {
         this.baseView = baseView;

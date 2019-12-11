@@ -1,8 +1,8 @@
 package c.g.a.x.lib_rxbus.rxbus;
 
-/**
- * Created by Administrator on 2018/2/9.
- * 支持背压，当数据量多时，能够防止报错
+/*
+  Created by Administrator on 2018/2/9.
+  支持背压，当数据量多时，能够防止报错
  */
 
 
@@ -29,12 +29,12 @@ public final class RxBus {
     }
 
     private static class InnerInstance {
-        private static RxBus INSTANCE = new RxBus();
+        private static final RxBus INSTANCE = new RxBus();
     }
 
     //
     private final FlowableProcessor<Object> mBus;
-    private final Map<String, CompositeDisposable> map = new HashMap();
+    private final Map<String, CompositeDisposable> map = new HashMap<>();
 
     private RxBus() {
         mBus = PublishProcessor.create().toSerialized();

@@ -31,11 +31,11 @@ def isDebug = true//<----------| 发布版本类型true 测试版本 false 正�
 //服务器配置
 def server_config = [:]
 if (isDebug) {//测试下配置
-    server_config.base_url = "https://39.96.132.92:32443/"
+    server_config.base_url = "https://39.96.132.92:324431/"
 //    server_config.aaaa = 123
 //    server_config.bbbb = "gdl"
 } else {//正式下配置
-    server_config.base_url = "https://39.96.132.92:32443/"
+    server_config.base_url = "https://39.96.132.92:324432/"
 //    server_config.aaaa = 321
 //    server_config.bbbb = "ldg"
 }
@@ -85,7 +85,7 @@ log_mode.release = "false"
 ext.log_mode = log_mode
 /////////////////////////////////////////////////////////////////////
 //**************************框架依赖配置**************************//
-def initRepositories(RepositoryHandler handler) {
+static def initRepositories(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.mavenCentral()

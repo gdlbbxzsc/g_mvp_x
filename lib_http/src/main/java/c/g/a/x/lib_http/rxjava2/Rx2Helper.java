@@ -13,21 +13,21 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Rx2Helper {
 
-    public static <T extends Object> Observable<T> applySchedulers(Observable<T> observable) {
+    public static <T> Observable<T> applySchedulers(Observable<T> observable) {
         return observable
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <T extends Object> Observable<T> addProgress(Observable<T> observable, Context context) {
+    public static <T> Observable<T> addProgress(Observable<T> observable, Context context) {
         if (context == null) return observable;
         return observable//
                 .doOnSubscribe(disposable -> WaitDialogMnger.getInstance().show(context))//
                 .doFinally(() -> WaitDialogMnger.getInstance().cancel(context));
     }
 
-    public static <T extends Object> Observable<T> addNetWorkCheck(Observable<T> observable, Context context) {
+    public static <T> Observable<T> addNetWorkCheck(Observable<T> observable, Context context) {
         if (context == null) return observable;
         return observable.doOnSubscribe(disposable -> {
             if (!AndroidUtils.hasNetWork(context)) {

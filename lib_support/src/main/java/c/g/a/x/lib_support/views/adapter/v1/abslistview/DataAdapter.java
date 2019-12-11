@@ -18,21 +18,21 @@ import c.g.a.x.lib_support.views.adapter.v1.abslistview.choicehelper.SingleChoic
 
 public class DataAdapter extends BaseAdapter {
 
-    public Context context;
-    public LayoutInflater inflater;
-    public Resources resources;
+    public final Context context;
+    public final LayoutInflater inflater;
+    public final Resources resources;
 
-    public AbsListView view;// adapter 持有者控件
+    public final AbsListView view;// adapter 持有者控件
 
     //
     protected int view_type_count = 1;
     // key position value view type
-    protected List<Class> viewTypeCount;
-    // viewDataList.get(i)'s viewholder is viewTypeList.get(i)
+    protected final List<Class> viewTypeCount;
+    // viewDataList.get(i)'s viewHolder is viewTypeList.get(i)
     protected List<Integer> viewTypeList;
 
     // vo
-    public List<Object> viewDataList = new ArrayList<Object>(10);
+    public final List<Object> viewDataList = new ArrayList<>(10);
     //
 
 
@@ -41,7 +41,7 @@ public class DataAdapter extends BaseAdapter {
     public OnItemViewClickListener onItemViewClickListener;//列表item中控件点击事件
     public ChoiceHelper choiceHelper;
 
-    private DataAdapter(Context context, AbsListView view, Class viewholder, int view_type_count, Class choiceHelperClz) {
+    private DataAdapter(Context context, AbsListView view, Class viewHolder, int view_type_count, Class choiceHelperClz) {
         this.context = context;
 
         this.inflater = LayoutInflater.from(context);
@@ -52,33 +52,33 @@ public class DataAdapter extends BaseAdapter {
         this.view_type_count = view_type_count;
 
         viewTypeCount = new ArrayList<>(view_type_count);
-        if (viewholder != null) {
-            viewTypeCount.add(viewholder);
+        if (viewHolder != null) {
+            viewTypeCount.add(viewHolder);
         }
         if (view_type_count > 1) {
             viewTypeList = new ArrayList<>(10);
         }
 
         if (choiceHelperClz == SingleChoiceHelper.class) {
-            choiceHelper = new SingleChoiceHelper(this);
+            choiceHelper = new SingleChoiceHelper<>(this);
         } else if (choiceHelperClz == MultipleChoiceHelper.class) {
-            choiceHelper = new MultipleChoiceHelper(this);
+            choiceHelper = new MultipleChoiceHelper<>(this);
         }
 
 
         view.setAdapter(this);
     }
 
-    public DataAdapter(Context context, AbsListView view, Class viewholder) {
-        this(context, view, viewholder, 1, null);
+    public DataAdapter(Context context, AbsListView view, Class viewHolder) {
+        this(context, view, viewHolder, 1, null);
     }
 
     public DataAdapter(Context context, AbsListView view, int view_type_count) {
         this(context, view, null, view_type_count, null);
     }
 
-    public DataAdapter(Context context, AbsListView view, Class viewholder, Class choiceHelperClz) {
-        this(context, view, viewholder, 1, choiceHelperClz);
+    public DataAdapter(Context context, AbsListView view, Class viewHolder, Class choiceHelperClz) {
+        this(context, view, viewHolder, 1, choiceHelperClz);
     }
 
     public DataAdapter(Context context, AbsListView view, int view_type_count, Class choiceHelperClz) {
@@ -169,7 +169,7 @@ public class DataAdapter extends BaseAdapter {
     }
 
     // ////single adapter use.*if separator adapter use will get error;
-    public <T extends Object> void setDatas(List<T> datas) {
+    public <T> void setDatas(List<T> datas) {
 
         clearDatas();
 
@@ -177,40 +177,40 @@ public class DataAdapter extends BaseAdapter {
     }
 
     //
-    public <T extends Object> void addDatas(List<T> datas) {
+    public <T> void addDatas(List<T> datas) {
         if (datas == null || datas.size() <= 0) return;
         viewDataList.addAll(datas);
         notifyDataSetChanged();
     }
 
-    public <T extends Object> void addData(T data) {
+    public <T> void addData(T data) {
         viewDataList.add(data);
     }
 
-    public <T extends Object> void addData(int pos, T data) {
+    public <T> void addData(int pos, T data) {
         if (pos >= viewDataList.size()) {
             pos = viewDataList.size();
         }
         viewDataList.add(pos, data);
     }
 
-    public <T extends Object> void addData(T data, Class viewholder) {
+    public <T> void addData(T data, Class viewHolder) {
 
-        int type = viewTypeCount.indexOf(viewholder);
+        int type = viewTypeCount.indexOf(viewHolder);
         if (type == -1) {
-            viewTypeCount.add(viewholder);
-            type = viewTypeCount.indexOf(viewholder);
+            viewTypeCount.add(viewHolder);
+            type = viewTypeCount.indexOf(viewHolder);
         }
         viewDataList.add(data);
         viewTypeList.add(type);
     }
 
-    public <T extends Object> void addData(int pos, T data, Class viewholder) {
+    public <T> void addData(int pos, T data, Class viewHolder) {
 
-        int type = viewTypeCount.indexOf(viewholder);
+        int type = viewTypeCount.indexOf(viewHolder);
         if (type == -1) {
-            viewTypeCount.add(viewholder);
-            type = viewTypeCount.indexOf(viewholder);
+            viewTypeCount.add(viewHolder);
+            type = viewTypeCount.indexOf(viewHolder);
         }
         if (pos >= viewDataList.size()) {
             pos = viewDataList.size();
@@ -222,7 +222,7 @@ public class DataAdapter extends BaseAdapter {
     //
 
 
-    public <T extends Object> void removeData(T vo) {
+    public <T> void removeData(T vo) {
         int pos = viewDataList.indexOf(vo);
         if (pos < 0) {
             return;

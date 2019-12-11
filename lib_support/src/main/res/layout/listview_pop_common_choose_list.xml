@@ -9,5 +9,5 @@
     <TextView
         android:id="@+id/tv_common_choose_list"
         style="@style/font_normal1.black1.Tv_B_mw.G_leftcenter"
-        android:layout_marginLeft="@dimen/dp10" />
+        android:layout_marginStart="@dimen/dp10" />
 </LinearLayout>

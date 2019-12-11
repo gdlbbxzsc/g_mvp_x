@@ -26,7 +26,7 @@ public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment i
     public BaseFragment fragment;
     public Context context;
 
-    public D viewDataBinding;
+    public D binder;
 
 
     private boolean isVisibleToUser;
@@ -73,17 +73,17 @@ public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment i
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (viewDataBinding == null) {
+        if (binder == null) {
 //            mContentView = inflater.inflate(layoutResID(), container, false);
-            viewDataBinding = DataBindingUtil.inflate(inflater, layoutResID(), container, false);
-            initView(viewDataBinding);
+            binder = DataBindingUtil.inflate(inflater, layoutResID(), container, false);
+            initView(binder);
             onCreateViewFirst();
             initData();
             Logger.e(this + " onCreateView new");
         }
         onCreateViewOtherTimes();
         Logger.e(this + " onCreateView old");
-        return viewDataBinding.getRoot();
+        return binder.getRoot();
     }
 
     public void onCreateViewFirst() {

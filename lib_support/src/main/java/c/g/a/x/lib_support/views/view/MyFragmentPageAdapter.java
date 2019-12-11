@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MyFragmentPageAdapter extends FragmentPagerAdapter {
 
-    private ArrayList<? extends Fragment> fragments;
+    private final ArrayList<? extends Fragment> fragments;
 
     public MyFragmentPageAdapter(FragmentManager fm, ArrayList<? extends Fragment> fragments) {
         super(fm);

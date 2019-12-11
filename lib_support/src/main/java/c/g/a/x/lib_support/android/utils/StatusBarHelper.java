@@ -37,8 +37,6 @@ public final class StatusBarHelper {
 
     /**
      * 通过反射的方式获取状态栏高度
-     *
-     * @return
      */
     private static void getStatusBarHeight(Activity activity) {
         if (statusBarHeight != null) return;
@@ -57,8 +55,6 @@ public final class StatusBarHelper {
 
     /**
      * 获取底部导航栏高度
-     *
-     * @return
      */
     public static void getNavigationBarHeight(Activity activity) {
 
@@ -95,7 +91,7 @@ public final class StatusBarHelper {
             } else if ("0".equals(navBarOverride)) {
                 hasNavigationBar = true;
             }
-        } catch (Exception e) {
+        } catch (Exception e) {e.printStackTrace();
         }
         return hasNavigationBar;
     }
@@ -142,8 +138,6 @@ public final class StatusBarHelper {
 /////////////
     /**
      * 判断手机是否是小米
-     *
-     * @return
      */
     private static Boolean miui = null;
 
@@ -164,8 +158,6 @@ public final class StatusBarHelper {
 
     /**
      * 判断手机是否是魅族
-     *
-     * @return
      */
     private static Boolean flyme = null;
 
@@ -174,7 +166,7 @@ public final class StatusBarHelper {
         try {
             // Invoke Build.hasSmartBar()
             final Method method = Build.class.getMethod("hasSmartBar");
-            flyme = method != null;
+            flyme = true;
         } catch (final Exception e) {
             flyme = false;
         }
@@ -197,8 +189,8 @@ public final class StatusBarHelper {
             } else {
                 field.set(lp, (~value) & origin);
             }
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -214,8 +206,8 @@ public final class StatusBarHelper {
             darkModeFlag = field.getInt(layoutParams);
             Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
             extraFlagField.invoke(activity.getWindow(), lightStatusBar ? darkModeFlag : 0, darkModeFlag);
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

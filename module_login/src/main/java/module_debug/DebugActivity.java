@@ -17,7 +17,7 @@ public class DebugActivity extends MvpActivity<ViewDataBinding,Presenter> implem
 
     @Override
     protected Presenter createPresenter() {
-        return new Presenter(this);
+        return new Presenter<>(this);
     }
 
     @Override

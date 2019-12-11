@@ -23,9 +23,9 @@ public final class FlowLayout extends ViewGroup {
 
     private int maxLines;
 
-    private List<List<View>> mAllChildViews = new ArrayList<>();   // 存储所有子View
-    private List<Integer> mLineHeight = new ArrayList<>(); // 每一行的高度
-    private MarginLayoutParams layoutParams;
+    private final List<List<View>> mAllChildViews = new ArrayList<>();   // 存储所有子View
+    private final List<Integer> mLineHeight = new ArrayList<>(); // 每一行的高度
+    private final MarginLayoutParams layoutParams;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -184,12 +184,12 @@ public final class FlowLayout extends ViewGroup {
 
     public static abstract class DataHelper<V extends View, O, T> {
 
-        FlowLayout flowLayout;
+        final FlowLayout flowLayout;
         private LayoutInflater inflater;
 
         private int layoutId = R.layout.layout_default_flowlayout_item;
 
-        private List<O> dataList = new ArrayList<>();
+        private final List<O> dataList = new ArrayList<>();
 
         OnItemInitListener<V, O> onItemInitListener;
         OnItemStateChangeListener onItemStateChangeListener;
@@ -373,7 +373,7 @@ public final class FlowLayout extends ViewGroup {
 
     public static class MultipleChoiceDataHelper<V extends View, O> extends DataHelper<V, O, List<O>> {
 
-        private Map<V, Boolean> choose_map = new HashMap<>();
+        private final Map<V, Boolean> choose_map = new HashMap<>();
 
         public MultipleChoiceDataHelper(FlowLayout flowLayout) {
             super(flowLayout);

@@ -48,7 +48,7 @@ public class AppLogicProcessor extends AbstractProcessor {
 
     private String moduleName;
 
-    private List<String> clsFullNameList = new ArrayList<>();
+    private final List<String> clsFullNameList = new ArrayList<>();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {

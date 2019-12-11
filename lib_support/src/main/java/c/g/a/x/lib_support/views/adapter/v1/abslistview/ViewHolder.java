@@ -2,7 +2,7 @@ package c.g.a.x.lib_support.views.adapter.v1.abslistview;
 
 import android.view.View;
 
-public abstract class ViewHolder<T extends Object> {
+public abstract class ViewHolder<T> {
 
     protected DataAdapter adapter;
 

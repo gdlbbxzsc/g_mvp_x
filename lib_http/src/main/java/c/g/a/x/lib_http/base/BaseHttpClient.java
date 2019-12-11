@@ -32,7 +32,7 @@ public abstract class BaseHttpClient {
     private int readTimeout = 8;
     private int writeTimeout = 8;
 
-    Retrofit retrofit;
+    final Retrofit retrofit;
 
     public BaseHttpClient() {
 
@@ -117,7 +117,7 @@ public abstract class BaseHttpClient {
                 //为了支持rxjava,需要添加下面这个把 Retrofit 转成RxJava可用的适配类
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
-        builder = initREtrofitBuilder(builder);
+        builder = initRetrofitBuilder(builder);
 
         return builder.build();
     }
@@ -140,7 +140,7 @@ public abstract class BaseHttpClient {
         return writeTimeout;
     }
 
-    public Retrofit.Builder initREtrofitBuilder(Retrofit.Builder builder) {
+    public Retrofit.Builder initRetrofitBuilder(Retrofit.Builder builder) {
         return builder;
     }
 

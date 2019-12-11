@@ -79,8 +79,9 @@ public final class ClassUtils {
                                 classNames.add(className);
                             }
                         }
-                    } catch (Throwable ignore) {
-                        Log.e("ARouter", "Scan map file in dex files made error.", ignore);
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                        Log.e("ARouter", "Scan map file in dex files made error.", t);
                     } finally {
                         if (null != dexfile) {
                             try {

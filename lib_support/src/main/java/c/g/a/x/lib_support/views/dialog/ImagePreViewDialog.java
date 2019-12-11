@@ -2,7 +2,6 @@ package c.g.a.x.lib_support.views.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,9 +17,9 @@ import c.g.a.x.lib_support.R;
 
 public class ImagePreViewDialog extends Dialog {
 
-    private Context context;
+    private final Context context;
 
-    private ImageView imageView;
+    private final ImageView imageView;
 
     public static void show(Context context, String url) {
         new ImagePreViewDialog(context).show(url);

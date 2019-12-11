@@ -7,12 +7,10 @@ import java.util.Map;
 
 public final class IDCardHelper {
 
-    private final String PARRENT_IDCARD = "^[0-9]{17}[0-9|X]$";
-
     private final int[] WEIGHT = new int[]{7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
     private final int[] CHECKDIGIT = new int[]{1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2}; // 校验码
 
-    private final Map<String, String> cityCodes = new HashMap<String, String>();
+    private final Map<String, String> cityCodes = new HashMap<>();
 
 
     private String idCard;
@@ -22,7 +20,7 @@ public final class IDCardHelper {
     }
 
     private static class InnerInstance {
-        private static IDCardHelper INSTANCE = new IDCardHelper();
+        private static final IDCardHelper INSTANCE = new IDCardHelper();
     }
 
     private IDCardHelper() {
@@ -70,6 +68,7 @@ public final class IDCardHelper {
 
     public boolean isIDCard() {
 
+        String PARRENT_IDCARD = "^[0-9]{17}[0-9|X]$";
         if (!idCard.matches(PARRENT_IDCARD)) return false;
 
         int sum = 0;

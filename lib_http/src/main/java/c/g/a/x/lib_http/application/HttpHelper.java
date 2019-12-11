@@ -11,7 +11,7 @@ public final class HttpHelper {
     }
 
     private static class InnerInstance {
-        private static HttpHelper INSTANCE = new HttpHelper();
+        private static final HttpHelper INSTANCE = new HttpHelper();
     }
 
     private HttpHelper() {

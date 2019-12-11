@@ -12,7 +12,7 @@ public final class MD5Utils {
         messageDigest.update(bytes);
         byte[] byteArray = messageDigest.digest();
 
-        StringBuffer md5StrBuff = new StringBuffer();
+        StringBuilder md5StrBuff = new StringBuilder();
 
         for (byte b : byteArray) {
             if (Integer.toHexString(0xFF & b).length() == 1)

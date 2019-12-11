@@ -2,6 +2,7 @@ package c.g.a.x.lib_support.views.adapter.v2.recyclerview;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,18 @@ import c.g.a.x.lib_support.views.adapter.v2.recyclerview.choicehelper.SingleChoi
 
 public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewViewHolder> {
 
-    public Context context;
-    public LayoutInflater inflater;
+    public final Context context;
+    public final LayoutInflater inflater;
 
-    public RecyclerView recyclerView;// adapter 持有者控件
+    public final RecyclerView recyclerView;// adapter 持有者控件
 
     //
-    protected Class viewholder;
-    protected HashMap<Integer, Class> typeViewMap;    //num from 0    value viewholder.class
+    protected Class viewHolder;
+    protected SparseArray<Class> typeViewMap;    //num from 0    value viewHolder.class
     protected HashMap<String, Integer> dataTypeMap;  //key:vo.class    value num from 0
 
     // vo
-    public List<Object> viewDataList = new ArrayList<Object>(10);
+    public final List<Object> viewDataList = new ArrayList<>(10);
     //
 
     public Bundle bundle = new Bundle();
@@ -48,9 +49,9 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
         this.recyclerView = view;
 
         if (viewHolderClz.length == 1) {
-            this.viewholder = viewHolderClz[0];
+            this.viewHolder = viewHolderClz[0];
         } else {
-            typeViewMap = new HashMap<>(viewHolderClz.length, 1f);
+            typeViewMap = new SparseArray<>(viewHolderClz.length);
             dataTypeMap = new HashMap<>(viewHolderClz.length, 1f);
 
             for (Class clz : viewHolderClz) {
@@ -62,12 +63,12 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
     }
 
     public DataAdapter singleChoice() {
-        choiceHelper = new SingleChoiceHelper(this);
+        choiceHelper = new SingleChoiceHelper<>(this);
         return this;
     }
 
     public DataAdapter multipleChoice() {
-        choiceHelper = new MultipleChoiceHelper(this);
+        choiceHelper = new MultipleChoiceHelper<>(this);
         return this;
     }
 
@@ -78,7 +79,7 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
 
     @Override
     public int getItemViewType(int position) {
-        return viewholder == null ? dataTypeMap.get(getDataType(position)) : 0;
+        return viewHolder == null ? dataTypeMap.get(getDataType(position)) : 0;
     }
 
     public Object getItem(int position) {
@@ -111,7 +112,7 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
 
 
     public Class getItemViewTypeClass(int viewType) {
-        return viewholder == null ? typeViewMap.get(viewType) : viewholder;
+        return viewHolder == null ? typeViewMap.get(viewType) : viewHolder;
     }
 
     @Override
@@ -167,24 +168,24 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
     public void onShowView(ViewHolder holder, List<Object> payloads) {
     }
 
-    public <T extends Object> void setDatas(List<T> datas) {
+    public <T> void setDatas(List<T> datas) {
         clearDatas();
         addDatas(datas);
     }
 
     //
-    public <T extends Object> void addDatas(List<T> datas) {
+    public <T> void addDatas(List<T> datas) {
         if (datas == null || datas.size() <= 0) return;
         viewDataList.addAll(datas);
         notifyDataSetChanged();
     }
 
 
-    public <T extends Object> void addData(T data) {
+    public <T> void addData(T data) {
         viewDataList.add(data);
     }
 
-    public <T extends Object> void addData(int pos, T data) {
+    public <T> void addData(int pos, T data) {
         if (pos >= viewDataList.size()) {
             pos = viewDataList.size();
         }
@@ -193,7 +194,7 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
 
 
     //
-    public <T extends Object> void removeData(T vo) {
+    public <T> void removeData(T vo) {
         int pos = viewDataList.indexOf(vo);
         if (pos < 0) {
             return;

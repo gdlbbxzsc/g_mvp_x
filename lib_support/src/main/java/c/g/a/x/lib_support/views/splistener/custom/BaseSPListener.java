@@ -11,7 +11,7 @@ public abstract class BaseSPListener {
 
     private long lastClickTime = 0;
 
-    protected boolean canClick() {
+    boolean canClick() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastClickTime < MIN_CLICK_DELAY_TIME) {
             lastClickTime = currentTime;

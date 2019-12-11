@@ -2,7 +2,6 @@ package c.g.a.x.lib_sp.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import java.lang.ref.SoftReference;
 
@@ -12,8 +11,8 @@ import java.lang.ref.SoftReference;
 
 public abstract class BaseSpHelper {
 
-    public Context context;
-    public String sp_name;
+    public final Context context;
+    public final String sp_name;
     public SoftReference<SharedPreferences> reference;
 
     public BaseSpHelper(Context context, String sp_name) {
@@ -35,7 +34,7 @@ public abstract class BaseSpHelper {
     //    context.getSharedPreferences(PREFS_FILE, Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB ? Context.MODE_PRIVATE : Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
     public SharedPreferences makeSp() {
         SharedPreferences sp = context.getSharedPreferences(sp_name, Context.MODE_PRIVATE);
-        reference = new SoftReference(sp);
+        reference = new SoftReference<>(sp);
         return sp;
     }
 }

@@ -20,7 +20,7 @@ import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
  * Created by Administrator on 2018/4/3.
  */
 
-public class CommonTitlebar {
+public class CommonTitleBar {
 
     private enum TitlebarStyle {
         WHITE(R.color.white, R.drawable.left_arrow_black, R.color.black1, R.color.line),//
@@ -28,10 +28,10 @@ public class CommonTitlebar {
         TRANSPARENT_BLACK(R.color.touming, R.drawable.left_arrow_black, R.color.black1, R.color.touming),//
         TRANSPARENT_WHITE(R.color.touming, R.drawable.left_arrow_white, R.color.white, R.color.touming);
 
-        private int bgColor;
-        private int backDrawable;
-        private int textColor;
-        private int lineColor;
+        private final int bgColor;
+        private final int backDrawable;
+        private final int textColor;
+        private final int lineColor;
 
         TitlebarStyle(int bgColor, int backDrawable, int textColor, int lineColor) {
             this.bgColor = bgColor;
@@ -43,18 +43,18 @@ public class CommonTitlebar {
 
     private Activity activity;
     private Fragment fragment;
-    private Context context;
+    private final Context context;
 
-    private ConstraintLayout layout;
-    public ImageButton titlebar_left;
-    public TextView titlebar_center;
-    private View titlebar_bottom_line;
+    private final ConstraintLayout layout;
+    public final ImageButton titlebar_left;
+    public final TextView titlebar_center;
+    private final View titlebar_bottom_line;
 
     public View titlebar_right;
 
     TitlebarStyle style;
 
-    public CommonTitlebar(Activity activity) {
+    public CommonTitleBar(Activity activity) {
         this.activity = activity;
         context = activity;
 
@@ -66,7 +66,7 @@ public class CommonTitlebar {
         titlebar_left.setOnClickListener(onSingleClickListener);
     }
 
-    public CommonTitlebar(Fragment fragment, View view) {
+    public CommonTitleBar(Fragment fragment, View view) {
         this.fragment = fragment;
         context = fragment.getContext();
 
@@ -78,23 +78,23 @@ public class CommonTitlebar {
         titlebar_left.setOnClickListener(onSingleClickListener);
     }
 
-    public CommonTitlebar setStyleWhite() {
+    public CommonTitleBar setStyleWhite() {
         return setStyle(TitlebarStyle.WHITE);
     }
 
-    public CommonTitlebar setStyleBlack() {
+    public CommonTitleBar setStyleBlack() {
         return setStyle(TitlebarStyle.BLACK);
     }
 
-    public CommonTitlebar setStyleTransparentWhite() {
+    public CommonTitleBar setStyleTransparentWhite() {
         return setStyle(TitlebarStyle.TRANSPARENT_WHITE);
     }
 
-    public CommonTitlebar setStyleTransparentBlack() {
+    public CommonTitleBar setStyleTransparentBlack() {
         return setStyle(TitlebarStyle.TRANSPARENT_BLACK);
     }
 
-    public CommonTitlebar setStyle(TitlebarStyle style) {
+    public CommonTitleBar setStyle(TitlebarStyle style) {
         this.style = style;
 
         layout.setBackgroundResource(style.bgColor);
@@ -104,17 +104,17 @@ public class CommonTitlebar {
         return this;
     }
 
-    public CommonTitlebar setTitle(String title) {
+    public CommonTitleBar setTitle(String title) {
         titlebar_center.setText(title);
         return this;
     }
 
-    public CommonTitlebar setTitle(int titleId) {
+    public CommonTitleBar setTitle(int titleId) {
         titlebar_center.setText(titleId);
         return this;
     }
 
-    public CommonTitlebar addRightImageButton(int imgId, OnSPClickListener listener) {
+    public CommonTitleBar addRightImageButton(int imgId, OnSPClickListener listener) {
 
         ImageButton ibtn = new ImageButton(context);
         int padding = context.getResources().getDimensionPixelSize(R.dimen.dp3);
@@ -128,7 +128,7 @@ public class CommonTitlebar {
         return this;
     }
 
-    public CommonTitlebar addRightTextViewButton(String str, OnSPClickListener listener) {
+    public CommonTitleBar addRightTextViewButton(String str, OnSPClickListener listener) {
 
         TextView tv = new TextView(new ContextThemeWrapper(context, R.style.font_normal1_black1_Btn_B_ww_pad_lr8_tb4));
         tv.setTextColor(style.textColor);
@@ -159,11 +159,11 @@ public class CommonTitlebar {
     }
 
 
-    OnSPClickListener onSingleClickListener = new OnSPClickListener() {
+    final OnSPClickListener onSingleClickListener = new OnSPClickListener() {
 
         @Override
         public void onClickSucc(View v) {
-            Logger.e("CommonTitlebar finish");
+            Logger.e("CommonTitleBar finish");
             if (fragment != null) {
                 fragment.getActivity().finish();
                 return;

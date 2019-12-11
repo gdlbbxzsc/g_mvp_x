@@ -14,14 +14,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class WxHttpHelper {
 
-    private static String baseUrl = "https://api.weixin.qq.com/sns/";
+    private final int connectTimeout = 8;
+    private final int readTimeout = 8;
+    private final int writeTimeout = 8;
 
-    private int connectTimeout = 8;
-    private int readTimeout = 8;
-    private int writeTimeout = 8;
-
-    private OkHttpClient okHttpClient;
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
 //    private static WxHttpHelper mInstance;
 //
@@ -32,9 +29,12 @@ public final class WxHttpHelper {
 
     public WxHttpHelper() {
 
-        okHttpClient = new OkHttpClient.Builder()//
-                .addInterceptor(new HttpLoggingInterceptor(message ->
-                        Logger.e(message)
+        //
+        //设置连接超时
+        //设置从主机读信息超时
+        //设置写信息超时
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()//
+                .addInterceptor(new HttpLoggingInterceptor(Logger::e
                 ).setLevel(HttpLoggingInterceptor.Level.BODY))
                 //设置连接超时
                 .connectTimeout(connectTimeout, TimeUnit.SECONDS)
@@ -43,6 +43,7 @@ public final class WxHttpHelper {
                 //设置写信息超时
                 .writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
 
+        String baseUrl = "https://api.weixin.qq.com/sns/";
         retrofit = new Retrofit.Builder().baseUrl(baseUrl)
                 .client(okHttpClient)
                 //如果网络访问返回的字符串，而不是json数据格式，可以使用ScalarsConverterFactory转换器

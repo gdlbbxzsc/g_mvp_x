@@ -27,7 +27,7 @@ public final class SpMnger<T extends BaseSpHelper> {
     }
 
     private static class InnerInstance {
-        private static SpMnger INSTANCE = new SpMnger();
+        private static final SpMnger INSTANCE = new SpMnger();
     }
 
     private SpMnger() {
@@ -79,12 +79,7 @@ public final class SpMnger<T extends BaseSpHelper> {
     }
 
     private String makeSpName(Class<T> keyName) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(context.getPackageName());
-        sb.append("_");
-        sb.append(keyName.getSimpleName());
-        sb.append("_sp");
-        return sb.toString();
+        return context.getPackageName() + "_" + keyName.getSimpleName() + "_sp";
     }
 
 }

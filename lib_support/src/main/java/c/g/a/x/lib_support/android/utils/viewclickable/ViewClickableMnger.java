@@ -14,14 +14,14 @@ import java.util.Map;
 
 public final class ViewClickableMnger<T extends View> {
 
-    private Map<Object, ViewClickableHelper> map = new HashMap<>(2);
+    private final Map<Object, ViewClickableHelper> map = new HashMap<>(2);
 
     public static ViewClickableMnger getInstance() {
         return InnerInstance.INSTANCE;
     }
 
     private static class InnerInstance {
-        private static ViewClickableMnger INSTANCE = new ViewClickableMnger();
+        private static final ViewClickableMnger INSTANCE = new ViewClickableMnger();
     }
 
     private ViewClickableMnger() {

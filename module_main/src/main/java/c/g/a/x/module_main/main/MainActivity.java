@@ -21,7 +21,7 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 
     @Override
     protected Presenter createPresenter() {
-        return new Presenter(this);
+        return new Presenter<>(this);
     }
 
 
@@ -29,8 +29,8 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
     protected void initView() {
         NotificationHelper.checkEnabledDialog(context);
 
-//        ImageLoader.loadHead(context, databind.iv1, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
-//        ImageLoader.load(context, databind.iv2, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
+//        ImageLoader.loadHead(context, binder.iv1, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
+//        ImageLoader.load(context, binder.iv2, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
     }
 
 

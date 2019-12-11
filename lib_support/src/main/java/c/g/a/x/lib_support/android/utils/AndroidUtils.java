@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 public final class AndroidUtils {
 
     @SuppressLint("MissingPermission")
-    public static final String getDeviceId(Context context) {
+    public static String getDeviceId(Context context) {
         try {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
             if (tm == null) return "unknowdevice";
@@ -67,14 +67,14 @@ public final class AndroidUtils {
     }
 
 
-    private static final NetworkInfo getNetworkInfo(Context context) {
+    private static NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager manager = getConnectivityManager(context);
         if (null == manager)
             return null;
         return manager.getActiveNetworkInfo();
     }
 
-    private static final NetworkInfo[] getNetworkInfos(Context context) {
+    private static NetworkInfo[] getNetworkInfos(Context context) {
         ConnectivityManager manager = getConnectivityManager(context);
         if (null == manager)
             return null;

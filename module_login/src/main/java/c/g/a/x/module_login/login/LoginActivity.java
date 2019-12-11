@@ -19,7 +19,7 @@ public class LoginActivity extends MvpActivity<ActivityLoginBinding, Presenter> 
 
     @Override
     protected Presenter createPresenter() {
-        return new Presenter(this);
+        return new Presenter<>(this);
     }
 
 

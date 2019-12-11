@@ -95,7 +95,7 @@ public final class UpVersionService extends Service {
                     InputStream is = body.byteStream();
 
                     if (TextUtils.isEmpty(localPath))
-                        saveFile = FileHelper.getInstance().toAppPath().fileSubPath(Constant.PATH_DOWNLOAD).fileName(Constant.FILE_DOWN_APK).creat();
+                        saveFile = FileHelper.getInstance().toAppPath().fileSubPath(Constant.PATH_DOWNLOAD).fileName(Constant.FILE_DOWN_APK).create();
                     else
                         saveFile = FileUtils.createFile(localPath);
 
@@ -147,7 +147,7 @@ public final class UpVersionService extends Service {
         }
     }
 
-    private final void createChannel() {
+    private void createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //只在Android O之上需要渠道
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID + context.getPackageName(),
@@ -156,7 +156,7 @@ public final class UpVersionService extends Service {
         }
     }
 
-    private final NotificationCompat.Builder buildNotificationCompat(int progress, PendingIntent pendingIntent) {
+    private NotificationCompat.Builder buildNotificationCompat(int progress, PendingIntent pendingIntent) {
         return new NotificationCompat
                 .Builder(context, CHANNEL_ID + context.getPackageName())
                 .setChannelId(CHANNEL_ID + context.getPackageName())
@@ -187,7 +187,7 @@ public final class UpVersionService extends Service {
         return intent;
     }
 
-    public static final void start(Context context, String downloadUrl, String local_path, boolean notification) {
+    public static void start(Context context, String downloadUrl, String local_path, boolean notification) {
         Intent intent = new Intent(context, UpVersionService.class);
         intent.putExtra("download_url", downloadUrl);
         intent.putExtra("local_path", local_path);

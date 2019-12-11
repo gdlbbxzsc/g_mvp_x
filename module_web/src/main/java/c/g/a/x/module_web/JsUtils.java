@@ -12,9 +12,9 @@ import android.webkit.WebView;
 @TargetApi(Build.VERSION_CODES.CUPCAKE)
 public class JsUtils {
 
-    private Activity context;
+    private final Activity context;
 
-    private WebView webView;
+    private final WebView webView;
 
     public JsUtils(Activity context, WebView webView) {
         this.context = context;

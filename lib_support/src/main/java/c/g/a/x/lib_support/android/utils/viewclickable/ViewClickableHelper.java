@@ -11,9 +11,9 @@ import java.util.Map;
 
 public final class ViewClickableHelper<T extends View> {
 
-    private Map<String, T> viewMap = new HashMap<>(2);
+    private final Map<String, T> viewMap = new HashMap<>(2);
 
-    private Map<String, Integer> countMap = new HashMap<>(2);
+    private final Map<String, Integer> countMap = new HashMap<>(2);
 
     public ViewClickableHelper() {
     }

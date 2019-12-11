@@ -12,7 +12,7 @@ import c.g.a.x.lib_support.views.adapter.v1.recyclerview.DataAdapter;
 
 public class MultipleChoiceHelper<T extends DataAdapter> extends ChoiceHelper<T, List<Object>> {
 
-    public List<Object> choice_data = new ArrayList<>();
+    public final List<Object> choice_data = new ArrayList<>();
 
     public MultipleChoiceHelper(T adapter) {
         super(adapter);

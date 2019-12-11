@@ -17,10 +17,8 @@ public final class IOUtils {
 
     public static byte[] stream2byteArray(InputStream is) {
         byte[] buff = null;
-        ByteArrayOutputStream bops = null;
         int tmp;
-        try {
-            bops = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream bops = new ByteArrayOutputStream()) {
 
             while ((tmp = is.read()) != -1) {
                 bops.write(tmp);
@@ -29,11 +27,6 @@ public final class IOUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (bops != null)
-                    bops.close();
-            } catch (IOException ignored) {
-            }
             try {
                 if (is != null)
                     is.close();

@@ -15,8 +15,6 @@ import c.g.a.x.lib_support.android.utils.Logger;
 @Interceptor(priority = 1)
 public class LoginInterceptor implements IInterceptor {
 
-    private Context context;
-
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
 
@@ -44,7 +42,6 @@ public class LoginInterceptor implements IInterceptor {
 
     @Override
     public void init(Context context) {
-        this.context = context;
         Logger.e(this.getClass().getSimpleName() + " init " + context);
     }
 

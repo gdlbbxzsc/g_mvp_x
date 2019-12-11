@@ -32,7 +32,7 @@ public abstract class ListActivity<D extends ViewDataBinding, T extends ListPres
     }
 
     @Override
-    public <T> void setDatas(List<T> list) {
+    public <L> void setDatas(List<L> list) {
         if (list == null || list.size() <= 0) return;
         adapter.addDatas(list);
         adapter.notifyDataSetChanged();

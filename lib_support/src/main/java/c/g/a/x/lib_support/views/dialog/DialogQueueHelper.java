@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class DialogQueueHelper<T extends Dialog> {
 
-    private Queue<T> dialogQueue = new LinkedList<>();
+    private final Queue<T> dialogQueue = new LinkedList<>();
 
     private T currentDialog = null;//当前显示的Dialog
 
@@ -17,7 +17,7 @@ public class DialogQueueHelper<T extends Dialog> {
     }
 
     private static class InnerInstance {
-        private static DialogQueueHelper INSTANCE = new DialogQueueHelper();
+        private static final DialogQueueHelper INSTANCE = new DialogQueueHelper();
     }
 
     private DialogQueueHelper() {

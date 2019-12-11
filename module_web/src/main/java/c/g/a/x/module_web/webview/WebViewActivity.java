@@ -14,7 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
-import c.g.a.x.lib_support.views.view.CommonTitlebar;
+import c.g.a.x.lib_support.views.view.CommonTitleBar;
 import c.g.a.x.module_web.JsUtils;
 import c.g.a.x.module_web.R;
 import c.g.a.x.module_web.databinding.ActivityWebviewBinding;
@@ -28,11 +28,11 @@ public class WebViewActivity extends MvpActivity<ActivityWebviewBinding, Present
     @Autowired()
     public String url;
 
-    private CommonTitlebar commonTitlebar;
+    private CommonTitleBar commonTitlebar;
 
     @Override
     protected Presenter createPresenter() {
-        return new Presenter(this);
+        return new Presenter<>(this);
     }
 
     @Override
@@ -42,31 +42,31 @@ public class WebViewActivity extends MvpActivity<ActivityWebviewBinding, Present
 
     @Override
     protected void initView() {
-        commonTitlebar = new CommonTitlebar(this).setStyleWhite().setTitle(title);
+        commonTitlebar = new CommonTitleBar(this).setStyleWhite().setTitle(title);
 
-        databind.webview.getSettings().setDefaultTextEncodingName("utf-8");
-        databind.webview.getSettings().setSupportZoom(false);
-        databind.webview.getSettings().setBuiltInZoomControls(false);
-        databind.webview.setWebViewClient(new MyWebViewClient());
-        databind.webview.setWebChromeClient(new MyWebChromeClient());
-        databind.webview.getSettings().setJavaScriptEnabled(true);
-        databind.webview.getSettings().setDomStorageEnabled(true);
+        binder.webview.getSettings().setDefaultTextEncodingName("utf-8");
+        binder.webview.getSettings().setSupportZoom(false);
+        binder.webview.getSettings().setBuiltInZoomControls(false);
+        binder.webview.setWebViewClient(new MyWebViewClient());
+        binder.webview.setWebChromeClient(new MyWebChromeClient());
+        binder.webview.getSettings().setJavaScriptEnabled(true);
+        binder.webview.getSettings().setDomStorageEnabled(true);
 //        webview.getSettings()
 //                .setUserAgentString(
 //                        "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; Nexus One Build/FRF50) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile
 //                        Safari/533.1");
 //        webview.getSettings()
 //                .setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        databind.webview.getSettings().setUseWideViewPort(true);
-        databind.webview.getSettings().setLoadWithOverviewMode(true);
-        databind.webview.addJavascriptInterface(new JsUtils(getActivity(), databind.webview), "callClass");
+        binder.webview.getSettings().setUseWideViewPort(true);
+        binder.webview.getSettings().setLoadWithOverviewMode(true);
+        binder.webview.addJavascriptInterface(new JsUtils(getActivity(), binder.webview), "callClass");
 
     }
 
 
     @Override
     protected void initData() {
-        databind.webview.loadUrl(url);
+        binder.webview.loadUrl(url);
     }
 
     private class MyWebViewClient extends WebViewClient {

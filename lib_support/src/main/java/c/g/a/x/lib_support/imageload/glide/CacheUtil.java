@@ -1,7 +1,7 @@
 package c.g.a.x.lib_support.imageload.glide;
 
-/**
- * Created by Administrator on 2018/5/15.
+/*
+  Created by Administrator on 2018/5/15.
  */
 
 import android.content.Context;
@@ -68,15 +68,13 @@ public final class CacheUtil {
 
     public static String getImageExternalCatchDir(Context context) {
 //        ExternalCacheDiskCacheFactory代表/sdcard/Android/data/<application package>/cache
-        String ImageExternalCatchDir = context.getExternalCacheDir() + ExternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
-        return ImageExternalCatchDir;
+        return context.getExternalCacheDir() + ExternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
 
     }
 
     public static String getImageInternalCatchDir(Context context) {
 //        InternalCacheDiskCacheFactory代表/data/data/<application package>/cache
-        String ImageInternalCatchDir = context.getCacheDir() + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
-        return ImageInternalCatchDir;
+        return context.getCacheDir() + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR;
     }
 
 }

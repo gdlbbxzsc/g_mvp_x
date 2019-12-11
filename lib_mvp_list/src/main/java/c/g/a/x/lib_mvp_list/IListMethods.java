@@ -17,6 +17,6 @@ public interface IListMethods {
     void clearDatas();
 
     //展示数据
-    <T extends Object> void setDatas(List<T> list);
+    <T> void setDatas(List<T> list);
 
 }

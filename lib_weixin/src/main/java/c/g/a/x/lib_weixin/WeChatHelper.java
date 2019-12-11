@@ -47,7 +47,7 @@ public final class WeChatHelper {
     public static Context context;
     private IWXAPI wxApi;
 
-    private WXMediaMessage wxMediaMessage = new WXMediaMessage();
+    private final WXMediaMessage wxMediaMessage = new WXMediaMessage();
     private int shareType = SendMessageToWX.Req.WXSceneSession;
 
     private String msgType;
@@ -80,7 +80,7 @@ public final class WeChatHelper {
 
 
     public final boolean loginForUserInfo(OnAccessTokenToUserinfoListener listener) {
-        RxBus.register0(this, WxUserInfo.class, wxUserInfo -> listener.onAccessTokenToUserinfoListener(wxUserInfo));
+        RxBus.register0(this, WxUserInfo.class, listener::onAccessTokenToUserinfoListener);
 
         boolean b = login();
         if (!b) RxBus.removeDisposable0(this, WxUserInfo.class);
@@ -168,16 +168,14 @@ public final class WeChatHelper {
 
     public final WeChatHelper text(String text) {
         if (!wxApi.isWXAppInstalled()) return this;
-        WXTextObject textObj = new WXTextObject(text);
-        wxMediaMessage.mediaObject = textObj;
+        wxMediaMessage.mediaObject = new WXTextObject(text);
         msgType = "text";
         return this;
     }
 
     public final WeChatHelper image(Bitmap bmp) {
         if (!wxApi.isWXAppInstalled()) return this;
-        WXImageObject imgObj = new WXImageObject(bmp);
-        wxMediaMessage.mediaObject = imgObj;
+        wxMediaMessage.mediaObject = new WXImageObject(bmp);
         bmp.recycle();
         msgType = "image";
         return this;
@@ -185,8 +183,7 @@ public final class WeChatHelper {
 
     public final WeChatHelper webpage(String url) {
         if (!wxApi.isWXAppInstalled()) return this;
-        WXWebpageObject webpageObj = new WXWebpageObject(url);
-        wxMediaMessage.mediaObject = webpageObj;
+        wxMediaMessage.mediaObject = new WXWebpageObject(url);
         msgType = "webpage";
         return this;
     }

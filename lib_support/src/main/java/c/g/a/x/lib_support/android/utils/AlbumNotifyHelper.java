@@ -15,7 +15,7 @@ import java.util.Map;
  **/
 public final class AlbumNotifyHelper {
 
-    private Context context;
+    private final Context context;
 
     private String path;
     private File file;
@@ -27,14 +27,14 @@ public final class AlbumNotifyHelper {
 
     private AlbumNotifyHelper(Context context) {
         this.context = context;
-        initmimeType();
+        initMimeType();
     }
 
 
     public final AlbumNotifyHelper insertPhoto(String path) {
         load(path);
 
-        if (!fileExists()) return this;
+        if (fileNotExists()) return this;
         ContentValues values = createContentValues();
 
         values.put(MediaStore.Images.ImageColumns.ORIENTATION, 0);
@@ -48,7 +48,7 @@ public final class AlbumNotifyHelper {
     public final AlbumNotifyHelper insertVideo(String path) {
         load(path);
 
-        if (!fileExists()) return this;
+        if (fileNotExists()) return this;
         ContentValues values = createContentValues();
 
         context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
@@ -57,7 +57,7 @@ public final class AlbumNotifyHelper {
     }
 
     public final AlbumNotifyHelper notifyByBroadcast() {
-        if (!fileExists()) return this;
+        if (fileNotExists()) return this;
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(uri);
         context.sendBroadcast(intent);
@@ -95,12 +95,12 @@ public final class AlbumNotifyHelper {
         return mimeTypeMap.get(sfx);
     }
 
-    private void initmimeType() {
+    private void initMimeType() {
         initMimeTypePhoto();
-        initmimeTypeVidio();
+        initMimeTypeVidio();
     }
 
-    private Map<String, String> mimeTypeMap = new HashMap<>();
+    private final Map<String, String> mimeTypeMap = new HashMap<>();
 
     private void initMimeTypePhoto() {
         mimeTypeMap.put("jpg", "image/jpeg");
@@ -110,7 +110,7 @@ public final class AlbumNotifyHelper {
     }
 
 
-    private void initmimeTypeVidio() {
+    private void initMimeTypeVidio() {
         mimeTypeMap.put("mp4", "video/mp4");
         mimeTypeMap.put("mpeg4", "video/mp4");
         mimeTypeMap.put("3gp", "video/3gp");
@@ -121,8 +121,8 @@ public final class AlbumNotifyHelper {
         return System.currentTimeMillis();
     }
 
-    private boolean fileExists() {
-        return file.exists();
+    private boolean fileNotExists() {
+        return !file.exists();
     }
 
     private String getSuffix() {

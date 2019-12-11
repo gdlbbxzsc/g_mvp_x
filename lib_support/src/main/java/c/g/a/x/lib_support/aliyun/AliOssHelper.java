@@ -16,6 +16,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,6 @@ public class AliOssHelper {
 
     //需要配置的数据
     private AliOssConfig aliOssConfig;
-
-    private final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
 
     public static UpLoadTask getUpLoadTask(Activity activity) {
         return Inner.aliOss.createUpLoadTask(activity);
@@ -61,7 +60,8 @@ public class AliOssHelper {
         return this;
     }
 
-    private void initOssClient() {
+    private synchronized void initOssClient() {
+
         if (BuildConfig.app_mode) {
             if (context == null) {
                 Logger.e("===============>>>>AliOss context is null,find an application to set it<<<<===============");
@@ -72,6 +72,9 @@ public class AliOssHelper {
                 return;
             }
         }
+
+        if (ossClient != null) return;
+
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(aliOssConfig.ACCESS_KEY_ID, aliOssConfig.ACCESS_KEY_SECRET, aliOssConfig.SECURITY_TOKEN);
         ClientConfiguration conf = new ClientConfiguration();
         conf.setConnectionTimeout(10 * 1000); // 连接超时，默认15秒
@@ -80,6 +83,7 @@ public class AliOssHelper {
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
 //        OSSLog.enableLog(); //这个开启会支持写入手机sd卡中的一份日志文件位置在SD_path\OSSLog\logs.csv
         OSSLog.disableLog();
+        String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
         ossClient = new OSSClient(context, ENDPOINT, credentialProvider, conf);
     }
 
@@ -93,17 +97,14 @@ public class AliOssHelper {
 
     private void upLoadImageByOss(UpLoadTask upLoadTask) {
 
-        if (ossClient == null) {
-            synchronized (ossClient) {
-                if (ossClient == null) initOssClient();
-            }
-        }
+        if (ossClient == null) initOssClient();
+
 
         for (int i = 0, size = upLoadTask.srcList.size(); i < size; i++) {
             if (!upLoadTask.uploadFail) break;
             final String path = upLoadTask.srcList.get(i);
-            final String imgName = creatUpLoadImgName(upLoadTask.imageNamePrefix);
-            PutObjectRequest put = new PutObjectRequest(aliOssConfig.BACKET_NAME, aliOssConfig.FOLDER + imgName, path);
+            final String imgName = createUpLoadImgName(upLoadTask.imageNamePrefix);
+            PutObjectRequest put = new PutObjectRequest(aliOssConfig.BUCKET_NAME, aliOssConfig.FOLDER + imgName, path);
             // 异步上传时可以设置进度回调
             put.setProgressCallback((request, currentSize, totalSize) -> {
             });
@@ -134,14 +135,13 @@ public class AliOssHelper {
         }
     }
 
-    private String creatUpLoadImgName(String imageNamePrefix) {
+    private String createUpLoadImgName(String imageNamePrefix) {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         return (imageNamePrefix == null ? "" : imageNamePrefix) + uuid + ".jpg";
     }
 
     private String getUploadImageUrl(String imgName) {
-        String str = aliOssConfig.OSSURL + "/" + aliOssConfig.FOLDER + imgName;
-        return str;
+        return aliOssConfig.OSS_URL + "/" + aliOssConfig.FOLDER + imgName;
     }
 
     public static final class AliOssConfig {
@@ -149,22 +149,22 @@ public class AliOssHelper {
         public String ACCESS_KEY_SECRET;
         public String SECURITY_TOKEN;
 
-        public String BACKET_NAME;  // 測試阿里云API的bucket名称
+        public String BUCKET_NAME;  // 測試阿里云API的bucket名称
         public String FOLDER;    // 阿里云API的文件夹名称
 
-        public String OSSURL;
+        public String OSS_URL;
     }
 
     private final class UpLoadTask {
-        private Activity activity;
+        private final Activity activity;
 
         private volatile boolean uploadFail = false;
         private UploadResultListener uploadResultListener;
 
         private String imageNamePrefix = "";
 
-        private List<String> srcList = new ArrayList<>(); //上传图片path
-        private Map<String, String> resultMap = new HashMap<>(); //上传成功后服务器返回图片地址 key:本地图片path value 服务器返回url
+        private final List<String> srcList = new ArrayList<>(); //上传图片path
+        private final Map<String, String> resultMap = new HashMap<>(); //上传成功后服务器返回图片地址 key:本地图片path value 服务器返回url
 
         UpLoadTask(Activity activity) {
             this.activity = activity;
@@ -189,9 +189,7 @@ public class AliOssHelper {
             srcList.clear();
             resultMap.clear();
 
-            for (String str : paths) {
-                srcList.add(str);
-            }
+            Collections.addAll(srcList, paths);
 
             uploadFail = true;
             return this;
@@ -226,6 +224,6 @@ public class AliOssHelper {
     }
 
     public interface UploadResultListener {
-        void result(boolean succ, List<String> resultList);
+        void result(boolean suc, List<String> resultList);
     }
 }

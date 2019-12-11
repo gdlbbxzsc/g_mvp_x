@@ -86,6 +86,6 @@ public final class AliHelper {
 //    }
 
     public interface AliResultListener {
-        void result(boolean succ, AliResult aliResult);
+        void result(boolean suc, AliResult aliResult);
     }
 }

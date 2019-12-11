@@ -4,6 +4,7 @@ package c.g.a.x.lib_support.utils;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 
 
 public class FileUtils {
@@ -116,7 +117,7 @@ public class FileUtils {
 
     public static String makeNameByMD5(String url) {
         try {
-            return MD5Utils.encrypt(url.getBytes("utf-8")) + makeFileSuffix(url);
+            return MD5Utils.encrypt(url.getBytes(StandardCharsets.UTF_8)) + makeFileSuffix(url);
         } catch (Exception e) {
             e.printStackTrace();
             return "unknow" + System.currentTimeMillis();

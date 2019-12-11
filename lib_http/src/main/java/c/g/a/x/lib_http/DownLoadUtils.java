@@ -28,7 +28,7 @@ public final class DownLoadUtils {
         observable
                 .observeOn(Schedulers.computation()) // 用于计算任务
                 .doOnNext(body -> {
-                    File file = FileHelper.getInstance().toCameraPath().fileName(FileUtils.makeNameByMD5(url)).creat();
+                    File file = FileHelper.getInstance().toCameraPath().fileName(FileUtils.makeNameByMD5(url)).create();
                     IOUtils.writeData2File(body.byteStream(), file);
                     AlbumNotifyHelper.getInstance(context).insertPhoto(file.getAbsolutePath()).notifyByBroadcast();
                 })

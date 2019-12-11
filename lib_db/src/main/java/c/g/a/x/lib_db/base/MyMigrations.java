@@ -8,7 +8,7 @@ public final class MyMigrations {
 
     public static Migration[] getUpdateList() {
 
-        Migration[] update_Migration_array = {
+        return new Migration[]{
 
 //                new Migration(1, 2) {
 //                    @Override
@@ -18,8 +18,6 @@ public final class MyMigrations {
 //                }
 
         };
-
-        return update_Migration_array;
     }
 
 }

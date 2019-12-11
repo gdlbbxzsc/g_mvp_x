@@ -30,15 +30,15 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
 
     @Override
     protected Presenter createPresenter() {
-        return new Presenter(this);
+        return new Presenter<>(this);
     }
 
 
     @Override
     protected void initView() {
-        databind.btnGuide.setVisibility(View.INVISIBLE);
-        databind.btnGuide.setEnabled(false);
-        databind.btnGuide.setOnClickListener(new OnSPClickListener() {
+        binder.btnGuide.setVisibility(View.INVISIBLE);
+        binder.btnGuide.setEnabled(false);
+        binder.btnGuide.setOnClickListener(new OnSPClickListener() {
             @Override
             public void onClickSucc(View v) {
                 SpMnger.getDefaultHelper().putFirstUse(false);
@@ -47,7 +47,7 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
             }
         });
 
-//        databind.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//        binder.vfGuide.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
 //            @Override
 //            public void onViewAttachedToWindow(View v) {
 //            }
@@ -65,22 +65,22 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
         for (int i = 0; i < resIds.length; i++) {
             ImageView iv = new ImageView(context);
             iv.setBackgroundResource(resIds[i]);
-            databind.vfGuide.addView(iv);
+            binder.vfGuide.addView(iv);
 
             RadioButton rb = (RadioButton) inflater.inflate(R.layout.rb_guide, null);
             rb.setId(i);
-            databind.rgGuide.addView(rb);
+            binder.rgGuide.addView(rb);
             RadioGroup.LayoutParams layoutParams = (RadioGroup.LayoutParams) rb.getLayoutParams();
             layoutParams.width = layoutParams.height = 20;
             layoutParams.setMargins(20, 0, 20, 0);//4个参数按顺序分别是左上右下
             rb.setLayoutParams(layoutParams);
         }
-        databind.rgGuide.check(0);
+        binder.rgGuide.check(0);
     }
 
     private float startX;
     private int indicatorPos = 0;
-    private int max = resIds.length - 1;
+    private final int max = resIds.length - 1;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -93,27 +93,27 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
                 if (event.getX() - startX > 100) { //向右滑动
                     if (indicatorPos <= 0) break;
 
-                    databind.vfGuide.setOutAnimation(this, R.anim.guide_right_out);
-                    databind.vfGuide.setInAnimation(this, R.anim.guide_left_in);
-                    databind.vfGuide.showNext();
+                    binder.vfGuide.setOutAnimation(this, R.anim.guide_right_out);
+                    binder.vfGuide.setInAnimation(this, R.anim.guide_left_in);
+                    binder.vfGuide.showNext();
                     indicatorPos--;
                 } else if (startX - event.getX() > 100) {  //向左滑动
                     if (indicatorPos >= max) break;
 
-                    databind.vfGuide.setOutAnimation(this, R.anim.guide_left_out);
-                    databind.vfGuide.setInAnimation(this, R.anim.guide_right_in);
-                    databind.vfGuide.showPrevious();
+                    binder.vfGuide.setOutAnimation(this, R.anim.guide_left_out);
+                    binder.vfGuide.setInAnimation(this, R.anim.guide_right_in);
+                    binder.vfGuide.showPrevious();
                     indicatorPos++;
                 }
 
-                databind.rgGuide.check(indicatorPos);
+                binder.rgGuide.check(indicatorPos);
 
                 if (indicatorPos == max) {
-                    databind.btnGuide.setVisibility(View.VISIBLE);
-                    databind.btnGuide.setEnabled(true);
+                    binder.btnGuide.setVisibility(View.VISIBLE);
+                    binder.btnGuide.setEnabled(true);
                 } else {
-                    databind.btnGuide.setVisibility(View.INVISIBLE);
-                    databind.btnGuide.setEnabled(false);
+                    binder.btnGuide.setVisibility(View.INVISIBLE);
+                    binder.btnGuide.setEnabled(false);
                 }
             }
             break;

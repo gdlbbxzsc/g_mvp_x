@@ -353,7 +353,7 @@ public final class DateHelper {
         // false：05-08-22
         private boolean retainZeroTerm = true;
 
-        public long all_milsecs;
+        public final long all_milsecs;
 
         public long all_secs;
         public long all_mins;

@@ -12,7 +12,7 @@ import io.reactivex.functions.Consumer;
 public abstract class BaseConsumer<T extends BaseResponse> extends BaseFilter implements Consumer<T> {
 
 
-    protected boolean filterAllError;
+    protected final boolean filterAllError;
 
     public BaseConsumer(Context context) {
         this(context, false);

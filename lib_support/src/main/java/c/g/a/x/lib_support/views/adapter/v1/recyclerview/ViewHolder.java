@@ -10,7 +10,7 @@ import java.util.List;
 import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 
 
-public abstract class ViewHolder<T extends Object> {
+public abstract class ViewHolder<T> {
 
     protected DataAdapter adapter;
 
@@ -32,7 +32,7 @@ public abstract class ViewHolder<T extends Object> {
 
     protected class RecyclerViewViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder viewHolder;
+        public final ViewHolder viewHolder;
 
         public RecyclerViewViewHolder(ViewHolder viewHolder, View itemView) {
             super(itemView);

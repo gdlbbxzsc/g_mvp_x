@@ -1,12 +1,11 @@
 package c.g.a.x.lib_support.views.adapter.v1.recyclerview;
 
 import android.content.Context;
+import android.util.SparseArray;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * q1:flushDatas 返回了一个adapter pos 可能是要 调用recyclerview特有的刷新功能。但是还没有调用，真实使用时再说吧。
@@ -14,10 +13,10 @@ import java.util.Map;
 public class DataSpeAdapter extends DataAdapter {
 
 
-    Map<Integer, KV> adapter_pos_2_true_pos_map = new HashMap<>();
+    final SparseArray<  KV> adapter_pos_2_true_pos_map = new SparseArray<>();
     int dataCount = 0;
 
-    OnGetSon onGetSon;
+    final OnGetSon onGetSon;
 
     public DataSpeAdapter(Context context, RecyclerView view, Class farViewHolder, Class sonViewHolder, OnGetSon onGetSon) {
         this(context, view, farViewHolder, sonViewHolder, onGetSon, null);
@@ -114,27 +113,27 @@ public class DataSpeAdapter extends DataAdapter {
         adapter_pos_2_true_pos_map.put(adapter_pos, vo);
     }
 
-    public <T extends Object> void setDatas(List<T> datas) {
+    public <T> void setDatas(List<T> datas) {
         clearDatas();
         addDatas(datas);
     }
 
     //
-    public <T extends Object> void addDatas(List<T> datas) {
+    public <T> void addDatas(List<T> datas) {
         super.addDatas(datas);
         flushDatas(null);
         notifyDataSetChanged();
     }
 
     //
-    public <T extends Object> void addData(T data) {
+    public <T> void addData(T data) {
         viewDataList.add(data);
 
         int data_pos = flushDatas(data);
         notifyDataSetChanged();
     }
 
-    public <T extends Object> void addData(int true_fpos, T data) {
+    public <T> void addData(int true_fpos, T data) {
         if (true_fpos >= viewDataList.size()) {
             true_fpos = viewDataList.size();
         }
@@ -144,7 +143,7 @@ public class DataSpeAdapter extends DataAdapter {
         notifyDataSetChanged();
     }
 
-    public <T extends Object> int addSonData(int true_fpos, T data) {
+    public <T> int addSonData(int true_fpos, T data) {
         Object obj = viewDataList.get(true_fpos);
         List<Object> list = onGetSon.getSonList(obj);
         list.add(data);
@@ -155,7 +154,7 @@ public class DataSpeAdapter extends DataAdapter {
         return data_pos;
     }
 
-    public <T extends Object> int addSonData(int true_fpos, int true_spos, T data) {
+    public <T> int addSonData(int true_fpos, int true_spos, T data) {
 
         Object obj = viewDataList.get(true_fpos);
 
@@ -232,7 +231,7 @@ public class DataSpeAdapter extends DataAdapter {
     }
 
     public interface OnGetSon {
-        List getSonList(Object obj);
+        List<Object> getSonList(Object obj);
     }
 
 }

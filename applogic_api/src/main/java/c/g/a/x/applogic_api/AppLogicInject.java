@@ -15,9 +15,9 @@ public class AppLogicInject {
 
     private static final String INTERFACE_IAPPLOGICFULLNAMESLOADER_IMPL_PACKAGE = "com.android.iapplogicfullnamesloader.impl";
 
-    public static List<String> appLogicFullNameList = new ArrayList<>();
+    public static final List<String> appLogicFullNameList = new ArrayList<>();
     private static Application mApplication;
-    private static ArrayList<BaseAppLogic> appLogicList = new ArrayList<>();
+    private static final ArrayList<BaseAppLogic> appLogicList = new ArrayList<>();
 
     public static void inject(Application application) {
         mApplication = application;

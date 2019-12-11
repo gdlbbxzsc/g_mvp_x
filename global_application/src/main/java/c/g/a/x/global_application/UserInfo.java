@@ -14,7 +14,7 @@ public final class UserInfo {
 
 
     private static class InnerInstance {
-        private static UserInfo INSTANCE = new UserInfo();
+        private static final UserInfo INSTANCE = new UserInfo();
     }
 
     private UserInfo() {

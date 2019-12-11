@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="c.g.a.x.lib_sp" />
+<manifest package="c.g.a.x.lib_sp" />

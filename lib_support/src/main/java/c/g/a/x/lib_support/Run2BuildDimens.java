@@ -43,7 +43,6 @@ public final class Run2BuildDimens {
                 System.out.print(str + ":");
                 File file = new File(str);
                 if (!file.exists()) {
-                    System.out.println("");
                     continue;
                 }
                 boolean b = file.delete();
@@ -92,7 +91,7 @@ public final class Run2BuildDimens {
             String end_dimen_tag = lineStr.substring(end);
 
             //截取<dimen></dimen>标签内的内容，从>右括号开始，到左括号减2，取得配置的数字
-            Double num = Double.parseDouble(lineStr.substring(start, end));
+            double num = Double.parseDouble(lineStr.substring(start, end));
 
             //根据不同的尺寸，计算新的值，拼接新的字符串，并且结尾处换行。
             sb.append(start_dimen_tag).append(num * val).append(end_dimen_tag);

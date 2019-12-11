@@ -12,14 +12,13 @@ import c.g.a.x.lib_http.base.BaseResponse;
 import c.g.a.x.lib_http.rxjava2.errorlistener.OnErrorToastShortListener;
 import c.g.a.x.lib_support.android.utils.Logger;
 import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
 import retrofit2.HttpException;
 
 
 public abstract class BaseObserver<T extends BaseResponse> extends BaseFilter implements Observer<T> {
 
-    protected boolean filterAllError;
+    protected final boolean filterAllError;
 
     public BaseObserver(Context context) {
         this(context, false);

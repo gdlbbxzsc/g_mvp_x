@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public final class StringUtils {
@@ -16,7 +17,7 @@ public final class StringUtils {
 
     public static boolean isEqual(Object foo, Object bar) {
 //        return foo == bar || (null != foo && foo.equals(bar));
-        return foo == bar || (null != foo && null != bar && foo.equals(bar));
+        return Objects.equals(foo, bar);
 //        return null == foo || null == bar ? foo == bar : foo.equals(bar);
     }
 
@@ -67,11 +68,11 @@ public final class StringUtils {
 
     /////////////
     //    字符串拼接,线程安全
-    public static <T extends Object> String buffer(T... array) {
+    public static <T> String buffer(T... array) {
         return buffer("", array);
     }
 
-    public static <T extends Object> String buffer(String join, T... array) {
+    public static <T> String buffer(String join, T... array) {
         if (array == null || array.length <= 0) return "";
 
         if (join == null) join = "";
@@ -83,12 +84,12 @@ public final class StringUtils {
         return s.substring(join.length());
     }
 
-    public static <T extends Object> String builder(T... array) {
+    public static <T> String builder(T... array) {
         return builder("", array);
     }
 
     //    字符串拼接,线程不安全,效率高
-    public static <T extends Object> String builder(String join, T... array) {
+    public static <T> String builder(String join, T... array) {
         if (array == null || array.length <= 0) return "";
 
         if (join == null) join = "";
@@ -100,11 +101,11 @@ public final class StringUtils {
         return s.substring(join.length());
     }
 
-    public static <T extends Object> String buffer(List<T> array) {
+    public static <T> String buffer(List<T> array) {
         return buffer("", array);
     }
 
-    public static <T extends Object> String buffer(String join, List<T> array) {
+    public static <T> String buffer(String join, List<T> array) {
         if (array == null || array.isEmpty()) return "";
 
         if (join == null) join = "";
@@ -116,12 +117,12 @@ public final class StringUtils {
         return s.substring(join.length());
     }
 
-    public static <T extends Object> String builder(List<T> array) {
+    public static <T> String builder(List<T> array) {
         return builder("", array);
     }
 
     //    字符串拼接,线程不安全,效率高
-    public static <T extends Object> String builder(String join, List<T> array) {
+    public static <T> String builder(String join, List<T> array) {
         if (array == null || array.isEmpty()) return "";
 
         if (join == null) join = "";

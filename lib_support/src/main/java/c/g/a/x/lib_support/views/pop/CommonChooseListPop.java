@@ -19,20 +19,17 @@ import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 
 public class CommonChooseListPop extends PopupWindow implements PopupWindow.OnDismissListener {
 
-    private Context context;
-    private LayoutInflater inflater;
-
-    public ListView listView;
-    public DataAdapter adapter;
 
 
-    OnItemChooseListener listener;
+    public final ListView listView;
+    public final DataAdapter adapter;
 
 
-    public CommonChooseListPop(Context context, final OnItemChooseListener listener, Class viewholder) {
+    final OnItemChooseListener listener;
+
+
+    public CommonChooseListPop(Context context, final OnItemChooseListener listener, Class viewHolder) {
         super(context);
-        this.context = context;
-        inflater = LayoutInflater.from(context);
         this.listener = listener;
 
 //        setBackgroundDrawable(new BitmapDrawable());
@@ -46,7 +43,7 @@ public class CommonChooseListPop extends PopupWindow implements PopupWindow.OnDi
 
         setOnDismissListener(this);
 
-        View view = inflater.inflate(R.layout.pop_common_choose_list, null);
+        View view =  LayoutInflater.from(context).inflate(R.layout.pop_common_choose_list, null);
 
         setContentView(view);
 
@@ -60,7 +57,7 @@ public class CommonChooseListPop extends PopupWindow implements PopupWindow.OnDi
 
         listView = view.findViewById(R.id.listView);
 
-        adapter = new DataAdapter(context, listView, viewholder).singleChoice();
+        adapter = new DataAdapter(context, listView, viewHolder).singleChoice();
 
 
         listView.setAdapter(adapter);
