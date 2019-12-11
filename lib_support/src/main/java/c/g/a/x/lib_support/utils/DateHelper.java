@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import c.g.a.x.lib_support.android.utils.Logger;
 
@@ -167,7 +169,7 @@ public final class DateHelper {
         private Calendar calendar;
 
         private DateMnger(String dateStr, String pattern) throws Exception {
-            getCalendar().setTime(new SimpleDateFormat(pattern).parse(dateStr));
+            getCalendar().setTime(Objects.requireNonNull(new SimpleDateFormat(pattern, Locale.getDefault()).parse(dateStr)));
         }
 
         private DateMnger(Calendar calendar) {
@@ -206,7 +208,7 @@ public final class DateHelper {
         }
 
         public final String getString(String pattern) {
-            return new SimpleDateFormat(pattern).format(getCalendar().getTime());
+            return new SimpleDateFormat(pattern,Locale.getDefault()).format(getCalendar().getTime());
         }
 
         public final long getLong() {

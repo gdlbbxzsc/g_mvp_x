@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public final class StringUtils {
@@ -202,7 +203,7 @@ public final class StringUtils {
      **/
     public static String encrypt(String str, int pre, int suf, String rep) {
         if (StringUtils.isEmpty(str) || (str.length() <= pre + suf)) return str;
-        String regex = String.format("(?<=\\w{%d})\\w(?=\\w{%d})", pre, suf);
+        String regex = String.format(Locale.getDefault(), "(?<=\\w{%d})\\w(?=\\w{%d})", pre, suf);
         if (TextUtils.isEmpty(rep)) rep = "*";
         return str.replaceAll(regex, rep);
     }
