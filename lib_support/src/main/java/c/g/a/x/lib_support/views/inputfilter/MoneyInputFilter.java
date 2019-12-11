@@ -45,10 +45,16 @@ public class MoneyInputFilter implements InputFilter {
 //        加减号
         if (negative) sb.append("(+|-)?");
 //        自然数
-        sb.append(String.format("(%s[1-9][0-9]{0,%d})", zero ? "0|" : "", (pre_point_num_length - 1)));
+//        sb.append(String.format("(%s[1-9][0-9]{0,%d})", zero ? "0|" : "", (pre_point_num_length - 1)));
+        sb.append("(");
+        if (zero) sb.append("0|");
+        sb.append("[1-9][0-9]{0,").append(pre_point_num_length - 1).append("})");
+
 //        小数
-        if (suf_point_num_length > 0)
-            sb.append(String.format("(\\.\\d{0,%d})?", suf_point_num_length));
+        if (suf_point_num_length > 0) {
+//            sb.append(String.format("(\\.\\d{0,%d})?", suf_point_num_length));
+            sb.append("(\\.\\d{0,").append(suf_point_num_length).append("})?");
+        }
 
         sb.append("$");
 
