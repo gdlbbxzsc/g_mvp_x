@@ -107,8 +107,6 @@ public final class ClassUtils {
      *
      * @param context the application context
      * @return all the dex path
-     * @throws PackageManager.NameNotFoundException
-     * @throws IOException
      */
     public static List<String> getSourcePaths(Context context) throws PackageManager.NameNotFoundException, IOException {
         ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0);

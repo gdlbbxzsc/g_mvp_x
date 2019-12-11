@@ -86,7 +86,7 @@ public class AppLogicProcessor extends AbstractProcessor {
     }
 
 
-    public void writeToFile() {
+    private void writeToFile() {
         try {
 
             ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(

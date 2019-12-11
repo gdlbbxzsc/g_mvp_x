@@ -23,10 +23,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
-    public BaseActivity activity;
-    public Context context;
+    protected BaseActivity activity;
+    protected Context context;
 
-    public T binder;
+    protected T binder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

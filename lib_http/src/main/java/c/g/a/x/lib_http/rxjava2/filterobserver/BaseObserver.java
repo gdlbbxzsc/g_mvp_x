@@ -24,7 +24,7 @@ public abstract class BaseObserver<T extends BaseResponse> extends BaseFilter im
         this(context, false);
     }
 
-    public BaseObserver(Context context, boolean filterAllError) {
+    protected BaseObserver(Context context, boolean filterAllError) {
         super(context);
 
         this.filterAllError = filterAllError;

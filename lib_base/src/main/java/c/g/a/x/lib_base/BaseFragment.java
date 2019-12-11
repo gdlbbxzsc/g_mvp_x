@@ -23,10 +23,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment implements EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
-    public BaseFragment fragment;
-    public Context context;
+    protected BaseFragment fragment;
+    protected Context context;
 
-    public D binder;
+    protected D binder;
 
 
     private boolean isVisibleToUser;

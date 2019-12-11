@@ -174,11 +174,11 @@ public final class ApkVersionHelper {
 
     private final class NoticeDialog extends Dialog {
 
-        public final TextView textView2;
-        public final TextView btn_dialog_no;
-        public final TextView btn_dialog_yes;
+        final TextView textView2;
+        final TextView btn_dialog_no;
+        final TextView btn_dialog_yes;
 
-        public NoticeDialog(Context context, List<String> list, boolean mustInstall, MyDialog.OnClickListener listener) {
+        NoticeDialog(Context context, List<String> list, boolean mustInstall, MyDialog.OnClickListener listener) {
             super(context, R.style.DialogTheme);
             Objects.requireNonNull(getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -230,9 +230,9 @@ public final class ApkVersionHelper {
 
     private final class ProgressDialog extends Dialog {
 
-        public final ProgressBar progressBar;
+        final ProgressBar progressBar;
 
-        public ProgressDialog(Context context) {
+        ProgressDialog(Context context) {
             super(context, R.style.DialogTheme);
             getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             requestWindowFeature(Window.FEATURE_NO_TITLE);

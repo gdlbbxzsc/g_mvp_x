@@ -32,7 +32,7 @@ public abstract class BaseHttpClient {
     private int readTimeout = 8;
     private int writeTimeout = 8;
 
-    final Retrofit retrofit;
+    private final Retrofit retrofit;
 
     public BaseHttpClient() {
 
@@ -126,25 +126,25 @@ public abstract class BaseHttpClient {
         return retrofit.create(cls);
     }
 
-    public abstract String getBaseUrl();
+    protected abstract String getBaseUrl();
 
-    public int getConnectTimeout() {
+    protected int getConnectTimeout() {
         return connectTimeout;
     }
 
-    public int getReadTimeout() {
+    protected int getReadTimeout() {
         return readTimeout;
     }
 
-    public int getWriteTimeout() {
+    protected int getWriteTimeout() {
         return writeTimeout;
     }
 
-    public Retrofit.Builder initRetrofitBuilder(Retrofit.Builder builder) {
+    protected Retrofit.Builder initRetrofitBuilder(Retrofit.Builder builder) {
         return builder;
     }
 
-    public OkHttpClient.Builder initOkHttpBuilder(OkHttpClient.Builder builder) {
+    protected OkHttpClient.Builder initOkHttpBuilder(OkHttpClient.Builder builder) {
         return builder;
     }
 }
