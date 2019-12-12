@@ -5,9 +5,9 @@ import android.app.Application;
 import androidx.room.Room;
 
 import c.g.a.x.lib_db.BuildConfig;
-import c.g.a.x.lib_db.MyObjectBox;
 import c.g.a.x.lib_db.base.room.DBMnger;
 import c.g.a.x.lib_db.base.room.MyMigrations;
+import c.g.a.x.lib_db.objectboxTest.MyObjectBox;
 import c.g.a.x.lib_support.android.utils.Logger;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;

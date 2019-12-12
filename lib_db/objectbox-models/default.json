@@ -29,9 +29,15 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    7305773433998199216,
+    8374021792860923118
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4904854998195105672,
+    8565264452145488149
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
