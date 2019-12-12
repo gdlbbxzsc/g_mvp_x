@@ -5,7 +5,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import c.g.a.x.lib_db.base.BaseDao;
+import c.g.a.x.lib_db.base.room.BaseDao;
 
 @Dao
 public interface RoomTestDao extends BaseDao<RoomTest> {

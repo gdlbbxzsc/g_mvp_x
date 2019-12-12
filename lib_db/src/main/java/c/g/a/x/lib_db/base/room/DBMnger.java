@@ -1,4 +1,4 @@
-package c.g.a.x.lib_db.base;
+package c.g.a.x.lib_db.base.room;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

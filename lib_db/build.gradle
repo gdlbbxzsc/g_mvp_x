@@ -65,9 +65,9 @@ dependencies {
     api "androidx.room:room-runtime:$dependencies_version.room_version"
     annotationProcessor "androidx.room:room-compiler:$dependencies_version.room_version"
 
-
-    api "io.objectbox:objectbox-android:$dependencies_version.objectbox_version"
+    //   浏览器访问 http://localhost:8090/index.html 不好使执行命令监听端口 adb forward tcp:8090 tcp:8090
     debugImplementation "io.objectbox:objectbox-android-objectbrowser:$dependencies_version.objectbox_version"
- //   浏览器访问 http://localhost:8090/index.html
+    releaseImplementation  "io.objectbox:objectbox-android:$dependencies_version.objectbox_version"
+
 }
 apply plugin: 'io.objectbox'
