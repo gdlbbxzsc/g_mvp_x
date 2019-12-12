@@ -40,7 +40,7 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         Playlist vo = new Playlist();
         vo.name = "gdl";
         box.insert(vo);
-        vo = box.aa();
+        vo = box.select("gdl");
         Logger.e(vo.id, "======== ", vo.name);
     }
 
