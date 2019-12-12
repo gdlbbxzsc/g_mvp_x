@@ -18,7 +18,7 @@ import io.objectbox.android.AndroidObjectBrowser;
 
 public final class DBHelper {
 
-    public static Application application;
+    static Application application;
 
 //    public static DBHelper getInstance() {
 //        return InnerInstance.INSTANCE;
