@@ -19,7 +19,8 @@ public class DBApplication extends BaseAppLogic {
     public void onCreate() {
         super.onCreate();
         Logger.e("DBApplication onCreate");
-        DBHelper.getInstance().application = getApplication();
+        DBHelper.application = getApplication();
+
     }
 
     @Override

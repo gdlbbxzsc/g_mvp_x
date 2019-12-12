@@ -66,8 +66,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$dependencies_version.room_version"
 
 
-//    api "io.objectbox:objectbox-android:$dependencies_version.objectbox_version"
-//    debugImplementation "io.objectbox:objectbox-android-objectbrowser:$dependencies_version.objectbox_version"
-
+    api "io.objectbox:objectbox-android:$dependencies_version.objectbox_version"
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:$dependencies_version.objectbox_version"
+ //   浏览器访问 http://localhost:8090/index.html
 }
-//apply plugin: 'io.objectbox'
+apply plugin: 'io.objectbox'

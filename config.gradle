@@ -105,7 +105,7 @@ dependencies_version.arouter_register = "1.0.2"
 
 dependencies_version.room_version = "2.2.0"
 
-//dependencies_version.objectbox_version = "2.4.1"
+dependencies_version.objectbox_version = "2.4.1"
 
 ext.dependencies_version = dependencies_version
 

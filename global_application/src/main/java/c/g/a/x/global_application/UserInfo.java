@@ -8,10 +8,9 @@ import c.g.a.x.lib_http.application.HttpHelper;
 
 public final class UserInfo {
 
-    public static UserInfo getInstance() {
+    static UserInfo getInstance() {
         return InnerInstance.INSTANCE;
     }
-
 
     private static class InnerInstance {
         private static final UserInfo INSTANCE = new UserInfo();
@@ -20,7 +19,7 @@ public final class UserInfo {
     private UserInfo() {
     }
 
-    public boolean isLogin() {
+    boolean isLogin() {
         return false;
     }
 
