@@ -14,7 +14,7 @@ public abstract class ViewHolder<T> {
 
     protected DataAdapter adapter;
 
-    public int position;
+//    public int position;
 
     public T item;
 
@@ -38,6 +38,10 @@ public abstract class ViewHolder<T> {
             super(itemView);
             this.viewHolder = viewHolder;
         }
+    }
+
+    protected int position() {
+        return adapter.getPosition(item);
     }
 
     final OnSPClickListener listener = new OnSPClickListener() {

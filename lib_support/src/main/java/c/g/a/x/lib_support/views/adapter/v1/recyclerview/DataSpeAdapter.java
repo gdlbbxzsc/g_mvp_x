@@ -9,11 +9,11 @@ import java.util.List;
 
 /**
  * q1:flushDatas 返回了一个adapter pos 可能是要 调用recyclerview特有的刷新功能。但是还没有调用，真实使用时再说吧。
- * **/
+ **/
 public class DataSpeAdapter extends DataAdapter {
 
 
-    final SparseArray<  KV> adapter_pos_2_true_pos_map = new SparseArray<>();
+    final SparseArray<KV> adapter_pos_2_true_pos_map = new SparseArray<>();
     int dataCount = 0;
 
     final OnGetSon onGetSon;
