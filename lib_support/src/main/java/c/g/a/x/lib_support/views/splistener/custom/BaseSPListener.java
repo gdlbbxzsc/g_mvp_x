@@ -9,15 +9,12 @@ public abstract class BaseSPListener {
 
     private static final int MIN_CLICK_DELAY_TIME = 350;
 
-    private long lastClickTime = 0;
+    private volatile long lastClickTime = 0;
 
     boolean canClick() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastClickTime < MIN_CLICK_DELAY_TIME) {
-            lastClickTime = currentTime;
-            return false;
-        }
+        long time = currentTime - lastClickTime;
         lastClickTime = currentTime;
-        return true;
+        return time > MIN_CLICK_DELAY_TIME;
     }
 }
