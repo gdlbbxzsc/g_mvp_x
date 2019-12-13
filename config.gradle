@@ -89,12 +89,12 @@ static def initRepositories(RepositoryHandler handler) {
 //    handler.mavenCentral()最古老的仓库
 
     //如果不好使可以到https://maven.aliyun.com/mvn/view中去找相关的仓库或者其他一些开放仓库
-    handler.jcenter()//最大的最好用的仓库
-    handler.jcenter() { url 'http://jcenter.bintray.com/' }
+//    handler.jcenter()//最大的最好用的仓库
+//    handler.jcenter() { url 'http://jcenter.bintray.com/' }
     handler.maven { url 'https://maven.aliyun.com/repository/jcenter/' }
 
-    handler.google()
-    handler.maven { url "https://maven.google.com" }
+//    handler.google()
+//    handler.maven { url "https://maven.google.com" }
     handler.maven { url "https://maven.aliyun.com/repository/google" }
 
     handler.maven { url "https://jitpack.io" }
