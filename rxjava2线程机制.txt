@@ -1,0 +1,195 @@
+1.从subscribe方法开始由下至上检索subscribeOn方法和受其影响的操作符(doOnSubscribe)，再由上至下检索observeOn方法和受其影响的操作符(其余操作符) 
+2.subscribeOn设定的线程影响所有操作符,observeOn设定的线程只影响特定操作符但优先级更高 
+3.以subscribeOn为“分隔符”分隔所有doOnSubscribe为一个“单位组”，按队列执行“单位组”。
+  每个“单位组”中doOnSubscribe按先后顺序入栈，按出栈顺序执行。
+  按由下至上规则(机制1)subscribeOn只能影响其上(按检索顺序是其后)。
+  存在默认subscribeOn方法，当前线程(由下至上无subscribeOn管理的操作符由默认管理)。
+4.以observeOn为“分隔符”分隔所有“其余操作符”(机制1)为一个“单位组”，按队列执行“单位组”。
+  每个“单位组”中的所有操作符(doFinally除外)按队列执行，所有doFinally在该单位组中最后按顺序执行。
+  按由上至下规则机制(1)observeOn只能影响其下(按检索顺序是其后)。
+  存在默认observeOn方法，最后一个subscribeOn设定的线程(由上至下无observeOn管理的操作符由默认管理)。
+5.最后一个observeOn方法后的doFinally才在最后执行(subscribe之后)，其他的都在其所在“单位组”中最后执行。
+==========================================
+执行代码：
+ Observable.just(0)
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "0", "1", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "0", "1", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "0", "1", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "0", "1", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "0", "2", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "0", "2", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "0", "2", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "0", "2", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "0", "3", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "0", "3", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "0", "3", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "0", "3", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ 
+ .subscribeOn(Schedulers.io())
+ 
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "1", "1", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "1", "1", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "1", "1", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "1", "1", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "1", "2", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "1", "2", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "1", "2", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "1", "2", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "1", "3", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "1", "3", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "1", "3", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "1", "3", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ 
+ .subscribeOn(Schedulers.newThread())
+ 
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "2", "1", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "2", "1", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "2", "1", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "2", "1", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "2", "2", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "2", "2", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "2", "2", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "2", "2", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "2", "3", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "2", "3", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "2", "3", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "2", "3", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ 
+ .observeOn(Schedulers.newThread())
+ 
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "3", "1", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "3", "1", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "3", "1", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "3", "1", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "3", "2", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "3", "2", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "3", "2", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "3", "2", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "3", "3", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "3", "3", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "3", "3", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "3", "3", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ 
+ .observeOn(Schedulers.io())
+ 
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "4", "1", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "4", "1", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "4", "1", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "4", "1", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "4", "2", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "4", "2", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "4", "2", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "4", "2", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "4", "3", "===+++>", Thread.currentThread().getName()))
+ .doFinally(() -> Logger.e("doFinally", "4", "3", "===+++>", Thread.currentThread().getName()))
+ .doOnNext(integer -> Logger.e("doOnNext", "4", "3", "===+++>", Thread.currentThread().getName()))
+ .map(integer -> {
+     Logger.e("map", "4", "3", "===+++>", Thread.currentThread().getName());
+     return 0;
+ })
+ .subscribe(integer -> Logger.e("subscribe", "===+++>", Thread.currentThread().getName()));
+----------------------------------------
+执行结果：
+doOnSubscribe21===+++>main
+doOnSubscribe22===+++>main
+doOnSubscribe23===+++>main
+doOnSubscribe31===+++>main
+doOnSubscribe32===+++>main
+doOnSubscribe33===+++>main
+doOnSubscribe41===+++>main
+doOnSubscribe42===+++>main
+doOnSubscribe43===+++>main
+doOnSubscribe11===+++>RxNewThreadScheduler-1
+doOnSubscribe12===+++>RxNewThreadScheduler-1
+doOnSubscribe13===+++>RxNewThreadScheduler-1
+doOnSubscribe01===+++>RxCachedThreadScheduler-1
+doOnSubscribe02===+++>RxCachedThreadScheduler-1
+doOnSubscribe03===+++>RxCachedThreadScheduler-1
+doOnNext01===+++>RxCachedThreadScheduler-1
+map01===+++>RxCachedThreadScheduler-1
+doOnNext02===+++>RxCachedThreadScheduler-1
+map02===+++>RxCachedThreadScheduler-1
+doOnNext03===+++>RxCachedThreadScheduler-1
+map03===+++>RxCachedThreadScheduler-1
+doOnNext11===+++>RxCachedThreadScheduler-1
+map11===+++>RxCachedThreadScheduler-1
+doOnNext12===+++>RxCachedThreadScheduler-1
+map12===+++>RxCachedThreadScheduler-1
+doOnNext13===+++>RxCachedThreadScheduler-1
+map13===+++>RxCachedThreadScheduler-1
+doOnNext21===+++>RxCachedThreadScheduler-1
+map21===+++>RxCachedThreadScheduler-1
+doOnNext22===+++>RxCachedThreadScheduler-1
+map22===+++>RxCachedThreadScheduler-1
+doOnNext23===+++>RxCachedThreadScheduler-1
+map23===+++>RxCachedThreadScheduler-1
+doFinally23===+++>RxCachedThreadScheduler-1
+doFinally22===+++>RxCachedThreadScheduler-1
+doFinally21===+++>RxCachedThreadScheduler-1
+doFinally13===+++>RxCachedThreadScheduler-1
+doFinally12===+++>RxCachedThreadScheduler-1
+doFinally11===+++>RxCachedThreadScheduler-1
+doFinally03===+++>RxCachedThreadScheduler-1
+doFinally02===+++>RxCachedThreadScheduler-1
+doFinally01===+++>RxCachedThreadScheduler-1
+doOnNext31===+++>RxNewThreadScheduler-2
+map31===+++>RxNewThreadScheduler-2
+doOnNext32===+++>RxNewThreadScheduler-2
+map32===+++>RxNewThreadScheduler-2
+doOnNext33===+++>RxNewThreadScheduler-2
+map33===+++>RxNewThreadScheduler-2
+doFinally33===+++>RxNewThreadScheduler-2
+doFinally32===+++>RxNewThreadScheduler-2
+doFinally31===+++>RxNewThreadScheduler-2
+doOnNext41===+++>RxCachedThreadScheduler-2
+map41===+++>RxCachedThreadScheduler-2
+doOnNext42===+++>RxCachedThreadScheduler-2
+map42===+++>RxCachedThreadScheduler-2
+doOnNext43===+++>RxCachedThreadScheduler-2
+map43===+++>RxCachedThreadScheduler-2
+subscribe===+++>RxCachedThreadScheduler-2
+doFinally43===+++>RxCachedThreadScheduler-2
+doFinally42===+++>RxCachedThreadScheduler-2
+doFinally41===+++>RxCachedThreadScheduler-2
