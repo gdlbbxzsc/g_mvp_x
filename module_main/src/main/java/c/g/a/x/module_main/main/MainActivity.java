@@ -4,10 +4,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
+import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 
 
@@ -25,7 +28,6 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         return new Presenter<>(this);
     }
 
-    Disposable dd = null;
 
     @Override
     protected void initView() {
@@ -41,6 +43,25 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        box.insert(vo);
 //        vo = box.select("gdl");
 //        Logger.e(vo.id, "======== ", vo.name);
+
+        Observable.just(0)
+
+
+
+                .observeOn(Schedulers.newThread())
+                .doFinally(() -> Logger.e("doFinally", "3", "1", "===+++>", Thread.currentThread().getName()))
+                .doOnNext(integer -> Logger.e("doOnNext", "3", "1", "===+++>", Thread.currentThread().getName()))
+                .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "3", "1", "===+++>", Thread.currentThread().getName()))
+                .subscribeOn(Schedulers.newThread())
+
+                .observeOn(Schedulers.io())
+                .doFinally(() -> Logger.e("doFinally", "2", "1", "===+++>", Thread.currentThread().getName()))
+                .doOnNext(integer -> Logger.e("doOnNext", "2", "1", "===+++>", Thread.currentThread().getName()))
+                .doOnSubscribe(disposable -> Logger.e("doOnSubscribe", "2", "1", "===+++>", Thread.currentThread().getName()))
+                .subscribeOn(Schedulers.io())
+
+                .subscribe(integer -> Logger.e("subscribe", "===+++>", Thread.currentThread().getName()));
+
 
     }
 

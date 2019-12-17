@@ -20,18 +20,17 @@
 建议：
 1.代码习惯：要按检索顺序在受影响操作符前调用对应的subscribeOn和observeOn。且不要用默认subscribeOn和observeOn。
 2.如无必要，勿增subscribeOn
-3.代码习惯：要按由下至上顺序顺序先写subscribeOn->doOnSubscribe->其他操作符->doFinally->observeOn这样。
+3.代码习惯：要按由下至上顺序顺序先写subscribeOn->doOnSubscribe->doFinally->其他操作符->observeOn这样。
   例如：        Observable.just(0)
-
                      .observeOn(Schedulers.io())
-                     .doFinally(() ->{})
                      .doOnNext(integer -> {})
+                     .doFinally(() ->{})
                      .doOnSubscribe(disposable -> {})
                      .subscribeOn(Schedulers.io())
 
                      .observeOn(Schedulers.io())
-                     .doFinally(() ->{})
                      .doOnNext(integer -> {})
+                     .doFinally(() ->{})
                      .doOnSubscribe(disposable -> {})
                      .subscribeOn(Schedulers.io())
 
