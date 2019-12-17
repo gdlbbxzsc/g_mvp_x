@@ -7,6 +7,7 @@ import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
+import io.reactivex.disposables.Disposable;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 
 
@@ -24,6 +25,7 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         return new Presenter<>(this);
     }
 
+    Disposable dd = null;
 
     @Override
     protected void initView() {
