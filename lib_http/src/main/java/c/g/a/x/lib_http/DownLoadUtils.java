@@ -4,7 +4,13 @@ package c.g.a.x.lib_http;
 import android.content.Context;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
+import c.g.a.x.lib_http.http.UrlAction;
 import c.g.a.x.lib_support.android.utils.AlbumNotifyHelper;
 import c.g.a.x.lib_support.android.utils.FileHelper;
 import c.g.a.x.lib_support.utils.FileUtils;
@@ -22,7 +28,7 @@ import okhttp3.ResponseBody;
 
 public final class DownLoadUtils {
     public static void downloadImage(Context context, String url) {
-        Observable<ResponseBody> observable = HttpAction.context(context).url(url).toObservable();
+        Observable<ResponseBody> observable = UrlAction.<ResponseBody>context(context).url(url).toObservable();
 
         observable
                 .observeOn(Schedulers.computation()) // 用于计算任务
@@ -39,4 +45,6 @@ public final class DownLoadUtils {
                             SysToast.showToastShort(context, "下载失败");
                         });
     }
+
+
 }

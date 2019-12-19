@@ -34,26 +34,31 @@ public class BaseAction<S> {
         return observable;
     }
 
-    public final <O extends BaseObserver> void subscribe(O o) {
+    public <O extends BaseObserver> void subscribe(O o) {
         checkNetWork();
         observable.subscribe(o);
     }
 
     //默认调用，如无意外无需调用
-    public final BaseAction commonSchedulers() {
+    public final BaseAction<S> commonSchedulers() {
         observable = observable.compose(new CommonSchedulers<>());
         return this;
     }
 
     //若存在其他doOnSubscribe,且有可能调用disposable，那么尽量让progress按检索顺序(由下至上顺序)最后执行
-    public final BaseAction progress() {
+    public final BaseAction<S> progress() {
         observable = observable.compose(new ProgressSchedulers<>());
         return this;
     }
 
     //默认调用，如无意外无需调用
-    public final BaseAction checkNetWork() {
+    public final BaseAction<S> checkNetWork() {
         observable = observable.compose(new NetWorkSchedulers<>());
+        return this;
+    }
+ 
+    protected final <T extends ObservableTransformer<S, S>> BaseAction<S> compose(T t) {
+        observable = observable.compose(t);
         return this;
     }
 
@@ -92,4 +97,5 @@ public class BaseAction<S> {
                     .subscribeOn(AndroidSchedulers.mainThread());
         }
     }
+
 }
