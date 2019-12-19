@@ -5,7 +5,6 @@ import android.content.Context;
 
 import java.io.File;
 
-import c.g.a.x.lib_http.http.HttpAction;
 import c.g.a.x.lib_support.android.utils.AlbumNotifyHelper;
 import c.g.a.x.lib_support.android.utils.FileHelper;
 import c.g.a.x.lib_support.utils.FileUtils;
