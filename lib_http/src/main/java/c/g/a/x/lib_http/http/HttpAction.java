@@ -26,17 +26,17 @@ import okhttp3.RequestBody;
  * Created by Administrator on 2017/12/4.
  */
 
-public final class HttpAction1<R extends BaseResponse> extends BaseAction<R> {
+public final class HttpAction<R extends BaseResponse> extends BaseAction<R> {
 
-    public static <S extends BaseResponse> HttpAction1<S> context(Context context) {
-        return new HttpAction1<>(context);
+    public static <S extends BaseResponse> HttpAction<S> context(Context context) {
+        return new HttpAction<>(context);
     }
 
-    protected HttpAction1(Context context) {
+    protected HttpAction(Context context) {
         super(context);
     }
 
-    public final HttpAction1 post(BaseRequest<R> request) {
+    public final HttpAction post(BaseRequest<R> request) {
         try {
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(request));
 
@@ -47,7 +47,7 @@ public final class HttpAction1<R extends BaseResponse> extends BaseAction<R> {
         return this;
     }
 
-    public final HttpAction1 get(BaseRequest<R> request) {
+    public final HttpAction get(BaseRequest<R> request) {
         try {
             createObservable(request.getRequestPath(), createQueryMap(request));
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public final class HttpAction1<R extends BaseResponse> extends BaseAction<R> {
         return this;
     }
 
-    public final HttpAction1 get(GetUrlPathRequest<R> request) {
+    public final HttpAction get(GetUrlPathRequest<R> request) {
         try {
             createObservable(request.getRequestPath(), createUrlPath(request));
         } catch (Exception e) {

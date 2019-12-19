@@ -41,7 +41,7 @@ public class LogoutInterceptor implements Interceptor {
 //        RefreshTokenRequest refreshTokenRequest = new RefreshTokenRequest();
 //        refreshTokenRequest.refreshToken = HttpHelper.getInstance().refreshToken;
 //
-//        retrofit2.Response<RefreshTokenResponse> refreshTokenResponse = HttpAction1.getInstance().get(refreshTokenRequest).subscribe();
+//        retrofit2.Response<RefreshTokenResponse> refreshTokenResponse = HttpAction.getInstance().get(refreshTokenRequest).subscribe();
 //        if (refreshTokenResponse.body().getCode() != 412) {
 //            RefreshTokenResponse.DataBean dataBean = refreshTokenResponse.body().getData();
 //            String access_token = dataBean.getAccess_token();
