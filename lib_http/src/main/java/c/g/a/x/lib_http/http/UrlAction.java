@@ -14,6 +14,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
@@ -57,6 +58,11 @@ public final class UrlAction<R extends ResponseBody> extends BaseAction<R> {
     public final UrlAction<R> downPhoto() {
         observable = observable.compose(new DownPhotoTransformer<>());
         return this;
+    }
+
+    public final void downPhoto(Consumer<? super R> onNext, Consumer<? super Throwable> onError) {
+        downPhoto();
+        observable.subscribe(onNext, onError);
     }
 
     public final class DownPhotoTransformer<R extends ResponseBody> implements ObservableTransformer<R, R> {
