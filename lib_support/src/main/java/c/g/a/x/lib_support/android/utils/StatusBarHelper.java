@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import java.io.File;
@@ -29,7 +28,6 @@ public final class StatusBarHelper {
 
 
     private static void init(Activity activity) {
-
         getStatusBarHeight(activity);
         getNavigationBarHeight(activity);
     }
@@ -91,20 +89,27 @@ public final class StatusBarHelper {
             } else if ("0".equals(navBarOverride)) {
                 hasNavigationBar = true;
             }
-        } catch (Exception e) {e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return hasNavigationBar;
     }
 
 
     /**
-     * @param useThemestatusBarColor 是否要状态栏的颜色，不设置则为透明色
-     * @param orOtherColor           不透明时颜色
+     * 状态栏的颜色透明
      */
-    public static void setStatusBar(Activity activity, boolean useThemestatusBarColor, int orOtherColor) {
+    public static void setStatusBarTransparent(Activity activity) {
+        setStatusBarTransparent(activity, Color.TRANSPARENT);
+    }
+
+    /**
+     * 状态栏的颜色
+     */
+    public static void setStatusBarTransparent(Activity activity, int orOtherColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
             activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(useThemestatusBarColor ? orOtherColor : Color.TRANSPARENT);
+            activity.getWindow().setStatusBarColor(orOtherColor);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4到5.0
             WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
@@ -164,8 +169,7 @@ public final class StatusBarHelper {
     public static boolean isFlyme() {
         if (flyme != null) return flyme;
         try {
-            // Invoke Build.hasSmartBar()
-            final Method method = Build.class.getMethod("hasSmartBar");
+            Build.class.getMethod("hasSmartBar");
             flyme = true;
         } catch (final Exception e) {
             flyme = false;
@@ -177,8 +181,8 @@ public final class StatusBarHelper {
      * 改变魅族的状态栏字体为黑色，要求FlyMe4以上
      */
     private static void processFlyMe(Activity activity, boolean isLightStatusBar) {
-        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         try {
+            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
             Class<?> instance = Class.forName("android.view.WindowManager$LayoutParams");
             int value = instance.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON").getInt(lp);
             Field field = instance.getDeclaredField("meizuFlags");
@@ -198,13 +202,13 @@ public final class StatusBarHelper {
      * 改变小米的状态栏字体颜色为黑色, 要求MIUI6以上  lightStatusBar为真时表示黑色字体
      */
     private static void processMIUI(Activity activity, boolean lightStatusBar) {
-        Class<? extends Window> clazz = activity.getWindow().getClass();
+
         try {
-            int darkModeFlag;
             Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
             Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-            darkModeFlag = field.getInt(layoutParams);
-            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+            int darkModeFlag = field.getInt(layoutParams);
+
+            Method extraFlagField = activity.getWindow().getClass().getMethod("setExtraFlags", int.class, int.class);
             extraFlagField.invoke(activity.getWindow(), lightStatusBar ? darkModeFlag : 0, darkModeFlag);
         } catch (Exception e) {
             e.printStackTrace();
