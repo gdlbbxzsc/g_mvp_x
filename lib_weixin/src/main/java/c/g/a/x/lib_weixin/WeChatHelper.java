@@ -31,6 +31,7 @@ import c.g.a.x.lib_weixin.http.WxAccessTokenResponse;
 import c.g.a.x.lib_weixin.http.WxHttpHelper;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -80,7 +81,13 @@ public final class WeChatHelper {
 
 
     public final boolean loginForUserInfo(OnAccessTokenToUserinfoListener listener) {
-        RxBus.register0(this, WxUserInfo.class, listener::onAccessTokenToUserinfoListener);
+        RxBus.register0(this, WxUserInfo.class, new Consumer<WxUserInfo>() {
+            @Override
+            public void accept(WxUserInfo wxUserInfo) throws Exception {
+                listener.onAccessTokenToUserinfoListener(wxUserInfo);
+                RxBus.removeDisposable0(this, WxUserInfo.class);
+            }
+        });
 
         boolean b = login();
         if (!b) RxBus.removeDisposable0(this, WxUserInfo.class);
