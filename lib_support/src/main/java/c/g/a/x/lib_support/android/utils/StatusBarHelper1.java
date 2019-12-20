@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
 //           //这样半透明+白=灰, 状态栏的文字能看得清
 //           StatusBarUtil.setStatusBarColor(this,0x55000000);
 //           }
-public class sss {
+public class StatusBarHelper1 {
 
     //代码实现android:fitsSystemWindows
     public static void setRootViewFitsSystemWindows(Activity activity, boolean fitSystemWindows) {
