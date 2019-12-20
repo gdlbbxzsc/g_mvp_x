@@ -2,6 +2,7 @@ package c.g.a.x.lib_http.base;
 
 
 import java.io.InputStream;
+import java.net.Proxy;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.Certificate;
@@ -93,6 +94,8 @@ public abstract class BaseHttpClient {
                 .readTimeout(readTimeout, TimeUnit.SECONDS)
                 //设置写信息超时
                 .writeTimeout(writeTimeout, TimeUnit.SECONDS)
+                //禁止代理
+                .proxy(Proxy.NO_PROXY)
                 //                  验证服务器信息是否可信
                 .hostnameVerifier((s, sslSession) -> true);
 
