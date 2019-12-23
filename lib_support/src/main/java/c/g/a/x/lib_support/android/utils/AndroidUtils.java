@@ -229,8 +229,8 @@ public final class AndroidUtils {
     }
 
     public static int getWidthInDp(Context context) {
-        final float height = context.getResources().getDisplayMetrics().heightPixels;
-        return px2dip(context, height);
+        final float width = context.getResources().getDisplayMetrics().widthPixels;
+        return px2dip(context, width);
     }
 
     public static int dip2px(Context context, float dpValue) {
