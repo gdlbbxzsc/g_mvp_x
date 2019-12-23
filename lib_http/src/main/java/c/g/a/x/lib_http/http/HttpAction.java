@@ -112,4 +112,33 @@ public final class HttpAction<R extends BaseResponse> extends BaseAction<R> {
 
         return sb.substring(Constant.Data.JOIN_SEPARATOR.length());
     }
+
+//    public Flowable<Upload2ossResponse> upload2oss(String path, String fileType) {
+//
+//        File file = new File(path);
+//        String fileName = file.getName();
+//        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+//
+//        MultipartBody.Builder builder = new MultipartBody.Builder();
+//        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+//        builder.addFormDataPart("file", file.getName(), fileBody);
+//
+//
+//        builder.addFormDataPart("fileType", fileType);
+//        builder.addFormDataPart("suffixName", suffixName);
+//        /////////
+//        builder.setType(MultipartBody.FORM);
+//
+//        MultipartBody multipartBody = builder.build();
+//
+//        return applySchedulers(HttpClient.getHttpService().upload2oss(multipartBody));
+//    }
+//
+//
+//    public Flowable<ResponseBody> uploadFiles(ImageItem items) {
+//        File file = new File(items.path);
+//        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("file", items.name, fileBody);
+//        return applySchedulers(HttpClient.getHttpService().uploadFiles(body));
+//    }
 }

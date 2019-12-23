@@ -121,6 +121,10 @@ public final class DateHelper {
 
     }
 
+    public static LastTimeMnger getLastTimeMnger() {
+        return new LastTimeMnger();
+    }
+
     public static LastTimeMnger getLastTimeMnger(long msec) {
         return new LastTimeMnger(msec);
     }
@@ -208,7 +212,7 @@ public final class DateHelper {
         }
 
         public final String getString(String pattern) {
-            return new SimpleDateFormat(pattern,Locale.getDefault()).format(getCalendar().getTime());
+            return new SimpleDateFormat(pattern, Locale.getDefault()).format(getCalendar().getTime());
         }
 
         public final long getLong() {
@@ -353,77 +357,80 @@ public final class DateHelper {
         // false：05-08-22
         private boolean retainZeroTerm = true;
 
-        public final long all_milsecs;
+        private long all_milsec;
 
-        public long all_secs;
-        public long all_mins;
-        public long all_hours;
-        public long all_days;
-        public long all_months;
-        public long all_years;
+        private long all_sec;
+        private long all_min;
+        private long all_hour;
+        private long all_day;
+        private long all_month;
+        private long all_year;
 
-        public long last_secs;
-        public long last_mins;
-        public long last_hours;
-        public long last_days;
-        public long last_months;
-        public long last_years;
+        private long last_sec = -1;
+        private long last_min = -1;
+        private long last_hour = -1;
+        private long last_day = -1;
+        private long last_month = -1;
+        private long last_year = -1;
 
         private String time_ago_tag;
 
-        private LastTimeMnger(long msec) {
-            this.all_milsecs = msec;
-            Logger.e("LastTimeMnger d-value====>", msec);
-            getLastTime();
+        private LastTimeMnger() {
         }
 
-        private void getLastTime() {
-            if (all_milsecs <= 0) return;
+        private LastTimeMnger(long msec) {
+            initLastTime(msec);
+        }
 
-            all_secs = all_milsecs / 1000;
-            last_secs = all_secs;
+        public final void initLastTime(long msec) {
+            Logger.e("LastTimeMnger d-value====>", msec);
+            if (all_milsec <= 0) return;
+            this.all_milsec = msec;
+
+            all_sec = all_milsec / 1000;
+            last_sec = all_sec;
             //<1min
-            if (all_secs < 60) {
+            if (all_sec < 60) {
                 time_ago_tag = "刚刚";
                 return;
             }
 
-            last_mins = all_mins = all_secs / 60;
-            last_secs = all_secs % 60;
+            last_min = all_min = all_sec / 60;
+            last_sec = all_sec % 60;
             //<1hour
-            if (all_mins < 60) {
-                time_ago_tag = all_mins + "分钟前";
+            if (all_min < 60) {
+                time_ago_tag = all_min + "分钟前";
                 return;
             }
 
-            last_hours = all_hours = all_mins / 60;
-            last_mins = all_mins % 60;
+            last_hour = all_hour = all_min / 60;
+            last_min = all_min % 60;
             //<1 day
-            if (all_hours < 24) {
-                time_ago_tag = all_hours + "小时前";
+            if (all_hour < 24) {
+                time_ago_tag = all_hour + "小时前";
                 return;
             }
 
-            last_days = all_days = all_hours / 24;
-            last_hours = all_hours % 24;
+            last_day = all_day = all_hour / 24;
+            last_hour = all_hour % 24;
             //<1 month
-            if (all_days < 30) {
-                time_ago_tag = all_days + "天前";
+            if (all_day < 30) {
+                time_ago_tag = all_day + "天前";
                 return;
             }
 
-            last_months = all_months = all_days / 30;
-            last_days = all_days % 30;
+            last_month = all_month = all_day / 30;
+            last_day = all_day % 30;
             //<1 year
-            if (all_months < 12) {
-                time_ago_tag = all_months + "月前";
+            if (all_month < 12) {
+                time_ago_tag = all_month + "月前";
                 return;
             }
 
-            last_years = all_years = all_months / 12;
-            last_months = all_months % 12;
+            last_year = all_year = all_month / 12;
+            last_month = all_month % 12;
 
-            time_ago_tag = all_years + "年前";
+            time_ago_tag = all_year + "年前";
         }
 
         public final LastTimeMnger retainZeroValue() {
@@ -450,6 +457,88 @@ public final class DateHelper {
             return time_ago_tag;
         }
 
+        ////////////
+        public final long getAllMilSec() {
+            return all_milsec;
+        }
+
+        public final long getAllSec() {
+            return all_sec;
+        }
+
+        public final long getAllMin() {
+            return all_min;
+        }
+
+        public final long getAllHour() {
+            return all_hour;
+        }
+
+        public final long getAllDay() {
+            return all_day;
+        }
+
+        public final long getAllMonth() {
+            return all_month;
+        }
+
+        public final long getAllYear() {
+            return all_year;
+        }
+
+        ////////////
+        public final long getLastSec() {
+            return last_sec == -1 ? 0 : last_sec;
+        }
+
+        public final long getLastMin() {
+            return last_min == -1 ? 0 : last_min;
+        }
+
+        public final long getLastHour() {
+            return last_hour == -1 ? 0 : last_hour;
+        }
+
+        public final long getLastDay() {
+            return last_day == -1 ? 0 : last_day;
+        }
+
+        public final long getLastMonth() {
+            return last_month == -1 ? 0 : last_month;
+        }
+
+        public final long getLastYear() {
+            return last_year == -1 ? 0 : last_year;
+        }
+
+        public final String getLastSecStr() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastSec(), 2) : String.valueOf(getLastSec());
+        }
+
+        public final String getLastMinStr() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastMin(), 2) : String.valueOf(getLastMin());
+        }
+
+        public final String getLastHourStr() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastHour(), 2) : String.valueOf(getLastHour());
+        }
+
+        public final String getLastDayStr() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastDay(), 2) : String.valueOf(getLastDay());
+        }
+
+        public final String getLastMonthStr() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastMonth(), 2) : String.valueOf(getLastMonth());
+        }
+
+        public final String getLastYearStr2() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastYear(), 2) : String.valueOf(getLastYear());
+        }
+
+        public final String getLastYearStr4() {
+            return retainZeroValue ? StringUtils.formatLong2String(getLastYear(), 4) : String.valueOf(getLastYear());
+        }
+
         //            "yyyy-MM-dd_HH-mm-ss"
         public final String getString(String pattern) {
 
@@ -470,7 +559,6 @@ public final class DateHelper {
                     continue;
                 }
 
-
                 if (last == null) {
                     last = ch;
                     times = 1;
@@ -479,23 +567,23 @@ public final class DateHelper {
 
                 switch (last) {
                     case 'y':
-                        delete = addTime(list, last_years, times);
+                        delete = addTime(list, last_year, times);
                         break;
                     case 'M':
-                        delete = addTime(list, last_months, times);
+                        delete = addTime(list, last_month, times);
                         break;
                     case 'd':
-                        delete = addTime(list, last_days, times);
+                        delete = addTime(list, last_day, times);
                         break;
                     ////
                     case 'H':
-                        delete = addTime(list, last_hours, times);
+                        delete = addTime(list, last_hour, times);
                         break;
                     case 'm':
-                        delete = addTime(list, last_mins, times);
+                        delete = addTime(list, last_min, times);
                         break;
                     case 's':
-                        delete = addTime(list, last_secs, times);
+                        delete = addTime(list, last_sec, times);
                         break;
                     ////
                     default:
@@ -512,8 +600,8 @@ public final class DateHelper {
         }
 
         private boolean addTime(List<String> list, long lastTime, int times) {
-            if (!retainZeroTerm && lastTime == 0) return true;
-
+            if (!retainZeroTerm && lastTime == -1) return true;
+            if (lastTime == -1) lastTime = 0;
             list.add(retainZeroValue ? StringUtils.formatLong2String(lastTime, times) : String.valueOf(lastTime));
             return false;
         }
@@ -535,34 +623,34 @@ public final class DateHelper {
 //        long b = dateMnger.calculateDay(-1).getLong();
 //        System.out.println(a - b);
 
-        //        5时8分
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).getString("HHmmss"), " = ", "HHmmss");
+        //        5时0分
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).getString("HHmmss"), " = ", "HHmmss");
 //        Logger.e("sssss=====>", "========================");
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().getString("HHmmss"), " = ", "HHmmss");
 //        Logger.e("sssss=====>", "========================");
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
 //        Logger.e("sssss=====>", "========================");
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
-//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18502922).unRetainZeroTerm().unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D3_T3_1), " = ", DateHelper.Pattern.PATTERN_D3_T3_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T3_2), " = ", DateHelper.Pattern.PATTERN_D2_T3_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_D2_T2_2), " = ", DateHelper.Pattern.PATTERN_D2_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_2), " = ", DateHelper.Pattern.PATTERN_T2_2);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().unRetainZeroValue().getString(DateHelper.Pattern.PATTERN_T2_1), " = ", DateHelper.Pattern.PATTERN_T2_1);
+//        Logger.e("sssss=====>", DateHelper.getLastTimeMnger(18034922).unRetainZeroTerm().unRetainZeroValue().getString("HHmmss"), " = ", "HHmmss");
 
     }
 
