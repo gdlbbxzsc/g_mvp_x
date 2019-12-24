@@ -28,52 +28,39 @@ import c.g.a.x.lib_support.android.utils.Logger;
 
 public class AliOssHelper {
 
-    private Context context;
-
-    /////////
     private OSSClient ossClient;
 
     //需要配置的数据
-    private AliOssConfig aliOssConfig;
+    private static AliOssConfig aliOssConfig;
+
+    public static void aliOssConfig(AliOssConfig config) {
+        aliOssConfig = config;
+    }
 
     public static UpLoadTask getUpLoadTask(Activity activity) {
-        return Inner.aliOss.createUpLoadTask(activity);
+        return getInstance(activity).createUpLoadTask(activity);
     }
 
-    public static void context(Context context) {
-        Inner.aliOss.setContext(context);
-    }
+    private static volatile AliOssHelper aliOssHelper;
 
-    public static void aliOssConfig(AliOssConfig aliOssConfig) {
-        Inner.aliOss.setAliOssConfig(aliOssConfig);
-    }
-
-    private static class Inner {
-        private static final AliOssHelper aliOss = new AliOssHelper();
-    }
-
-    private AliOssHelper() {
-    }
-
-    public final AliOssHelper setContext(Context context) {
-        this.context = context;
-        return this;
-    }
-
-    private synchronized void initOssClient() {
-
-        if (BuildConfig.app_mode) {
-            if (context == null) {
-                Logger.e("===============>>>>AliOss context is null,find an application to set it<<<<===============");
-                return;
+    private static AliOssHelper getInstance(Context context) {
+        if (aliOssHelper == null) {
+            synchronized (AliOssHelper.class) {
+                if (aliOssHelper == null) {
+                    aliOssHelper = new AliOssHelper(context);
+                }
             }
+        }
+        return aliOssHelper;
+    }
+
+    private AliOssHelper(Context context) {
+        if (BuildConfig.app_mode) {
             if (aliOssConfig == null) {
                 Logger.e("===============>>>>AliOss aliOssConfig is null,need to init it<<<<===============");
                 return;
             }
         }
-
-        if (ossClient != null) return;
 
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(aliOssConfig.ACCESS_KEY_ID, aliOssConfig.ACCESS_KEY_SECRET, aliOssConfig.SECURITY_TOKEN);
         ClientConfiguration conf = new ClientConfiguration();
@@ -84,11 +71,7 @@ public class AliOssHelper {
 //        OSSLog.enableLog(); //这个开启会支持写入手机sd卡中的一份日志文件位置在SD_path\OSSLog\logs.csv
         OSSLog.disableLog();
         String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
-        ossClient = new OSSClient(context, ENDPOINT, credentialProvider, conf);
-    }
-
-    public final void setAliOssConfig(AliOssConfig aliOssConfig) {
-        this.aliOssConfig = aliOssConfig;
+        ossClient = new OSSClient(context.getApplicationContext(), ENDPOINT, credentialProvider, conf);
     }
 
     private UpLoadTask createUpLoadTask(Activity activity) {
@@ -96,9 +79,6 @@ public class AliOssHelper {
     }
 
     private void upLoadImageByOss(UpLoadTask upLoadTask) {
-
-        if (ossClient == null) initOssClient();
-
 
         for (int i = 0, size = upLoadTask.srcList.size(); i < size; i++) {
             if (!upLoadTask.uploadFail) break;

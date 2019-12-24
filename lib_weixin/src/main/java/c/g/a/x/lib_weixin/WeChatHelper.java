@@ -45,7 +45,7 @@ public final class WeChatHelper {
     private static final int THUMB_SIDE_LENGTH = 150;
     private static final int THUMB_MAX_SIZE_KB = 31;
 
-    public static Context context;
+    private Context context;
     private IWXAPI wxApi;
 
     private final WXMediaMessage wxMediaMessage = new WXMediaMessage();
@@ -55,13 +55,20 @@ public final class WeChatHelper {
 
     private static volatile WeChatHelper weChatHelper;
 
-    public static synchronized WeChatHelper getInstance() {
-        if (weChatHelper == null) weChatHelper = new WeChatHelper();
+    public static WeChatHelper getInstance(Context context) {
+        if (weChatHelper == null) {
+            synchronized (WeChatHelper.class) {
+                if (weChatHelper == null) {
+                    weChatHelper = new WeChatHelper(context);
+                }
+            }
+        }
         return weChatHelper;
     }
 
-    private WeChatHelper() {
-        wxApi = WXAPIFactory.createWXAPI(context, APP_ID, false);
+    private WeChatHelper(Context ctx) {
+        this.context = ctx.getApplicationContext();
+        wxApi = WXAPIFactory.createWXAPI(this.context, APP_ID, false);
         wxApi.registerApp(APP_ID);
     }
 

@@ -8,15 +8,7 @@ import c.g.a.x.lib_http.application.HttpHelper;
 
 public final class UserInfo {
 
-    static UserInfo getInstance() {
-        return InnerInstance.INSTANCE;
-    }
-
-    private static class InnerInstance {
-        private static final UserInfo INSTANCE = new UserInfo();
-    }
-
-    private UserInfo() {
+    UserInfo() {
     }
 
     boolean isLogin() {
@@ -24,7 +16,7 @@ public final class UserInfo {
     }
 
     public void clear() {
-//        this.userId = null;
+//        this.userId = 0;
 //        this.token = null;
 
         HttpHelper.getInstance().accessToken = null;

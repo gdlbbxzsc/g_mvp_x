@@ -16,10 +16,7 @@ import java.util.Map;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_base.BaseApplication;
-import c.g.a.x.lib_sp.SpMnger;
-import c.g.a.x.lib_support.aliyun.AliOssHelper;
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
-import c.g.a.x.lib_support.android.utils.FileHelper;
 import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.SystemUtils;
 import c.g.a.x.lib_support.views.dialog.MyDialog;
@@ -28,7 +25,7 @@ import c.g.a.x.lib_support.views.toast.SysToast;
 
 public class GlobalApplication extends BaseApplication {
 
-    public static GlobalApplication instances;
+    private static GlobalApplication instances;
 
     public static GlobalApplication getInstances() {
         return instances;
@@ -37,7 +34,7 @@ public class GlobalApplication extends BaseApplication {
     //用于界面间数据透传--by gdl key the Class.getname value the data you want
     private static final Map<String, Object> dataMap = new HashMap<>();
 
-    public UserInfo userInfo;
+    private UserInfo userInfo;
 
     @Override
     public void onCreate() {
@@ -53,12 +50,9 @@ public class GlobalApplication extends BaseApplication {
 
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
 
-        userInfo = UserInfo.getInstance();
+        userInfo = new UserInfo();
 
         Logger.e("=======GlobalApplication's  getPackageName:" + getPackageName());
-        FileHelper.init(getPackageName());
-
-        SpMnger.getInstance().init(this);
 
         if (BuildConfig.DEBUG) {           // These two lines must be written before init, otherwise these configurations will be invalid in the init process
             ARouter.openLog();     // Print log
@@ -67,8 +61,6 @@ public class GlobalApplication extends BaseApplication {
         ARouter.init(this); // As early as possible, it is recommended to initialize in the Application
 
         AndroidUtils.addPrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
-
-        AliOssHelper.context(getApplicationContext());
 
         if (BuildConfig.app_mode)
             SysToast.showToastLong(getApplicationContext(), "已连接测试服务器!\n connected test server!");
@@ -80,6 +72,9 @@ public class GlobalApplication extends BaseApplication {
         super.onTerminate();
     }
 
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
 
     /////////////////////
     public static Object getDataMapData(String key) {
