@@ -3,7 +3,7 @@ package c.g.a.x.lib_mvp.fragment;
 
 import androidx.databinding.ViewDataBinding;
 
-import c.g.a.x.lib_base.BaseFragment;
+import c.g.a.x.lib_support.base.BaseFragment;
 import c.g.a.x.lib_mvp.base.IBasePresenter;
 
 

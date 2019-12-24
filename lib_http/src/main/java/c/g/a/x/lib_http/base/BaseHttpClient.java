@@ -15,7 +15,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import c.g.a.x.lib_base.BaseApplication;
+import c.g.a.x.lib_support.base.BaseApplication;
 import c.g.a.x.lib_http.interceptor.HeadTokenInterceptor;
 import c.g.a.x.lib_http.interceptor.LogoutInterceptor;
 import c.g.a.x.lib_support.android.utils.Logger;

@@ -56,7 +56,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation project(path: ':lib_support')
-    implementation project(path: ':lib_base')
 
     implementation project(":applogic_annotation")
     implementation project(":applogic_api")

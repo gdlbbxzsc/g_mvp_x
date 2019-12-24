@@ -3,7 +3,7 @@ package c.g.a.x.lib_mvp.activity;
 
 import androidx.databinding.ViewDataBinding;
 
-import c.g.a.x.lib_base.BaseActivity;
+import c.g.a.x.lib_support.base.BaseActivity;
 import c.g.a.x.lib_mvp.base.IBasePresenter;
 
 

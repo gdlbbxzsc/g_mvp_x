@@ -21,8 +21,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
-import c.g.a.x.lib_base.BaseActivity;
-import c.g.a.x.lib_base.BaseFragment;
+import c.g.a.x.lib_support.base.BaseActivity;
+import c.g.a.x.lib_support.base.BaseFragment;
 import c.g.a.x.lib_rxbus.base.BaseMsg;
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
 import c.g.a.x.lib_support.android.utils.Logger;

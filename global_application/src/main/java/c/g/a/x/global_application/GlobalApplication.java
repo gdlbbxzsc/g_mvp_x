@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import c.g.a.x.global_application.arouter.Constant;
-import c.g.a.x.lib_base.BaseApplication;
+import c.g.a.x.lib_support.base.BaseApplication;
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.SystemUtils;

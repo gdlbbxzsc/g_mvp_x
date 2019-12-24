@@ -1,4 +1,4 @@
-package c.g.a.x.lib_base;
+package c.g.a.x.lib_support.base;
 
 import android.app.Application;
 import android.content.Context;

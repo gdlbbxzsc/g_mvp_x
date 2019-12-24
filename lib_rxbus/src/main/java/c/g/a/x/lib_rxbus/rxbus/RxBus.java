@@ -9,8 +9,8 @@ package c.g.a.x.lib_rxbus.rxbus;
 import java.util.HashMap;
 import java.util.Map;
 
-import c.g.a.x.lib_base.BaseActivity;
-import c.g.a.x.lib_base.BaseFragment;
+import c.g.a.x.lib_support.base.BaseActivity;
+import c.g.a.x.lib_support.base.BaseFragment;
 import c.g.a.x.lib_rxbus.base.BaseMsg;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
