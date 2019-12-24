@@ -1,13 +1,13 @@
 package c.g.a.x.lib_support.android.utils;
 
 
-import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
 import java.io.File;
 import java.io.IOException;
 
+import c.g.a.x.lib_support.BuildConfig;
 import c.g.a.x.lib_support.utils.FileUtils;
 
 /**
@@ -17,19 +17,14 @@ public final class FileHelper {
 
     private static final String ROOT = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
 
-    private final String NAME;
+    private final String NAME = BuildConfig.project_applicationId;
 
     private String rootMainPath;
     private String fileSubPath;
     private String fileName;
 
-
-    public static FileHelper getInstance(Context context) {
-        return new FileHelper(context);
-    }
-
-    private FileHelper(Context context) {
-        NAME = context.getPackageName();
+    public static FileHelper getInstance() {
+        return new FileHelper();
     }
 
     ///////////
@@ -79,6 +74,4 @@ public final class FileHelper {
             return null;
         }
     }
-
-
 }

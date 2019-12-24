@@ -8,8 +8,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import java.util.List;
 
 import c.g.a.x.global_application.arouter.Constant;
+import c.g.a.x.global_application.sp.AccountSpHelper;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
-import c.g.a.x.lib_sp.AccountSpHelper;
 import c.g.a.x.lib_support.views.dialog.MyDialog;
 import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.module_main.R;
@@ -47,7 +47,7 @@ public class WelcomeActivity extends MvpActivity<ActivityWelcomeBinding, Present
     @Override
     public void doSomeThing() {
         new Handler().postDelayed(() -> {
-            ARouter.getInstance().build(new AccountSpHelper(context).isFirstUse() ? Constant.GUIDE_ACTIVITY : Constant.MAIN_ACTIVITY).navigation();
+            ARouter.getInstance().build(new AccountSpHelper().isFirstUse() ? Constant.GUIDE_ACTIVITY : Constant.MAIN_ACTIVITY).navigation();
             finish();
         }, 2000);
     }

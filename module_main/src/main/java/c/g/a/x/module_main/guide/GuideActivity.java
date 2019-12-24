@@ -11,8 +11,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import c.g.a.x.global_application.arouter.Constant;
+import c.g.a.x.global_application.sp.AccountSpHelper;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
-import c.g.a.x.lib_sp.AccountSpHelper;
 import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityGuideBinding;
@@ -41,7 +41,7 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
         binder.btnGuide.setOnClickListener(new OnSPClickListener() {
             @Override
             public void onClickSucc(View v) {
-                new AccountSpHelper(context).closeFirstUse();
+                new AccountSpHelper().closeFirstUse();
                 ARouter.getInstance().build(Constant.MAIN_ACTIVITY).navigation();
                 finish();
             }

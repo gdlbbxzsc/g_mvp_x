@@ -57,7 +57,6 @@ dependencies {
 
     implementation project(path: ':lib_support')
     implementation project(path: ':lib_base')
-    implementation project(path: ':lib_sp')
     implementation project(path: ':lib_http')
 
     annotationProcessor "com.alibaba:arouter-compiler:$dependencies_version.arouter_compiler_verion"

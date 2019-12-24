@@ -72,6 +72,5 @@ dependencies {
     annotationProcessor project(":applogic_compiler")
     implementation project(path: ':lib_http')
     implementation project(path: ':lib_db')
-    implementation project(path: ':lib_sp')
 
 }

@@ -1,13 +1,8 @@
-package c.g.a.x.lib_sp;
+package c.g.a.x.global_application.sp;
 
-import android.content.Context;
 import android.text.TextUtils;
 
-public class AccountSpHelper extends BaseSpHelper {
-
-    public AccountSpHelper(Context context) {
-        super(context);
-    }
+public final class AccountSpHelper extends BaseSpHelper {
 
     ////////////////
     public final void putAccount(String account) {
