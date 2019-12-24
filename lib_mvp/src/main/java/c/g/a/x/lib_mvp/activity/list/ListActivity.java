@@ -1,4 +1,4 @@
-package c.g.a.x.lib_mvp_list.activity;
+package c.g.a.x.lib_mvp.activity.list;
 
 import androidx.databinding.ViewDataBinding;
 

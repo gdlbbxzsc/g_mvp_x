@@ -1,26 +1,26 @@
-package c.g.a.x.lib_mvp_list.smartrefreshlayout;
+package c.g.a.x.lib_mvp.activity.list.smartrefreshlayout;
 
 import androidx.databinding.ViewDataBinding;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
-import c.g.a.x.lib_mvp_list.fragment.ListFragment;
-import c.g.a.x.lib_mvp_list.fragment.ListPresenter;
+import c.g.a.x.lib_mvp.activity.list.ListActivity;
+import c.g.a.x.lib_mvp.activity.list.ListPresenter;
 import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
 
 /**
  * Created by Administrator on 2018/1/19.
  */
 
-public abstract class SmartRefreshListFragment<D extends ViewDataBinding, T extends ListPresenter, A extends DataAdapter> extends ListFragment<D, T, A> {
+public abstract class SmartRefreshListActivity<D extends ViewDataBinding, T extends ListPresenter, A extends DataAdapter> extends ListActivity<D, T, A> {
 
     public SmartRefreshLayout smartRefreshLayout;
 
     @Override
-    public void onCreateViewFirst() {
+    public void afterInitView() {
         smartRefreshLayout = setSmartRefreshLayout();
-        super.onCreateViewFirst();
+        super.afterInitView();
     }
 
     @Override

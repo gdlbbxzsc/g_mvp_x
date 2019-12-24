@@ -1,10 +1,10 @@
-package c.g.a.x.lib_mvp_list.activity;
+package c.g.a.x.lib_mvp.activity.list;
 
 
 import java.util.List;
 
 import c.g.a.x.lib_mvp.base.BasePresenter;
-import c.g.a.x.lib_mvp_list.IListPresenter;
+import c.g.a.x.lib_mvp.base.IListPresenter;
 
 public abstract class ListPresenter<T extends IListActivityView> extends BasePresenter<T> implements IListPresenter {
 

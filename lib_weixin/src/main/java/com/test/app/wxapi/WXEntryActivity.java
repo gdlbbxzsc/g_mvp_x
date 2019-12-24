@@ -18,14 +18,14 @@ import c.g.a.x.lib_weixin.WeChatHelper;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
-    Context context;
-    WeChatHelper wechatHelper;
+   private Context context;
+   private WeChatHelper wechatHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        wechatHelper = WeChatHelper.getInstance();
+        wechatHelper = WeChatHelper.getInstance(context);
         wechatHelper.handleIntent(getIntent(), this);
     }
 

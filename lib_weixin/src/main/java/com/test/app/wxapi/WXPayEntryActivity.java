@@ -2,6 +2,7 @@ package com.test.app.wxapi;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,12 +17,14 @@ import c.g.a.x.lib_weixin.WeChatHelper;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
+    private Context context;
     private WeChatHelper wechatHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        wechatHelper = WeChatHelper.getInstance();
+        context = this;
+        wechatHelper = WeChatHelper.getInstance(context);
         wechatHelper.handleIntent(getIntent(), this);
     }
 

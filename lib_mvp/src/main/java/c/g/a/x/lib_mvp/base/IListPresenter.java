@@ -1,4 +1,4 @@
-package c.g.a.x.lib_mvp_list;
+package c.g.a.x.lib_mvp.base;
 
 
 import c.g.a.x.lib_mvp.base.IBasePresenter;

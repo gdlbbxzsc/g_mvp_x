@@ -1,10 +1,10 @@
-package c.g.a.x.lib_mvp_list.fragment;
+package c.g.a.x.lib_mvp.fragment.list;
 
 
 import java.util.List;
 
 import c.g.a.x.lib_mvp.base.BasePresenter;
-import c.g.a.x.lib_mvp_list.IListPresenter;
+import c.g.a.x.lib_mvp.base.IListPresenter;
 
 public abstract class ListPresenter<T extends IListFragmentView> extends BasePresenter<T> implements IListPresenter {
 

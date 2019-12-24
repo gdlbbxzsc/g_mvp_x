@@ -1,4 +1,4 @@
-package c.g.a.x.lib_mvp_list.fragment;
+package c.g.a.x.lib_mvp.fragment.list;
 
 import androidx.databinding.ViewDataBinding;
 
