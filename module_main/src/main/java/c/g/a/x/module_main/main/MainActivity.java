@@ -7,6 +7,8 @@ import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
+import c.g.a.x.module_main.main.index.IndexFragment;
+import c.g.a.x.module_main.main.mine.MineFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 
 
@@ -29,6 +31,12 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
     protected void initView() {
         NotificationHelper.checkEnabledDialog(context);
 
+        ViewPager2FragmentStateAdapter adapter = new ViewPager2FragmentStateAdapter(this);
+        adapter.list.add(new IndexFragment());
+        adapter.list.add(new MineFragment());
+
+        binder.vpContainer.setAdapter(adapter);
+
 //        ImageLoader.loadHead(context, binder.iv1, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
 //        ImageLoader.load(context, binder.iv2, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
 
@@ -39,6 +47,7 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        box.insert(vo);
 //        vo = box.select("gdl");
 //        Logger.e(vo.id, "======== ", vo.name);
+
 
     }
 
