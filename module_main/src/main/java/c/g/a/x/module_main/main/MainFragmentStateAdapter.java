@@ -11,7 +11,7 @@ import java.util.List;
 final class MainFragmentStateAdapter extends FragmentStateAdapter {
 
     List<Integer> rbIds = new ArrayList<>(4);
-    List<Fragment> list = new ArrayList<>(4);
+    private List<Fragment> list = new ArrayList<>(4);
 
     MainFragmentStateAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);

@@ -1,6 +1,7 @@
 package c.g.a.x.module_main.main.mine;
 
 import c.g.a.x.lib_mvp.fragment.MvpFragment;
+import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.FragmentMineBinding;
 
@@ -21,7 +22,7 @@ public class MineFragment extends MvpFragment<FragmentMineBinding, Presenter> im
 
     @Override
     public void initView(FragmentMineBinding viewDataBinding) {
-
+        binder.tv2.setOnClickListener(v -> SysToast.showToastShort(context, "ss"));
     }
 
     @Override

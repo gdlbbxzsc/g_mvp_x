@@ -29,7 +29,6 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         return new Presenter<>(this);
     }
 
-
     @Override
     protected void initView() {
         NotificationHelper.checkEnabledDialog(context);
@@ -48,6 +47,7 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         });
         binder.rgMain.setOnCheckedChangeListener((group, checkedId) -> binder.vpContainer.setCurrentItem(mainAdapter.rbIds.indexOf(checkedId)));
 
+        binder.vpContainer.setUserInputEnabled(false); //true:滑动，false：禁止滑动
         binder.rgMain.check(mainAdapter.rbIds.get(0));
         binder.vpContainer.setCurrentItem(0);
     }
