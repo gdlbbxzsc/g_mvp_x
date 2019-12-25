@@ -17,10 +17,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 @Route(path = Constant.MAIN_ACTIVITY)
 public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> implements Contract.View {
 
-    private final int[] rbIds = new int[]{
-            R.id.rb_main_index
-            , R.id.rb_main_mine
-    };
+    private MainFragmentStateAdapter mainAdapter;
 
     @Override
     protected int layoutResID() {
@@ -37,30 +34,36 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
     protected void initView() {
         NotificationHelper.checkEnabledDialog(context);
 
-        MainFragmentStateAdapter adapter = new MainFragmentStateAdapter(this);
-        adapter.list.add(new IndexFragment());
-        adapter.list.add(new MineFragment());
+        mainAdapter = new MainFragmentStateAdapter(this);
+        mainAdapter.addTabItem(R.id.rb_main_index, new IndexFragment());
+        mainAdapter.addTabItem(R.id.rb_main_mine, new MineFragment());
 
-        binder.vpContainer.setAdapter(adapter);
+        binder.vpContainer.setAdapter(mainAdapter);
         binder.vpContainer.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                binder.rgMain.check(rbIds[position]);
+                binder.rgMain.check(mainAdapter.rbIds.get(position));
             }
         });
+        binder.rgMain.setOnCheckedChangeListener((group, checkedId) -> binder.vpContainer.setCurrentItem(mainAdapter.rbIds.indexOf(checkedId)));
 
-        binder.rgMain.setOnCheckedChangeListener((group, checkedId) -> {
-            for (int i = 0; i < rbIds.length; i++) {
-                if (rbIds[i] != checkedId) continue;
-                binder.vpContainer.setCurrentItem(i);
-                break;
-            }
-        });
-        binder.rgMain.check(rbIds[0]);
+        binder.rgMain.check(mainAdapter.rbIds.get(0));
         binder.vpContainer.setCurrentItem(0);
+    }
 
-//        ImageLoader.loadHead(context, binder.iv1, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
+    @Override
+    protected void initData() {
+        test();
+    }
+
+    @AfterPermissionGranted(Presenter.REQUEST_CODE_4_DOSOMETHING)
+    @Override
+    public void doSomeThing() {
+    }
+
+    private void test() {
+        //        ImageLoader.loadHead(context, binder.iv1, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
 //        ImageLoader.load(context, binder.iv2, "http://f.hiphotos.baidu.com/zhidao/pic/item/3c6d55fbb2fb4316984c0f4122a4462309f7d3be.jpg");
 
 //        PlaylistBox box = new PlaylistBox();
@@ -70,19 +73,5 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        box.insert(vo);
 //        vo = box.select("gdl");
 //        Logger.e(vo.id, "======== ", vo.name);
-
-
     }
-
-
-    @Override
-    protected void initData() {
-    }
-
-
-    @AfterPermissionGranted(Presenter.REQUEST_CODE_4_DOSOMETHING)
-    @Override
-    public void doSomeThing() {
-    }
-
 }

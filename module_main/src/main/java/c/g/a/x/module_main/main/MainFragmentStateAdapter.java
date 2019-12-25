@@ -10,6 +10,7 @@ import java.util.List;
 
 final class MainFragmentStateAdapter extends FragmentStateAdapter {
 
+    List<Integer> rbIds = new ArrayList<>(4);
     List<Fragment> list = new ArrayList<>(4);
 
     MainFragmentStateAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -25,5 +26,10 @@ final class MainFragmentStateAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         return list.get(position);
+    }
+
+    void addTabItem(int rbId, Fragment fragment) {
+        rbIds.add(rbId);
+        list.add(fragment);
     }
 }
