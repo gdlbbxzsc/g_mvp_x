@@ -5,10 +5,12 @@
 
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <LinearLayout style="@style/Bg_default.B_mm.O_v_G_topcenter">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#0f0"
+            android:text="index" />
     </LinearLayout>
 </layout>

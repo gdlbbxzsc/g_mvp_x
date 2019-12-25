@@ -26,9 +26,9 @@
             android:background="@color/white">
 
             <RadioButton
-                android:id="@+id/rb_home"
+                android:id="@+id/rb_main_index"
                 style="@style/main_bottom_rb_style"
-                android:drawableTop="@drawable/share_pyq" />
+                android:drawableTop="@drawable/main_bottom_rb_btn_selector1" />
 
             <ImageView
                 android:id="@+id/iv_main_bottom"
@@ -40,9 +40,9 @@
             <!--            android:adjustViewBounds="true"-->
 
             <RadioButton
-                android:id="@+id/rb_mine"
+                android:id="@+id/rb_main_mine"
                 style="@style/main_bottom_rb_style"
-                android:drawableTop="@drawable/share_pyq" />
+                android:drawableTop="@drawable/main_bottom_rb_btn_selector2" />
         </RadioGroup>
     </LinearLayout>
 </layout>
