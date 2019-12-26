@@ -14,13 +14,13 @@
             android:hint="输入图片验证码"
             android:maxLength="4"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/iv_code"
+            app:layout_constraintEnd_toStartOf="@+id/btn_image_code"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
-            android:id="@+id/iv_code"
+            android:id="@+id/btn_image_code"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:scaleType="fitXY"

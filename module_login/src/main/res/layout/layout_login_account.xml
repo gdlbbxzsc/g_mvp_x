@@ -13,6 +13,8 @@
             android:id="@+id/edt_account"
             style="@style/font_normal1.black1.Edt_B_0w_pad5_Bg_default.Singleline"
             android:hint="输入账号"
+            android:inputType="number|phone"
+            android:maxLength="11"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

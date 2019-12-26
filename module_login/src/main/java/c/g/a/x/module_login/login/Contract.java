@@ -1,6 +1,8 @@
 package c.g.a.x.module_login.login;
 
 
+import android.graphics.Bitmap;
+
 import c.g.a.x.lib_mvp.activity.IBaseActivityView;
 import c.g.a.x.lib_mvp.base.IBasePresenter;
 
@@ -11,14 +13,23 @@ public interface Contract {
 
     //看清楚哦 这里继承的是 IBaseActivityView ，还有一个BaseFragmentView，为什么就不用我多说了吧。
     interface View extends IBaseActivityView {
+        
+        void getImageCode(Bitmap bitmap);
+
+        void sendSmsCodeSucc();
+
+        void sendSmsCodeFail();
+
+        void login();
     }
 
     interface Presenter extends IBasePresenter {
 
         void getImageCode(String phone);
 
-        void login();
+        void sendSmsCode(String phone);
 
-        void register();
+        void login(String phone);
+
     }
 }

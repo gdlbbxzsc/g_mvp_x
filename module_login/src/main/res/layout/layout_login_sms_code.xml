@@ -16,12 +16,12 @@
             android:inputType="number"
             android:maxLength="6"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_send_code"
+            app:layout_constraintEnd_toStartOf="@+id/btn_sms_code"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_send_code"
+            android:id="@+id/btn_sms_code"
             style="@style/font_normal1.black2.Btn_B_ww_pad_lr8_tb4"
             android:background="@drawable/login_sms_btn_gray_bg"
             android:text="获取验证码"

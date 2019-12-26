@@ -21,16 +21,29 @@ public class Presenter<T extends Contract.View> extends BasePresenter<T> impleme
 
     @Override
     public void getImageCode(String phone) {
-
+//        Httpac.context(getBaseView().getContext()).get(request).progress().toObservable().subscribe((Consumer<ResponseBody>) responseBody -> {
+//            byte[] imageBytes = responseBody.bytes();
+//            if (null != imageBytes && imageBytes.length > 0) {
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//                getBaseView().getImageCode(bitmap);
+//            }
+//        }, new Consumer<Throwable>() {
+//            @Override
+//            public void accept(Throwable throwable) throws Exception {
+//                throwable.printStackTrace();
+//                SysToast.showToastShort(getBaseView().getContext(), "图片加载异常，点击重试");
+//            }
+//        });
     }
 
     @Override
-    public void login() {
-
+    public void sendSmsCode(String phone) {
+        getBaseView().sendSmsCodeSucc();
+        getBaseView().sendSmsCodeFail();
     }
 
     @Override
-    public void register() {
-
+    public void login(String phone) {
+        getBaseView().login();
     }
 }
