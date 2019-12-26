@@ -1,7 +1,7 @@
 <resources>
 
 
-    <style name="Rg_B_ww_O_h_G_center">
+    <style name="font_normal1.black1.Rg_B_ww_O_h_G_center">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>

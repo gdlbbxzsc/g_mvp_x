@@ -68,4 +68,13 @@ public final class AccountSpHelper extends BaseSpHelper {
     public void closeFirstUse() {
         sp.edit().putBoolean("firstUse", false).apply();
     }
+
+    ////////////////
+    public void putAgree(boolean agree) {
+        sp.edit().putBoolean("agree", agree).apply();
+    }
+
+    public boolean isAgree() {
+        return sp.getBoolean("agree", false);
+    }
 }

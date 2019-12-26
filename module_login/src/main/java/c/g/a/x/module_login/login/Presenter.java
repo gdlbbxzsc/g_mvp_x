@@ -18,4 +18,19 @@ public class Presenter<T extends Contract.View> extends BasePresenter<T> impleme
     public void unsubscribe() {
     }
 
+
+    @Override
+    public void getImageCode(String phone) {
+
+    }
+
+    @Override
+    public void login() {
+
+    }
+
+    @Override
+    public void register() {
+
+    }
 }

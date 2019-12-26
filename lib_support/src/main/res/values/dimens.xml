@@ -47,6 +47,8 @@
     <dimen name="dp28">28dp</dimen>
     <dimen name="dp29">29dp</dimen>
     <dimen name="dp30">30dp</dimen>
+
+    <dimen name="dp60">60dp</dimen>
     <!--不可删除部分end-->
 
 </resources>

@@ -1,0 +1,11 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <CheckBox
+        android:id="@+id/cb_remember"
+        style="@style/font_normal1.black1.Rg_B_ww_O_h_G_center"
+        android:text="记住密码" />
+</layout>

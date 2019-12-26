@@ -14,5 +14,11 @@ public interface Contract {
     }
 
     interface Presenter extends IBasePresenter {
+
+        void getImageCode(String phone);
+
+        void login();
+
+        void register();
     }
 }

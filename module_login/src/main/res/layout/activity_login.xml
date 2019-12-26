@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,8 +8,44 @@
 
     <LinearLayout style="@style/Bg_default.B_mm.O_v_G_center">
 
+        <include
+            android:id="@+id/include_login_account"
+            layout="@layout/layout_login_account" />
+
+        <include
+            android:id="@+id/include_login_password"
+            layout="@layout/layout_login_password" />
+
+        <include
+            android:id="@+id/include_login_image_code"
+            layout="@layout/layout_login_image_code" />
+
+        <include
+            android:id="@+id/include_login_sms_code"
+            layout="@layout/layout_login_sms_code" />
+
+        <include
+            android:id="@+id/include_login_auto"
+            layout="@layout/layout_login_auto" />
+
+        <include
+            android:id="@+id/include_login_remember"
+            layout="@layout/layout_login_remember" />
+
+        <include
+            android:id="@+id/include_login_agree"
+            layout="@layout/layout_login_agree" />
+
+        <include
+            android:id="@+id/include_login_btnlogin"
+            layout="@layout/layout_login_btnlogin" />
+
+        <include
+            android:id="@+id/include_login_btnregister"
+            layout="@layout/layout_login_btnregister" />
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
