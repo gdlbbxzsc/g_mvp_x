@@ -1,21 +1,13 @@
 package c.g.a.x.module_main.main;
 
-import android.os.Handler;
-import android.os.Message;
-
-import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import java.io.IOException;
-
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
-import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
-import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
 import c.g.a.x.module_main.main.index.IndexFragment;
@@ -60,21 +52,8 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         binder.rgMain.check(mainAdapter.rbIds.get(0));
         binder.vpContainer.setCurrentItem(0);
 
-//        ARouter.getInstance().build(Constant.LOGIN_ACTIVITY).navigation(context);
-        new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                try {
-                    int w = (int) (AndroidUtils.getWidthInPx(context) / 2);
-                    int h = (int) (AndroidUtils.getHeightInPx(context) / 2);
-                    Runtime.getRuntime().exec("input tap " + w + " " + h); //点击  长按 拖动
-                    SysToast.showToastShort(context, "click");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.sendEmptyMessageDelayed(0, 3000);
+        ARouter.getInstance().build(Constant.LOGIN_ACTIVITY).navigation(context);
+
     }
 
     @Override
