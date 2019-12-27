@@ -25,15 +25,6 @@ android {
                 buildConfigField("int", (key), value.toString())
             }
         }
-        weixin_config.each { key, value ->
-            if (value instanceof Boolean) {
-                buildConfigField("boolean", (key), value.toString())
-            } else if (value instanceof GString || value instanceof String) {
-                buildConfigField("String", (key), "\"" + value + "\"")
-            } else if (value instanceof Number) {
-                buildConfigField("int", (key), value.toString())
-            }
-        }
 
         javaCompileOptions {
             annotationProcessorOptions {
