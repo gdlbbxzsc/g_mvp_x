@@ -33,35 +33,32 @@ def server_config = [:]
 if (isDebug) {//测试下配置
     server_config.base_url = "https://39.96.132.92:324431/"
 //    server_config.aaaa = 123
-//    server_config.bbbb = "gdl"
 } else {//正式下配置
     server_config.base_url = "https://39.96.132.92:324432/"
 //    server_config.aaaa = 321
-//    server_config.bbbb = "ldg"
 }
 server_config.app_mode = isDebug
-//正式测试通用配置
 server_config.project_applicationId = app_versions.applicationId
 ext.server_config = server_config
 /////////////////////////////////////////////////////////////////////
 //第三方配置 ps:微信 支付宝 百度 极光 客服等。
 def third_config = [:]
+//微信
+if (isDebug) {
+    third_config.wx_app_id = "wxe6a4d73e2d482d86"
+    third_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
+    third_config.wx_app_name = "toutoule"
+} else {
+    third_config.wx_app_id = "wxe6a4d73e2d482d86"
+    third_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
+    third_config.wx_app_name = "toutoule"
+}
+//其他
 if (isDebug) {
 } else {
 }
 ext.third_config = third_config
 
-def weixin_config = [:]
-if (isDebug) {
-    weixin_config.wx_app_id = "wxe6a4d73e2d482d86"
-    weixin_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
-    weixin_config.wx_app_name = "toutoule"
-} else {
-    weixin_config.wx_app_id = "wxe6a4d73e2d482d86"
-    weixin_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
-    weixin_config.wx_app_name = "toutoule"
-}
-ext.weixin_config = weixin_config
 /////////////////////////////////////////////////////////////////////
 //配置文件中的占位符都可以写在这里
 def manifest_placeholders = [:]

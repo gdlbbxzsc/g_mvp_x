@@ -53,6 +53,18 @@ android {
         }
     }
 
+    flavorDimensions ""
+//     渠道列表
+    productFlavors {
+        testa {
+            manifestPlaceholders = [testname: "aa"]
+        }
+        testb {
+            manifestPlaceholders = [testname: "bb"]
+        }
+
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"

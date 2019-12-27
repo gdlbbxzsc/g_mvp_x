@@ -7,6 +7,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -24,6 +25,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public final class AndroidUtils {
+
+    public static String getMetaData(Context context, String key) {
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            if (info == null || info.metaData == null) return "unknow";
+            String value = info.metaData.getString(key);
+            Logger.e("AndroidUtils getMetaData===>", "key:", key, "value:", value);
+            return value;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "unknow";
+        }
+    }
 
     @SuppressLint("MissingPermission")
     public static String getDeviceId(Context context) {
