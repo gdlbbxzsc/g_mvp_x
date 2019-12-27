@@ -1,6 +1,8 @@
-package c.g.a.x.global_application.sp;
+package c.g.a.x.lib_sp;
 
 import android.text.TextUtils;
+
+import c.g.a.x.lib_sp.base.BaseSpHelper;
 
 public final class AccountSpHelper extends BaseSpHelper {
 
@@ -65,8 +67,8 @@ public final class AccountSpHelper extends BaseSpHelper {
         return sp.getBoolean("firstUse", true);
     }
 
-    public void closeFirstUse() {
-        sp.edit().putBoolean("firstUse", false).apply();
+    public void putFirstUse(boolean firstUse) {
+        sp.edit().putBoolean("firstUse", firstUse).apply();
     }
 
     ////////////////

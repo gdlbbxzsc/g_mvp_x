@@ -10,8 +10,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import c.g.a.x.global_application.arouter.Constant;
-import c.g.a.x.global_application.sp.AccountSpHelper;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
+import c.g.a.x.lib_sp.AccountSpHelper;
 import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.module_login.CheckUtils;

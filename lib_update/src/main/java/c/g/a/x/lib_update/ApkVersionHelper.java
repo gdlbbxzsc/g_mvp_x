@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
+import c.g.a.x.lib_sp.AccountSpHelper;
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.utils.StringUtils;
 import c.g.a.x.lib_support.views.dialog.MyDialog;
@@ -143,7 +144,7 @@ public final class ApkVersionHelper {
                                 break;
                             case 1:
                                 SysToast.showToastShort(context, "下载成功");
-
+                                new AccountSpHelper().putFirstUse(true);
                                 progressDialog.dismiss();
                                 RxBus.removeDisposable0(ApkVersionHelper.this, VUProgressMsg.class);
                                 break;

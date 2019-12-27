@@ -54,5 +54,6 @@ dependencies {
     implementation project(path: ':lib_support')
     implementation project(path: ':lib_http')
     implementation project(path: ':lib_rxbus')
+    implementation project(path: ':lib_sp')
 
 }

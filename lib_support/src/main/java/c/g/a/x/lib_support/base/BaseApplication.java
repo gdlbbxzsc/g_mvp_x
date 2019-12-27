@@ -11,8 +11,8 @@ import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.SystemUtils;
 
 public class BaseApplication extends Application {
-    
-    public static BaseApplication instances;
+
+    private static BaseApplication instances;
 
     public static BaseApplication getInstances() {
         return instances;

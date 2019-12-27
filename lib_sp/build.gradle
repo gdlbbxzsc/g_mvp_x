@@ -25,13 +25,6 @@ android {
                 buildConfigField("int", (key), value.toString())
             }
         }
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName(), APPLOGIC: project.getName()]
-            }
-        }
-
     }
 
     buildTypes {
@@ -47,10 +40,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    dataBinding {
-        enabled = true
-    }
 }
 
 dependencies {
@@ -61,16 +50,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation project(path: ':lib_support')
-    implementation project(path: ':lib_mvp')
-    implementation project(path: ':global_application')
-    implementation project(path: ':lib_sp')
-
-    annotationProcessor "com.alibaba:arouter-compiler:$dependencies_version.arouter_compiler_verion"
-
-    implementation project(":applogic_annotation")
-    implementation project(":applogic_api")
-    annotationProcessor project(":applogic_compiler")
-    implementation project(path: ':lib_http')
-    implementation project(path: ':lib_db')
 
 }
