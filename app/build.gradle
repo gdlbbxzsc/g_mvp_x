@@ -58,10 +58,12 @@ android {
 //     渠道列表
     productFlavors {
         atest {
-            manifestPlaceholders = [aname: "aa"]
+            manifest_placeholders.aname = "aa"
+            manifestPlaceholders = manifest_placeholders
         }
         btest {
-            manifestPlaceholders = [aname: "bb"]
+            manifest_placeholders.aname = "bb"
+            manifestPlaceholders = manifest_placeholders
         }
 
     }
