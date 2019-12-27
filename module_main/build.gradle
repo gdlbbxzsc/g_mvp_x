@@ -14,15 +14,9 @@ android {
 
         buildConfigField("boolean", "LOG", log_mode.debug)
 
-        server_config.each { key, value ->
-            if (value instanceof Boolean) {
-                buildConfigField("boolean", (key), value.toString())
-            } else if (value instanceof GString || value instanceof String) {
-                buildConfigField("String", (key), "\"" + value + "\"")
-            } else if (value instanceof Number) {
-                buildConfigField("int", (key), value.toString())
-            }
-        }
+        manifestPlaceholders = manifest_placeholders
+
+        resConfigs res_configs.configs
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -36,6 +30,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "LOG", log_mode.release)
         }
     }
 

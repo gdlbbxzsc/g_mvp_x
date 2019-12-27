@@ -33,7 +33,7 @@ android {
 
         resConfigs res_configs.configs
 
-        server_config.each { key, value ->
+        common_config.each { key, value ->
             if (value instanceof Boolean) {
                 buildConfigField("boolean", (key), value.toString())
             } else if (value instanceof GString || value instanceof String) {
@@ -42,6 +42,7 @@ android {
                 buildConfigField("int", (key), value.toString())
             }
         }
+
     }
 
     signingConfigs {
@@ -56,11 +57,11 @@ android {
     flavorDimensions ""
 //     渠道列表
     productFlavors {
-        testa {
-            manifestPlaceholders = [testname: "aa"]
+        atest {
+            manifestPlaceholders = [aname: "aa"]
         }
-        testb {
-            manifestPlaceholders = [testname: "bb"]
+        btest {
+            manifestPlaceholders = [aname: "bb"]
         }
 
     }
@@ -138,6 +139,7 @@ dependencies {
     implementation project(path: ':global_application')
 
     implementation project(path: ':module_main')
+    implementation project(path: ':lib_weixin')
 
     if (!module_Debug.toBoolean()) {
         implementation project(path: ':module_login')

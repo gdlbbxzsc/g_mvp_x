@@ -14,7 +14,11 @@ android {
 
         buildConfigField("boolean", "LOG", log_mode.debug)
 
-        server_config.each { key, value ->
+        manifestPlaceholders = manifest_placeholders
+
+        resConfigs res_configs.configs
+
+        common_config.each { key, value ->
             if (value instanceof Boolean) {
                 buildConfigField("boolean", (key), value.toString())
             } else if (value instanceof GString || value instanceof String) {
@@ -29,6 +33,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "LOG", log_mode.release)
         }
     }
 

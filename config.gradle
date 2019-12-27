@@ -28,6 +28,12 @@ def isDebug = true//<----------| 发布版本类型true 测试版本 false 正�
 //*************   *************修
 //************** **************改
 /////////////////////////////////////////////////////////////////////
+//通用配置
+def common_config = [:]
+common_config.app_mode = isDebug
+common_config.project_applicationId = app_versions.applicationId
+ext.common_config = common_config
+/////////////////////////////////////////////////////////////////////
 //服务器配置
 def server_config = [:]
 if (isDebug) {//测试下配置
@@ -37,23 +43,24 @@ if (isDebug) {//测试下配置
     server_config.base_url = "https://39.96.132.92:324432/"
 //    server_config.aaaa = 321
 }
-server_config.app_mode = isDebug
-server_config.project_applicationId = app_versions.applicationId
 ext.server_config = server_config
 /////////////////////////////////////////////////////////////////////
 //第三方配置 ps:微信 支付宝 百度 极光 客服等。
-def third_config = [:]
+def weixin_config = [:]
 //微信
 if (isDebug) {
-    third_config.wx_app_id = "wxe6a4d73e2d482d86"
-    third_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
-    third_config.wx_app_name = "toutoule"
+    weixin_config.wx_app_id = "wxe6a4d73e2d482d86"
+    weixin_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
+    weixin_config.wx_app_name = "toutoule"
 } else {
-    third_config.wx_app_id = "wxe6a4d73e2d482d86"
-    third_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
-    third_config.wx_app_name = "toutoule"
+    weixin_config.wx_app_id = "wxe6a4d73e2d482d86"
+    weixin_config.wx_app_secret = "3b63c4cef0c4ea6e57fb3c7275f4fba3"
+    weixin_config.wx_app_name = "toutoule"
 }
+ext.weixin_config = weixin_config
+
 //其他
+def third_config = [:]
 if (isDebug) {
 } else {
 }
@@ -62,8 +69,9 @@ ext.third_config = third_config
 /////////////////////////////////////////////////////////////////////
 //配置文件中的占位符都可以写在这里
 def manifest_placeholders = [:]
-manifest_placeholders.placeholder_applicationId = server_config.project_applicationId
+manifest_placeholders.placeholder_applicationId = common_config.project_applicationId
 manifest_placeholders.placeholder_wx_app_id = weixin_config.wx_app_id
+
 ext.manifest_placeholders = manifest_placeholders
 /////////////////////////////////////////////////////////////////////
 //resConfigs打包过滤
