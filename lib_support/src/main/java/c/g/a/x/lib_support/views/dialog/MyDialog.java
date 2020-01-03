@@ -30,7 +30,10 @@ public final class MyDialog extends Dialog {
     }
 
     public static MyDialog toast(Context context, View toastView) {
-        return builder(context).setContentView(toastView).setPositiveButton().show();
+        return builder(context)
+                .setContentView(toastView)
+                .setPositiveButton()
+                .show();
     }
 
     public static MyDialog confirm(Context context, String toast, OnClickListener onClickListener) {
@@ -40,7 +43,13 @@ public final class MyDialog extends Dialog {
     }
 
     public static MyDialog confirm(Context context, View toastView, OnClickListener onClickListener) {
-        return builder(context).setContentView(toastView).setPositiveButton().setNegativeButton().setOnClickListener(onClickListener).show();
+        return builder(context)
+                .setContentView(toastView)
+                .setPositiveButton()
+                .setNegativeButton()
+                .setOnClickListener(onClickListener)
+                .cancelable(false)
+                .show();
     }
 
     public static Builder builder(Context context) {
@@ -91,9 +100,12 @@ public final class MyDialog extends Dialog {
 
         setOnCancelListener(dialog -> {
             if (builder.onClickListener != null)
-                builder.onClickListener.onClick(MyDialog.this, WhichButton.Esc);
+                builder.onClickListener.onClick(dialog, WhichButton.Esc);
         });
-
+        setOnDismissListener(dialog -> {
+            if (builder.listenerDismiss)
+                builder.onClickListener.onClick(dialog, WhichButton.Dismiss);
+        });
         setContentView(rootView);
     }
 
@@ -142,21 +154,21 @@ public final class MyDialog extends Dialog {
         private String title;
         private Integer titleColor;
 
+        private View contentView;
+
         private boolean negativeButton;
         private String negativeButtonText;
         private boolean positiveButton = true;
         private String positiveButtonText;
 
-        private OnClickListener onClickListener;
-
-        private View contentView;
-
         private boolean cancelable = true;
+        private boolean listenerDismiss;
+
+        private OnClickListener onClickListener;
 
         private Builder(Context context) {
             this.context = context;
         }
-
 
         public Builder setTitle(String title) {
             this.title = title;
@@ -167,7 +179,6 @@ public final class MyDialog extends Dialog {
             this.titleColor = color;
             return this;
         }
-
 
         public Builder setNegativeButton(String negativeButtonText) {
             this.negativeButtonText = negativeButtonText;
@@ -200,8 +211,14 @@ public final class MyDialog extends Dialog {
             return this;
         }
 
-        public void setCancelable(boolean cancelable) {
+        public Builder cancelable(boolean cancelable) {
             this.cancelable = cancelable;
+            return this;
+        }
+
+        public Builder listenerDismiss() {
+            this.listenerDismiss = true;
+            return this;
         }
 
         public final MyDialog show() {
@@ -212,7 +229,7 @@ public final class MyDialog extends Dialog {
     }
 
     private enum WhichButton {
-        Yes, No, Esc
+        Yes, No, Esc, Dismiss
     }
 
     public interface OnClickListener {
