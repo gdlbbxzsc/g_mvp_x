@@ -23,25 +23,24 @@ import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 
 public final class MyDialog extends Dialog {
 
-
     public static MyDialog toast(Context context, String toast) {
         TextView v = (TextView) LayoutInflater.from(context).inflate(R.layout.layout_dialog_toast_text, null);
         v.setText(toast);
-        return builder(context).setButtonStyleOne().setContentView(v).show();
+        return toast(context, v);
+    }
+
+    public static MyDialog toast(Context context, View toastView) {
+        return builder(context).setContentView(toastView).setPositiveButton().show();
     }
 
     public static MyDialog confirm(Context context, String toast, OnClickListener onClickListener) {
         TextView v = (TextView) LayoutInflater.from(context).inflate(R.layout.layout_dialog_toast_text, null);
         v.setText(toast);
-        return builder(context).setButtonStyleTwo().setContentView(v).setOnClickListener(onClickListener).show();
-    }
-
-    public static MyDialog toast(Context context, View toastView) {
-        return builder(context).setButtonStyleOne().setContentView(toastView).show();
+        return confirm(context, v, onClickListener);
     }
 
     public static MyDialog confirm(Context context, View toastView, OnClickListener onClickListener) {
-        return builder(context).setButtonStyleTwo().setContentView(toastView).setOnClickListener(onClickListener).show();
+        return builder(context).setContentView(toastView).setPositiveButton().setNegativeButton().setOnClickListener(onClickListener).show();
     }
 
     public static Builder builder(Context context) {
@@ -73,11 +72,8 @@ public final class MyDialog extends Dialog {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) title.getLayoutParams();
         params.bottomMargin = dp20;
         title.setLayoutParams(params);
-
-
 //
         rootView.addView(builder.contentView);
-
 //
         LinearLayout bottom_buttons = new LinearLayout(context);
         rootView.setGravity(Gravity.CENTER);
@@ -87,35 +83,25 @@ public final class MyDialog extends Dialog {
         params.topMargin = dp20;
         bottom_buttons.setLayoutParams(params);
 
+        if (builder.positiveButton)
+            addButton(inflater, bottom_buttons, R.layout.dialog_common_bottom_button_yes, builder.positiveButtonText, builder.onClickListener, WhichButton.Yes);
 
-        TextView positiveButton = (TextView) inflater.inflate(R.layout.dialog_common_bottom_button_yes, null);
-        initButton(positiveButton, builder.positiveButtonText, builder.onClickListener, 1);
-        bottom_buttons.addView(positiveButton);
-
-        if (builder.buttonStyle == ButtonStyle.style_two) {
-            TextView negativeButton = (TextView) inflater.inflate(R.layout.dialog_common_bottom_button_no, null);
-            initButton(negativeButton, builder.negativeButtonText, builder.onClickListener, 0);
-            bottom_buttons.addView(negativeButton);
-
-            LinearLayout.LayoutParams paramsPos = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
-            LinearLayout.LayoutParams paramsNeg = (LinearLayout.LayoutParams) negativeButton.getLayoutParams();
-            paramsPos.weight = paramsNeg.weight = 1;
-
-            positiveButton.setLayoutParams(paramsPos);
-            negativeButton.setLayoutParams(paramsNeg);
-        }
+        if (builder.negativeButton)
+            addButton(inflater, bottom_buttons, R.layout.dialog_common_bottom_button_no, builder.negativeButtonText, builder.onClickListener, WhichButton.No);
 
         setOnCancelListener(dialog -> {
             if (builder.onClickListener != null)
-                builder.onClickListener.onClick(MyDialog.this, -1);
+                builder.onClickListener.onClick(MyDialog.this, WhichButton.Esc);
         });
 
         setContentView(rootView);
-
     }
 
-    private void initButton(TextView button, String text, OnClickListener listener, int which) {
+    private void addButton(LayoutInflater inflater, LinearLayout bottom_buttons, int buttonLayoutId, String text, OnClickListener listener, WhichButton which) {
+        TextView button = (TextView) inflater.inflate(buttonLayoutId, null);
+
         if (!StringUtils.isEmpty(text)) button.setText(text);
+
         button.setOnClickListener(new OnSPClickListener() {
             @Override
             public void onClickSucc(View v) {
@@ -124,6 +110,12 @@ public final class MyDialog extends Dialog {
                 if (b) dismiss();
             }
         });
+
+        bottom_buttons.addView(button);
+
+        LinearLayout.LayoutParams paramsPos = (LinearLayout.LayoutParams) button.getLayoutParams();
+        paramsPos.weight = 1;
+        button.setLayoutParams(paramsPos);
     }
 
 
@@ -150,8 +142,9 @@ public final class MyDialog extends Dialog {
         private String title;
         private Integer titleColor;
 
-        private ButtonStyle buttonStyle;
+        private boolean negativeButton;
         private String negativeButtonText;
+        private boolean positiveButton = true;
         private String positiveButtonText;
 
         private OnClickListener onClickListener;
@@ -175,34 +168,32 @@ public final class MyDialog extends Dialog {
             return this;
         }
 
-        public Builder setButtonStyleOne() {
-            this.buttonStyle = ButtonStyle.style_one;
-            return this;
-        }
 
-        public Builder setButtonStyleTwo() {
-            this.buttonStyle = ButtonStyle.style_two;
-            return this;
-        }
-
-
-        public Builder setNegativeButtonText(String negativeButtonText) {
+        public Builder setNegativeButton(String negativeButtonText) {
             this.negativeButtonText = negativeButtonText;
+            return setNegativeButton();
+        }
+
+        public Builder setNegativeButton() {
+            this.negativeButton = true;
             return this;
         }
 
 
-        public Builder setPositiveButtonText(String positiveButtonText) {
+        public Builder setPositiveButton(String positiveButtonText) {
             this.positiveButtonText = positiveButtonText;
-            return this;
+            return setPositiveButton();
         }
 
+        public Builder setPositiveButton() {
+            this.positiveButton = true;
+            return this;
+        }
 
         public Builder setOnClickListener(OnClickListener onClickListener) {
             this.onClickListener = onClickListener;
             return this;
         }
-
 
         public Builder setContentView(View contentView) {
             this.contentView = contentView;
@@ -220,12 +211,12 @@ public final class MyDialog extends Dialog {
         }
     }
 
-    private enum ButtonStyle {
-        style_one, style_two
+    private enum WhichButton {
+        Yes, No, Esc
     }
 
     public interface OnClickListener {
-        boolean onClick(DialogInterface dialog, int which);
+        boolean onClick(DialogInterface dialog, WhichButton which);
     }
 
 }

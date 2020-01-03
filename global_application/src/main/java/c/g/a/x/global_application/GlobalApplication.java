@@ -1,10 +1,8 @@
 package c.g.a.x.global_application;
 
 import android.app.Activity;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,11 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import c.g.a.x.global_application.arouter.Constant;
-import c.g.a.x.lib_support.base.BaseApplication;
-import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.android.utils.SystemUtils;
-import c.g.a.x.lib_support.views.dialog.MyDialog;
+import c.g.a.x.lib_support.base.BaseApplication;
 import c.g.a.x.lib_support.views.toast.SysToast;
 
 
@@ -60,15 +56,12 @@ public class GlobalApplication extends BaseApplication {
         }
         ARouter.init(this); // As early as possible, it is recommended to initialize in the Application
 
-        AndroidUtils.addPrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
-
         if (BuildConfig.app_mode)
             SysToast.showToastLong(getApplicationContext(), "已连接测试服务器!\n connected test server!");
     }
 
     @Override
     public void onTerminate() {
-        AndroidUtils.removePrimaryClipChangedListener(this.getApplicationContext(), onPrimaryClipChangedListener);
         super.onTerminate();
     }
 
@@ -91,7 +84,6 @@ public class GlobalApplication extends BaseApplication {
     public boolean checkLogin4GoLogin(Context context) {
 
         if (userInfo.isLogin()) return true;
-//        context.startActivity(new Intent(context, LoginActivity.class));
         ARouter.getInstance().build(Constant.LOGIN_ACTIVITY).navigation(context);
         return false;
     }
@@ -100,61 +92,33 @@ public class GlobalApplication extends BaseApplication {
         return userInfo.isLogin();
     }
 
-    public String primaryClipText;
-
-    private final ClipboardManager.OnPrimaryClipChangedListener onPrimaryClipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
-
-
-        @Override
-        public void onPrimaryClipChanged() {
-            // 获取剪贴板数据
-            primaryClipText = AndroidUtils.getPrimaryClipText(instances);
-            Logger.e("onPrimaryClipChanged primaryClipText===>", primaryClipText);
-        }
-    };
-
     private final ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
         @Override
         public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-
         }
 
         @Override
         public void onActivityStarted(@NonNull Activity activity) {
-
         }
 
         @Override
         public void onActivityResumed(@NonNull Activity activity) {
-
-            if (TextUtils.isEmpty(primaryClipText)) return;
-
-            String content = primaryClipText;
-            primaryClipText = null;
-
-            Logger.e("onActivityResumed primaryClipText===>", content);
-
-            MyDialog.toast(activity, "primaryClipText:" + content);
         }
 
         @Override
         public void onActivityPaused(@NonNull Activity activity) {
-
         }
 
         @Override
         public void onActivityStopped(@NonNull Activity activity) {
-
         }
 
         @Override
         public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-
         }
 
         @Override
         public void onActivityDestroyed(@NonNull Activity activity) {
-
         }
     };
 
