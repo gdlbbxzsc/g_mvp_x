@@ -10,15 +10,23 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -265,5 +273,34 @@ public final class AndroidUtils {
     public static int sp2px(Context context, float spValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (spValue * scale + 0.5f);
+    }
+
+    public static void setSpannableString(TextView textView, String res, String rep, View.OnClickListener onClickListener) {
+        int start = res.indexOf(rep);
+        int end = start + rep.length();
+        setSpannableString(textView, res, start, end, Color.RED, onClickListener);
+    }
+
+    public static void setSpannableString(TextView textView, String res, int start, int end, int color, View.OnClickListener onClickListener) {
+
+        SpannableString spannableString = new SpannableString(res);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                if (onClickListener != null) onClickListener.onClick(textView);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        spannableString.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setHighlightColor(0);
     }
 }
