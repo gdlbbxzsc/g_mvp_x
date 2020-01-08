@@ -46,6 +46,8 @@ public final class Run2SearchRepeatFile {
             , ".iml"
             , ".pro"
             , ".bat"
+            , ".txt"
+            , ".rar"
     };
 
 
@@ -82,7 +84,10 @@ public final class Run2SearchRepeatFile {
                 }
 
                 path = path.substring(path.indexOf("\\.\\") + 3);
-                path = path.substring(0, path.indexOf("\\"));
+                int pos = path.indexOf("\\");
+                if (pos <= 0) continue;
+
+                path = path.substring(0, pos);
                 delSet.add(path);
             }
 
