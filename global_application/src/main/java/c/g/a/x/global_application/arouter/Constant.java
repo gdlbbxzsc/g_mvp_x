@@ -8,7 +8,6 @@ public final class Constant {
 
     public static final int EXTRA_NEED_LOGIN = 1;
 
-
     /////////
     public static final String MAIN_ACTIVITY = "/module_main/MainActivity";
     public static final String WELCOME_ACTIVITY = "/module_main/WelcomeActivity";
@@ -18,6 +17,4 @@ public final class Constant {
     public static final String REGISTER_ACTIVITY = "/module_login/RegisterActivity";
 
     public static final String WEBVIEW_ACTIVITY = "/module_web/WebViewActivity";
-
-
 }
