@@ -14,22 +14,20 @@ import java.io.PrintWriter;
 
 public final class Run2BuildDimens {
 
-    private static final String MODULE_NAME = "lib_support";
-
-    private static final String FILE_SOURCE = "./" + MODULE_NAME + "/src/main/res/values/dimens.xml";
-
-    private static final String FILE_START = "./" + MODULE_NAME + "/src/main/res/values-";
+    private static final String FILE_START = "./" + "lib_support" + "/src/main/res/values";
     private static final String FILE_END = "/dimens.xml";
 
+    private static final String FILE_SOURCE = FILE_START + FILE_END;
+
     private static final Object[][] OUTS = new Object[][]{
-            {new StringBuilder(), 0.75D, "sw240dp"},
-            {new StringBuilder(), 1D, "sw320dp"},
-            {new StringBuilder(), 1.125D, "sw360dp"},
-            {new StringBuilder(), 1.5D, "sw480dp"},
-            {new StringBuilder(), 1.87D, "sw600dp"},
-            {new StringBuilder(), 2.25D, "sw720dp"},
-            {new StringBuilder(), 2.5D, "sw800dp"},
-            {new StringBuilder(), 2.56D, "w820dp"}
+            {new StringBuilder(), 0.75D, "-sw240dp"},
+            {new StringBuilder(), 1D, "-sw320dp"},
+            {new StringBuilder(), 1.125D, "-sw360dp"},
+            {new StringBuilder(), 1.5D, "-sw480dp"},
+            {new StringBuilder(), 1.87D, "-sw600dp"},
+            {new StringBuilder(), 2.25D, "-sw720dp"},
+            {new StringBuilder(), 2.5D, "-sw800dp"},
+            {new StringBuilder(), 2.56D, "-w820dp"}
     };
 
     private static void gen() {
