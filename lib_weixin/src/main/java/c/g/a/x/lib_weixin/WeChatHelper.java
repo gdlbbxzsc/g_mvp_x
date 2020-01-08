@@ -21,11 +21,11 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
-import c.g.a.x.lib_support.base.BaseActivity;
-import c.g.a.x.lib_support.base.BaseFragment;
 import c.g.a.x.lib_rxbus.base.BaseMsg;
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
 import c.g.a.x.lib_support.android.utils.Logger;
+import c.g.a.x.lib_support.base.BaseActivity;
+import c.g.a.x.lib_support.base.BaseFragment;
 import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.lib_weixin.http.WxAccessTokenResponse;
 import c.g.a.x.lib_weixin.http.WxHttpHelper;
@@ -66,6 +66,10 @@ public final class WeChatHelper {
         return weChatHelper;
     }
 
+//    public static final WeChatHelper getInstance(Context context) {
+//        return new WeChatHelper(context);
+//    }
+
     private WeChatHelper(Context ctx) {
         this.context = ctx.getApplicationContext();
         wxApi = WXAPIFactory.createWXAPI(this.context, APP_ID, false);
@@ -82,8 +86,11 @@ public final class WeChatHelper {
         wxApi.handleIntent(var1, var2);
     }
 
+
     public final boolean isWXAppInstalled() {
-        return wxApi.isWXAppInstalled();
+        boolean b = wxApi.isWXAppInstalled();
+        if (!b) SysToast.showToastShort(context, "您未安装微信");
+        return b;
     }
 
 
@@ -101,11 +108,13 @@ public final class WeChatHelper {
         return b;
     }
 
+    public void open() {
+        if (!isWXAppInstalled()) return;
+        wxApi.openWXApp();
+    }
+
     public final boolean login() {
-        if (!wxApi.isWXAppInstalled()) {
-            SysToast.showToastShort(context, "您未安装微信");
-            return false;
-        }
+        if (!isWXAppInstalled()) return false;
 
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
@@ -146,10 +155,7 @@ public final class WeChatHelper {
     }
 
     public final void pay(String key, MyPayInfo payInfo, OnPayResultListener listener) {
-        if (!wxApi.isWXAppInstalled()) {
-            SysToast.showToastShort(context, "您未安装微信");
-            return;
-        }
+        if (!isWXAppInstalled()) return;
 
         RxBus.register0(key, PayResultMsg.class, payResultMsg -> {
             if (listener != null) listener.onPayResultListener(payResultMsg);
