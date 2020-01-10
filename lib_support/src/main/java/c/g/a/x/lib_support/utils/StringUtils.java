@@ -243,7 +243,7 @@ public final class StringUtils {
             e.printStackTrace(pw);
             return sw.toString();
         } catch (Exception e2) {
-            return "";
+            return "unknow-exception";
         }
     }
 }

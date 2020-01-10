@@ -18,11 +18,11 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 import c.g.a.x.lib_rxbus.base.BaseMsg;
 import c.g.a.x.lib_rxbus.rxbus.RxBus;
+import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.Logger;
 import c.g.a.x.lib_support.base.BaseActivity;
 import c.g.a.x.lib_support.base.BaseFragment;
@@ -256,7 +256,7 @@ public final class WeChatHelper {
 
     private void thumbData2Msg(Bitmap thumb) {
         if (!wxApi.isWXAppInstalled()) return;
-        wxMediaMessage.thumbData = bitmap2Bytes(thumb, THUMB_MAX_SIZE_KB);
+        wxMediaMessage.thumbData = AndroidUtils.bitmap2Bytes(thumb, THUMB_MAX_SIZE_KB);
         thumb.recycle();
     }
 
@@ -290,17 +290,6 @@ public final class WeChatHelper {
             thumbData(R.mipmap.ic_launcher);
     }
 
-    private byte[] bitmap2Bytes(Bitmap bitmap, int maxkb) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
-        int options = 100;
-        while (output.toByteArray().length > maxkb && options != 10) {
-            output.reset(); //清空output
-            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
-            options -= 10;
-        }
-        return output.toByteArray();
-    }
 
     private String buildTransaction(final String type) {
         return (type == null ? "" : type) + System.currentTimeMillis();
