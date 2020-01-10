@@ -55,13 +55,15 @@ dependencies {
     implementation project(path: ':lib_mvp')
     implementation project(path: ':global_application')
     implementation project(path: ':lib_sp')
+    implementation project(path: ':lib_http')
+    implementation project(path: ':lib_db')
+    implementation project(path: ':lib_update')
 
     annotationProcessor "com.alibaba:arouter-compiler:$dependencies_version.arouter_compiler_verion"
 
     implementation project(":applogic_annotation")
     implementation project(":applogic_api")
     annotationProcessor project(":applogic_compiler")
-    implementation project(path: ':lib_http')
-    implementation project(path: ':lib_db')
+
 
 }

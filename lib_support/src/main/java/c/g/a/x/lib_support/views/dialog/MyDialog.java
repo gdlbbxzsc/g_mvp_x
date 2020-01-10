@@ -222,13 +222,17 @@ public final class MyDialog extends Dialog {
         }
 
         public final MyDialog show() {
-            MyDialog dialog = new MyDialog(context, this);
+            MyDialog dialog = create();
             dialog.show();
             return dialog;
         }
+
+        public final MyDialog create() {
+            return new MyDialog(context, this);
+        }
     }
 
-    private enum WhichButton {
+    public enum WhichButton {
         Yes, No, Esc, Dismiss
     }
 

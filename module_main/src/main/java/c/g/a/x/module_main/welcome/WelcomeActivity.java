@@ -57,10 +57,10 @@ public class WelcomeActivity extends MvpActivity<ActivityWelcomeBinding, Present
         super.onPermissionsDeniedNormal(requestCode, perms);
         MyDialog.confirm(context, "请给与app相应权限，否则将无法正常使用,点击确认获取权限", (dialog, which) -> {
             switch (which) {
-                case 0:
+                case No:
                     finish();
                     break;
-                case 1:
+                case Yes:
                     presenter.checkPermission2doSomeThing();
                     break;
             }

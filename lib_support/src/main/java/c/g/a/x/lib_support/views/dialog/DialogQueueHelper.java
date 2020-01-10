@@ -49,6 +49,5 @@ public class DialogQueueHelper<T extends Dialog> {
             currentDialog = null;
             show();
         });
-
     }
 }

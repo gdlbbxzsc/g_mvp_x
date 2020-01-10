@@ -3,34 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#fff"
-    android:gravity="bottom|center"
+    android:gravity="center"
     android:orientation="vertical">
 
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_dialog_content"
         style="@style/font_normal1.black1.Tv_B_mw"
-        android:layout_marginLeft="@dimen/dp20"
-        android:layout_marginRight="@dimen/dp20"
-        android:layout_marginBottom="@dimen/dp10"
-        android:layout_weight="1"
         android:gravity="start|center"
         android:lineSpacingMultiplier="1.2"
-        tools:text="\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf" />
-
+        tools:text="sdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf\nsdfsdf" />
 
     <TextView
         android:id="@+id/btn_dialog_yes"
         style="@style/font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default_btn_rect_sltr"
-        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
         android:gravity="center"
         android:text="立即更新" />
 
     <TextView
         android:id="@+id/btn_dialog_no"
         style="@style/font_small1.black2.Tv_B_ww"
-        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
         android:text="暂不更新" />
 
 

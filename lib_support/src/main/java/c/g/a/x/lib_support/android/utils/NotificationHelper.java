@@ -1,6 +1,7 @@
 package c.g.a.x.lib_support.android.utils;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,7 +14,12 @@ import androidx.core.app.NotificationManagerCompat;
  * Created by Administrator on 2018/11/14.
  */
 
-public class NotificationHelper {
+public final class NotificationHelper {
+
+    public static void checkEnabledDialog(Context context) {
+        if (checkEnabled(context)) return;
+        createDialog(context).show();
+    }
 
     public static boolean checkEnabled(Context context) {
         boolean isOpened = NotificationManagerCompat.from(context).areNotificationsEnabled();
@@ -21,11 +27,7 @@ public class NotificationHelper {
         return isOpened;
     }
 
-    public static boolean checkEnabledDialog(Context context) {
-        boolean isOpened = checkEnabled(context);
-        // 根据isOpened结果，判断是否需要提醒用户跳转AppInfo页面，去打开App通知权限
-        if (isOpened) return true;
-
+    public static Dialog createDialog(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("通知权限");
         builder.setMessage("需要获取通知栏权限，是否设置？");
@@ -40,8 +42,6 @@ public class NotificationHelper {
             intent.setData(uri);
             context.startActivity(intent);
         });
-        builder.show();
-
-        return false;
+        return builder.create();
     }
 }
