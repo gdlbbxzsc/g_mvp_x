@@ -11,7 +11,7 @@ public final class DialogQueueHelper<T extends Dialog> {
 
     private volatile T currentDialog = null;//当前显示的Dialog
 
-    private boolean pause;
+    private volatile boolean pause;
 
     public static DialogQueueHelper getInstance() {
         return InnerInstance.INSTANCE;
