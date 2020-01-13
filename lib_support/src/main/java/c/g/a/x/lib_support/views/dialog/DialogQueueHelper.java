@@ -4,13 +4,12 @@ import android.app.Dialog;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public final class DialogQueueHelper<T extends Dialog> {
 
-    private final Queue<T> dialogQueue = new LinkedList<>();
+    private final LinkedList<T> dialogQueue = new LinkedList<>();
 
-    private T currentDialog = null;//当前显示的Dialog
+    private volatile T currentDialog = null;//当前显示的Dialog
 
     private boolean pause;
 
@@ -36,7 +35,17 @@ public final class DialogQueueHelper<T extends Dialog> {
         if (dialog != null) dialogQueue.offer(dialog);
     }
 
+    public final void addDialogFirst(T dialog) {
+        if (dialog != null) dialogQueue.offerFirst(dialog);
+    }
+
     public final void show() {
+
+        if (pause) {
+            pause = false;
+            return;
+        }
+
         if (currentDialog != null) return;
 
         //从队列中拿出一个Dialog实例,并从列表中移除
@@ -44,11 +53,6 @@ public final class DialogQueueHelper<T extends Dialog> {
 
         //当队列为空的时候拿出来的会是null
         if (currentDialog == null) return;
-
-        if (pause) {
-            pause = false;
-            return;
-        }
 
         currentDialog.show();
         currentDialog.setOnDismissListener(dialog -> {
