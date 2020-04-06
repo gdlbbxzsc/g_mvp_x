@@ -64,6 +64,7 @@ dependencies {
     implementation project(":applogic_annotation")
     implementation project(":applogic_api")
     annotationProcessor project(":applogic_compiler")
+    implementation project(path: ':lib_guide')
 
 
 }
