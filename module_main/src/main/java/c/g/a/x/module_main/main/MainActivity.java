@@ -111,19 +111,26 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
         GuideController controller = new GuideController(this)
                 .addGuidePage(new GuidePage("aaaaaa")
                         .setResetNum(0)
+                        .setMaxTimes(10)
                         .addHighLight(new HighLight(binder.ivMainBottom)//
                                 .setShapeRectangleRound(20)//
                                 .setPadding(20)
-                                .setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        SysToast.showToastShort(context, "社会我凡哥");
-
-                                    }
-                                })
+                                .setOnClickListener(v -> SysToast.showToastShort(context, "社会我凡哥"))
                                 .addRelativeGuide(new HighLightGuide(R.layout.layout_newbie_guide_page)//
                                         .setLayoutType(HighLightGuide.LayoutType.Bottom2Top)//
                                         .setLayoutType(HighLightGuide.LayoutType.Right2Left)
+                                        .setOnClickListener(null))))
+
+                .addGuidePage(new GuidePage("bbbb")
+                        .setResetNum(0)
+                        .setMaxTimes(10)
+                        .addHighLight(new HighLight(binder.ivMainBottom)//
+                                .setShapeRectangleRound(20)//
+                                .setPadding(20)
+                                .setOnClickListener(v -> SysToast.showToastShort(context, "社会我凡哥牛逼"))
+                                .addRelativeGuide(new HighLightGuide(R.layout.layout_newbie_guide_page)//
+                                        .setLayoutType(HighLightGuide.LayoutType.Bottom2Top)//
+                                        .setLayoutType(HighLightGuide.LayoutType.Left2Right)
                                         .setOnClickListener(null))));
         controller.create();
 
