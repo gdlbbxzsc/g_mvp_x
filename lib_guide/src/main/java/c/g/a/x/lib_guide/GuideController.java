@@ -95,12 +95,13 @@ public final class GuideController {
                         (fragment == null ? "" : fragment.getClass().getSimpleName()) +//
                         "_";//
 
-        if (!b) {//上一张时，应该把当前一张的计数器减一
+        if (!b && currentGuidePage != null) {//上一张时，应该把当前一张的计数器减一
             currentGuidePage.reduceTimes(sharedPreferences, preKey);
         }
 
         currentGuidePage = guidePageList.get(current);
-        String versionName = null;
+        
+        String versionName;
         try {
             versionName = AndroidUtils.getVersionName(activity);
         } catch (Exception e) {

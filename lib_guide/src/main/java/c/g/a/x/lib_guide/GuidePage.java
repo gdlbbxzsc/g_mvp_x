@@ -39,24 +39,28 @@ public class GuidePage {
         return touchCancel;
     }
 
-    public void setTouchCancel(boolean touchCancel) {
+    public GuidePage setTouchCancel(boolean touchCancel) {
         this.touchCancel = touchCancel;
+        return this;
     }
 
     public View.OnClickListener getOnTouchCancelListener() {
         return onTouchCancelListener;
     }
 
-    public void setOnTouchCancelListener(View.OnClickListener onTouchCancelListener) {
+    public GuidePage setOnTouchCancelListener(View.OnClickListener onTouchCancelListener) {
         this.onTouchCancelListener = onTouchCancelListener;
+        return this;
     }
 
-    public void setResetNum(int resetNum) {
+    public GuidePage setResetNum(int resetNum) {
         this.resetNum = resetNum;
+        return this;
     }
 
-    public void setMaxTimes(int maxTimes) {
+    public GuidePage setMaxTimes(int maxTimes) {
         this.maxTimes = maxTimes;
+        return this;
     }
 
     boolean canShow(SharedPreferences sp, String preTag) {
@@ -64,8 +68,8 @@ public class GuidePage {
         return num < maxTimes;
     }
 
-    public void reset(SharedPreferences sp, String preTag, String ver) {
-        String temp = sp.getString(preTag + tag + "flag", "");
+    void reset(SharedPreferences sp, String preTag, String ver) {
+        String temp = sp.getString(preTag + tag + "_flag", "");
         if (StringUtils.isEqual(temp, ver)) return;
 
         SharedPreferences.Editor edit = sp.edit();

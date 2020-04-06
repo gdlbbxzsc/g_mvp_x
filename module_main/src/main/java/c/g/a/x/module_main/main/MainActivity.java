@@ -27,6 +27,7 @@ import c.g.a.x.lib_guide.HighLightGuide;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
+import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.lib_update.ApkVersionHelper;
 import c.g.a.x.lib_update.UpVersionService;
 import c.g.a.x.module_main.R;
@@ -107,17 +108,24 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 //        ApkVersionHelper.UpdateDialog a=ApkVersionHelper.getInstance(context).installTypeDialog().versionCode(10).versionName("11.0").url("sdfds").update();
 
 
-        new GuideController(this)
+        GuideController controller = new GuideController(this)
                 .addGuidePage(new GuidePage("aaaaaa")
+                        .setResetNum(0)
                         .addHighLight(new HighLight(binder.ivMainBottom)//
                                 .setShapeRectangleRound(20)//
                                 .setPadding(20)
-                                .setOnClickListener(null)
+                                .setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        SysToast.showToastShort(context, "社会我凡哥");
+
+                                    }
+                                })
                                 .addRelativeGuide(new HighLightGuide(R.layout.layout_newbie_guide_page)//
                                         .setLayoutType(HighLightGuide.LayoutType.Bottom2Top)//
                                         .setLayoutType(HighLightGuide.LayoutType.Right2Left)
-                                        .setOnClickListener(null))))
-                .create();
+                                        .setOnClickListener(null))));
+        controller.create();
 
     }
 
