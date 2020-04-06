@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btn_guide"
+    style="@style/font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default_btn_round_sltr"
+    android:layout_marginBottom="@dimen/dp20"
+    android:text="  点  击  " />

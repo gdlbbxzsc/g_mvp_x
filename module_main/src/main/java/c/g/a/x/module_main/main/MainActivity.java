@@ -2,6 +2,7 @@ package c.g.a.x.module_main.main;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +20,10 @@ import java.util.List;
 import java.util.Objects;
 
 import c.g.a.x.global_application.arouter.Constant;
+import c.g.a.x.lib_guide.GuideController;
+import c.g.a.x.lib_guide.GuidePage;
+import c.g.a.x.lib_guide.HighLight;
+import c.g.a.x.lib_guide.HighLightGuide;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
@@ -100,6 +105,19 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
 
 
 //        ApkVersionHelper.UpdateDialog a=ApkVersionHelper.getInstance(context).installTypeDialog().versionCode(10).versionName("11.0").url("sdfds").update();
+
+
+        new GuideController(this)
+                .addGuidePage(new GuidePage("aaaaaa")
+                        .addHighLight(new HighLight(binder.ivMainBottom)//
+                                .setShapeRectangleRound(20)//
+                                .setPadding(20)
+                                .setOnClickListener(null)
+                                .addRelativeGuide(new HighLightGuide(R.layout.layout_newbie_guide_page)//
+                                        .setLayoutType(HighLightGuide.LayoutType.Bottom2Top)//
+                                        .setLayoutType(HighLightGuide.LayoutType.Right2Left)
+                                        .setOnClickListener(null))))
+                .create();
 
     }
 
