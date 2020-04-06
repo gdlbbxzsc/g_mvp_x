@@ -1,3 +1,4 @@
 <resources>
-    <string name="my_app_name">G_MVP_X</string>
+    <string name="my_release_app_name">G_MVP_X</string>
+<!--    <string name="app_name">G_MVP_X_TEST</string>-->
 </resources>
