@@ -21,7 +21,7 @@ public class MineFragment extends MvpFragment<FragmentMineBinding, Presenter> im
     }
 
     @Override
-    public void initView(FragmentMineBinding viewDataBinding) {
+    public void initView() {
         binder.tv2.setOnClickListener(v -> SysToast.showToastShort(context, "ss"));
     }
 

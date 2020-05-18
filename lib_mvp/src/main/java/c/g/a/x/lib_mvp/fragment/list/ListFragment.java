@@ -1,6 +1,7 @@
 package c.g.a.x.lib_mvp.fragment.list;
 
-import androidx.databinding.ViewDataBinding;
+
+import androidx.viewbinding.ViewBinding;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
  * Created by Administrator on 2018/1/19.
  */
 
-public abstract class ListFragment<D extends ViewDataBinding, T extends ListPresenter, A extends DataAdapter> extends MvpFragment<D, T> implements IListFragmentView {
+public abstract class ListFragment<D extends ViewBinding, T extends ListPresenter, A extends DataAdapter> extends MvpFragment<D, T> implements IListFragmentView {
 
     public A adapter;
 

@@ -1,13 +1,13 @@
 package c.g.a.x.lib_mvp.fragment;
 
 
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import c.g.a.x.lib_support.base.BaseFragment;
 import c.g.a.x.lib_mvp.base.IBasePresenter;
 
 
-public abstract class MvpFragment<D extends ViewDataBinding, P extends IBasePresenter> extends BaseFragment<D> {
+public abstract class MvpFragment<D extends ViewBinding, P extends IBasePresenter> extends BaseFragment<D> {
 
     public P presenter;
 

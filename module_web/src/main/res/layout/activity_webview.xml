@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Bg_default.B_mm.O_v_G_center">
 
-    <data>
+    <include layout="@layout/titlebar_common" />
 
-    </data>
-
-    <LinearLayout style="@style/Bg_default.B_mm.O_v_G_center">
-
-        <include layout="@layout/titlebar_common" />
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-</layout>
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+</LinearLayout>

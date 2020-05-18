@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.viewbinding.ViewBinding;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import c.g.a.x.lib_support.android.utils.Logger;
@@ -21,7 +22,7 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
-public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment implements EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
+public abstract class BaseFragment<D extends ViewBinding> extends Fragment implements EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     protected BaseFragment fragment;
     protected Context context;
@@ -75,8 +76,21 @@ public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment i
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (binder == null) {
 //            mContentView = inflater.inflate(layoutResID(), container, false);
-            binder = DataBindingUtil.inflate(inflater, layoutResID(), container, false);
-            initView(binder);
+//            binder = DataBindingUtil.inflate(inflater, layoutResID(), container, false);
+
+            if (hasContentView()) {
+                try {
+                    ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+                    // 获取第一个类型参数的真实类型
+                    Class<D> clazz = (Class<D>) pt.getActualTypeArguments()[0];
+                    Method method = clazz.getMethod("inflate", LayoutInflater.class);
+                    binder = (D) method.invoke(null, inflater);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            initView();
             onCreateViewFirst();
             initData();
             Logger.e(this + " onCreateView new");
@@ -176,7 +190,11 @@ public abstract class BaseFragment<D extends ViewDataBinding> extends Fragment i
 
     protected abstract int layoutResID();
 
-    public abstract void initView(D viewDataBinding);
+    protected boolean hasContentView() {
+        return true;
+    }
+
+    public abstract void initView();
 
     protected abstract void initData();
 

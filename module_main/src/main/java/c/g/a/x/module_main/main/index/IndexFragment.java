@@ -1,7 +1,5 @@
 package c.g.a.x.module_main.main.index;
 
-import android.view.View;
-
 import c.g.a.x.lib_mvp.fragment.MvpFragment;
 import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.module_main.R;
@@ -23,7 +21,7 @@ public class IndexFragment extends MvpFragment<FragmentIndexBinding, Presenter> 
     }
 
     @Override
-    public void initView(FragmentIndexBinding viewDataBinding) {
+    public void initView() {
         binder.tv1.setOnClickListener(v -> SysToast.showToastShort(context, "ss"));
     }
 

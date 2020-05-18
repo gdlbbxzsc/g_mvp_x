@@ -1,6 +1,6 @@
 package c.g.a.x.lib_mvp.activity.list.smartrefreshlayout;
 
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -13,7 +13,7 @@ import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
  * Created by Administrator on 2018/1/19.
  */
 
-public abstract class SmartRefreshListActivity<D extends ViewDataBinding, T extends ListPresenter, A extends DataAdapter> extends ListActivity<D, T, A> {
+public abstract class SmartRefreshListActivity<D extends ViewBinding, T extends ListPresenter, A extends DataAdapter> extends ListActivity<D, T, A> {
 
     public SmartRefreshLayout smartRefreshLayout;
 

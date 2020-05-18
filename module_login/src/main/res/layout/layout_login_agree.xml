@@ -1,20 +1,14 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Bg_none.B_mw.O_h_G_center">
 
-    <data>
+    <CheckBox
+        android:id="@+id/cb_agreement"
+        style="@style/font_normal1.black1.Rg_B_ww_O_h_G_center"
 
-    </data>
+        android:text="同意" />
 
-    <LinearLayout style="@style/Bg_none.B_mw.O_h_G_center">
-
-        <CheckBox
-            android:id="@+id/cb_agreement"
-            style="@style/font_normal1.black1.Rg_B_ww_O_h_G_center"
-
-            android:text="同意" />
-
-        <TextView
-            android:id="@+id/tv_agreement"
-            style="@style/font_normal1.red.Tv_B_ww"
-            android:text="《服务协议》" />
-    </LinearLayout>
-</layout>
+    <TextView
+        android:id="@+id/tv_agreement"
+        style="@style/font_normal1.red.Tv_B_ww"
+        android:text="《服务协议》" />
+</LinearLayout>

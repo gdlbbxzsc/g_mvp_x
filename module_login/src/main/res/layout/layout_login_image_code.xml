@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Bg_none.B_mw.O_h_G_center">
 
-    <data>
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/Bg_none.B_mw.O_h_G_center">
-
-        <EditText
-            android:id="@+id/edt_image_code"
-            style="@style/font_normal1.black1.Edt_B_0w_pad5_Bg_default.Singleline"
-            android:hint="输入图片验证码"
-            android:maxLength="4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_image_code"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/edt_image_code"
+        style="@style/font_normal1.black1.Edt_B_0w_pad5_Bg_default.Singleline"
+        android:hint="输入图片验证码"
+        android:maxLength="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_image_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-        <ImageView
-            android:id="@+id/btn_image_code"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/iv_def_code"
-            app:layout_constraintBottom_toBottomOf="@+id/edt_image_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edt_image_code" />
+    <ImageView
+        android:id="@+id/btn_image_code"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/iv_def_code"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_image_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_image_code" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

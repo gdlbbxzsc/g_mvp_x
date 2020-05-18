@@ -3,16 +3,18 @@ package c.g.a.x.lib_support.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import c.g.a.x.lib_support.android.utils.viewclickable.ViewClickableMnger;
@@ -21,7 +23,7 @@ import c.g.a.x.lib_support.views.dialog.WaitDialogMnger;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
+public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     protected BaseActivity activity;
     protected Context context;
@@ -37,10 +39,22 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
 
         initSysSetting();
 
-        int layout_id = layoutResID();
-        if (layout_id > 0) {
-//            setContentView(layout_id);
-            binder = DataBindingUtil.setContentView(this, layout_id);
+//        int layout_id = layoutResID();
+//        if (layout_id > 0) {
+////            setContentView(layout_id);
+//            binder = DataBindingUtil.setContentView(this, layout_id);
+//        }
+        if (hasContentView()) {
+            try {
+                ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+                // 获取第一个类型参数的真实类型
+                Class<T> clazz = (Class<T>) pt.getActualTypeArguments()[0];
+                Method method = clazz.getMethod("inflate", LayoutInflater.class);
+                binder = (T) method.invoke(null, getLayoutInflater());
+                setContentView(binder.getRoot());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         initView();
@@ -102,6 +116,10 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     }
 
     protected abstract int layoutResID();
+
+    protected boolean hasContentView() {
+        return true;
+    }
 
     protected abstract void initView();
 

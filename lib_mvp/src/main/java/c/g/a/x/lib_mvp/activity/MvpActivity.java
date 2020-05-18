@@ -1,13 +1,13 @@
 package c.g.a.x.lib_mvp.activity;
 
 
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import c.g.a.x.lib_support.base.BaseActivity;
 import c.g.a.x.lib_mvp.base.IBasePresenter;
 
 
-public abstract class MvpActivity< D extends ViewDataBinding, P extends IBasePresenter> extends BaseActivity<D> {
+public abstract class MvpActivity< D extends ViewBinding, P extends IBasePresenter> extends BaseActivity<D> {
 
     public P presenter;
 

@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Bg_default.B_mm"
+    android:clipChildren="false"
+    android:gravity="top"
+    android:orientation="vertical">
 
-    <data>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    </data>
+    <View style="@style/Line.B_m1px" />
 
+    <RadioGroup
+        android:id="@+id/rg_main"
+        style="@style/Rg_B_mw_O_h_G_center"
+        android:background="@color/white">
 
-    <LinearLayout
-        style="@style/Bg_default.B_mm"
-        android:clipChildren="false"
-        android:gravity="top"
-        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/rb_main_index"
+            style="@style/main_bottom_rb_style"
+            android:drawableTop="@drawable/main_bottom_rb_btn_selector1" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_container"
+        <ImageView
+            android:id="@+id/iv_main_bottom"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-15dp"
+            android:layout_weight="1"
+            android:src="@drawable/share_pyq" />
+        <!--            android:adjustViewBounds="true"-->
 
-        <View style="@style/Line.B_m1px" />
-
-        <RadioGroup
-            android:id="@+id/rg_main"
-            style="@style/Rg_B_mw_O_h_G_center"
-            android:background="@color/white">
-
-            <RadioButton
-                android:id="@+id/rb_main_index"
-                style="@style/main_bottom_rb_style"
-                android:drawableTop="@drawable/main_bottom_rb_btn_selector1" />
-
-            <ImageView
-                android:id="@+id/iv_main_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-15dp"
-                android:layout_weight="1"
-                android:src="@drawable/share_pyq" />
-            <!--            android:adjustViewBounds="true"-->
-
-            <RadioButton
-                android:id="@+id/rb_main_mine"
-                style="@style/main_bottom_rb_style"
-                android:drawableTop="@drawable/main_bottom_rb_btn_selector2" />
-        </RadioGroup>
-    </LinearLayout>
-</layout>
+        <RadioButton
+            android:id="@+id/rb_main_mine"
+            style="@style/main_bottom_rb_style"
+            android:drawableTop="@drawable/main_bottom_rb_btn_selector2" />
+    </RadioGroup>
+</LinearLayout>

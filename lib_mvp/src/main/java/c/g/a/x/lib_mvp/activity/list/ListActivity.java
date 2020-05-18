@@ -1,6 +1,6 @@
 package c.g.a.x.lib_mvp.activity.list;
 
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
  * Created by Administrator on 2018/1/19.
  */
 
-public abstract class ListActivity<D extends ViewDataBinding, T extends ListPresenter, A extends DataAdapter> extends MvpActivity<D, T> implements IListActivityView {
+public abstract class ListActivity<D extends ViewBinding, T extends ListPresenter, A extends DataAdapter> extends MvpActivity<D, T> implements IListActivityView {
 
     private A adapter;
 

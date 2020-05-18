@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/Bg_none.B_mw.O_h_G_center">
 
 
-        <EditText
-            android:id="@+id/edt_sms_code"
-            style="@style/font_normal1.black1.Edt_B_0w_pad5_Bg_default.Singleline"
-            android:hint="输入短信验证码"
-            android:inputType="number"
-            android:maxLength="6"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_sms_code"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Bg_none.B_mw.O_h_G_center">
 
-        <TextView
-            android:id="@+id/btn_sms_code"
-            style="@style/font_normal1.black2.Btn_B_ww_pad_lr8_tb4"
-            android:background="@drawable/login_sms_btn_gray_bg"
-            android:text="获取验证码"
-            app:layout_constraintBottom_toBottomOf="@+id/edt_sms_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edt_sms_code" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    <EditText
+        android:id="@+id/edt_sms_code"
+        style="@style/font_normal1.black1.Edt_B_0w_pad5_Bg_default.Singleline"
+        android:hint="输入短信验证码"
+        android:inputType="number"
+        android:maxLength="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sms_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_sms_code"
+        style="@style/font_normal1.black2.Btn_B_ww_pad_lr8_tb4"
+        android:background="@drawable/login_sms_btn_gray_bg"
+        android:text="获取验证码"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_sms_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_sms_code" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
