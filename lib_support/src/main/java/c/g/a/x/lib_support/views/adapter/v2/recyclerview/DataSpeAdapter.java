@@ -9,8 +9,7 @@ import java.util.List;
 
 public class DataSpeAdapter extends DataAdapter {
 
-
-    final SparseArray<  KV> adapter_pos_2_true_pos_map = new SparseArray<>();
+    final SparseArray<KV> adapter_pos_2_true_pos_map = new SparseArray<>();
     int dataCount = 0;
 
     final OnGetSon onGetSon;
