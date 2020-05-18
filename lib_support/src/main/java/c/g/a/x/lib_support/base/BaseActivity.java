@@ -115,7 +115,9 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
         return activity;
     }
 
-    protected abstract int layoutResID();
+    protected int layoutResID() {
+        return 0;
+    }
 
     protected boolean hasContentView() {
         return true;

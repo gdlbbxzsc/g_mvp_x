@@ -188,7 +188,9 @@ public abstract class BaseFragment<D extends ViewBinding> extends Fragment imple
         return isOnResume;
     }
 
-    protected abstract int layoutResID();
+    protected int layoutResID() {
+        return 0;
+    }
 
     protected boolean hasContentView() {
         return true;
