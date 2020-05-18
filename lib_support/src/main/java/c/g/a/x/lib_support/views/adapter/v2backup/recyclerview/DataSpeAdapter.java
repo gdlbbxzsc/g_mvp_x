@@ -1,4 +1,4 @@
-//package c.g.a.x.lib_support.views.adapter.v1.recyclerview;
+//package c.g.a.x.lib_support.views.adapter.v2backup.recyclerview;
 //
 //import android.content.Context;
 //import android.util.SparseArray;
@@ -7,27 +7,19 @@
 //
 //import java.util.List;
 //
-///**
-// * q1:flushDatas 返回了一个adapter pos 可能是要 调用recyclerview特有的刷新功能。但是还没有调用，真实使用时再说吧。
-// **/
+//import c.g.a.x.lib_support.views.adapter.v2.recyclerview.DataAdapter;
+//
 //public class DataSpeAdapter extends DataAdapter {
 //
 //
-//    final SparseArray<KV> adapter_pos_2_true_pos_map = new SparseArray<>();
+//    final SparseArray<  KV> adapter_pos_2_true_pos_map = new SparseArray<>();
 //    int dataCount = 0;
 //
 //    final OnGetSon onGetSon;
 //
+//
 //    public DataSpeAdapter(Context context, RecyclerView view, Class farViewHolder, Class sonViewHolder, OnGetSon onGetSon) {
-//        this(context, view, farViewHolder, sonViewHolder, onGetSon, null);
-//    }
-//
-//    public DataSpeAdapter(Context context, RecyclerView view, Class farViewHolder, Class sonViewHolder, OnGetSon onGetSon, Class choiceHelperClz) {
-//        super(context, view, 2, choiceHelperClz);
-//
-//        viewTypeCount.add(0, farViewHolder);
-//        viewTypeCount.add(1, sonViewHolder);
-//
+//        super(context, view, farViewHolder, sonViewHolder);
 //        this.onGetSon = onGetSon;
 //    }
 //
@@ -58,23 +50,6 @@
 //        return getItemByKV(getKV(adapter_pos));
 //    }
 //
-//
-//    ////////////
-//
-//    @Override
-//    public int getItemViewType(int adapter_pos) {
-//        KV vo = getKV(adapter_pos);
-//        if (vo.spos == -1) {
-//            return 0;
-//        } else {
-//            return 1;
-//        }
-//    }
-//
-//    public Class getItemViewTypeClass(int adapter_pos) {
-//        return viewTypeCount.get(getItemViewType(adapter_pos));
-//    }
-//
 //    private int flushDatas(Object obj) {
 //        int obj_pos = -1;
 //
@@ -100,7 +75,7 @@
 //                if (obj != null) if (sonList.get(j) == obj) obj_pos = adapter_pos;
 //            }
 //        }
-//        dataCount += adapter_pos + 1;
+//        dataCount = adapter_pos + 1;
 //
 //        return obj_pos;
 //    }
@@ -214,13 +189,10 @@
 //        dataCount = 0;
 //
 //        viewDataList.clear();
-//        if (viewTypeList != null) {
-//            viewTypeList.clear();
-//        }
+//
 //        if (choiceHelper != null) {
 //            choiceHelper.clearChoices();
 //        }
-//
 //        notifyDataSetChanged();
 //    }
 //

@@ -1,33 +1,24 @@
-//package c.g.a.x.lib_support.views.adapter.v1.recyclerview;
+//package c.g.a.x.lib_support.views.adapter.v2backup.abslistview;
 //
 //import android.content.Context;
 //import android.util.SparseArray;
-//
-//import androidx.recyclerview.widget.RecyclerView;
+//import android.widget.AbsListView;
 //
 //import java.util.List;
 //
-///**
-// * q1:flushDatas 返回了一个adapter pos 可能是要 调用recyclerview特有的刷新功能。但是还没有调用，真实使用时再说吧。
-// **/
+//import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
+//
 //public class DataSpeAdapter extends DataAdapter {
 //
 //
-//    final SparseArray<KV> adapter_pos_2_true_pos_map = new SparseArray<>();
+//    final SparseArray<  KV> adapter_pos_2_true_pos_map = new SparseArray<>();
 //    int dataCount = 0;
 //
 //    final OnGetSon onGetSon;
 //
-//    public DataSpeAdapter(Context context, RecyclerView view, Class farViewHolder, Class sonViewHolder, OnGetSon onGetSon) {
-//        this(context, view, farViewHolder, sonViewHolder, onGetSon, null);
-//    }
 //
-//    public DataSpeAdapter(Context context, RecyclerView view, Class farViewHolder, Class sonViewHolder, OnGetSon onGetSon, Class choiceHelperClz) {
-//        super(context, view, 2, choiceHelperClz);
-//
-//        viewTypeCount.add(0, farViewHolder);
-//        viewTypeCount.add(1, sonViewHolder);
-//
+//    public DataSpeAdapter(Context context, AbsListView view, Class farViewHolder, Class sonViewHolder, OnGetSon onGetSon) {
+//        super(context, view, farViewHolder, sonViewHolder);
 //        this.onGetSon = onGetSon;
 //    }
 //
@@ -49,7 +40,7 @@
 //    }
 //
 //    @Override
-//    public int getItemCount() {
+//    public int getCount() {
 //        return dataCount;
 //    }
 //
@@ -59,24 +50,7 @@
 //    }
 //
 //
-//    ////////////
-//
-//    @Override
-//    public int getItemViewType(int adapter_pos) {
-//        KV vo = getKV(adapter_pos);
-//        if (vo.spos == -1) {
-//            return 0;
-//        } else {
-//            return 1;
-//        }
-//    }
-//
-//    public Class getItemViewTypeClass(int adapter_pos) {
-//        return viewTypeCount.get(getItemViewType(adapter_pos));
-//    }
-//
-//    private int flushDatas(Object obj) {
-//        int obj_pos = -1;
+//    private void flushDatas() {
 //
 //        adapter_pos_2_true_pos_map.clear();
 //        dataCount = 0;
@@ -86,9 +60,8 @@
 //        for (int i = 0, counti = viewDataList.size(); i < counti; i++) {
 //
 //            adapter_pos += 1;
-//            putPosMap(adapter_pos, i, -1);
 //
-//            if (obj != null) if (viewDataList.get(i) == obj) obj_pos = adapter_pos;
+//            putPosMap(adapter_pos, i, -1);
 //
 //            List<Object> sonList = onGetSon.getSonList(viewDataList.get(i));
 //            if (sonList == null || sonList.size() <= 0) continue;
@@ -96,13 +69,9 @@
 //            for (int j = 0, countj = sonList.size(); j < countj; j++) {
 //                adapter_pos += 1;
 //                putPosMap(adapter_pos, i, j);
-//
-//                if (obj != null) if (sonList.get(j) == obj) obj_pos = adapter_pos;
 //            }
 //        }
-//        dataCount += adapter_pos + 1;
-//
-//        return obj_pos;
+//        dataCount = adapter_pos + 1;
 //    }
 //
 //
@@ -121,7 +90,7 @@
 //    //
 //    public <T> void addDatas(List<T> datas) {
 //        super.addDatas(datas);
-//        flushDatas(null);
+//        flushDatas();
 //        notifyDataSetChanged();
 //    }
 //
@@ -129,7 +98,7 @@
 //    public <T> void addData(T data) {
 //        viewDataList.add(data);
 //
-//        int data_pos = flushDatas(data);
+//        flushDatas();
 //        notifyDataSetChanged();
 //    }
 //
@@ -139,22 +108,20 @@
 //        }
 //
 //        viewDataList.add(true_fpos, data);
-//        int data_pos = flushDatas(data);
+//        flushDatas();
 //        notifyDataSetChanged();
 //    }
 //
-//    public <T> int addSonData(int true_fpos, T data) {
+//    public <T> void addSonData(int true_fpos, T data) {
 //        Object obj = viewDataList.get(true_fpos);
 //        List<Object> list = onGetSon.getSonList(obj);
 //        list.add(data);
 //
-//        int data_pos = flushDatas(data);
-////        notifyDataSetChanged();
-//        notifyItemInserted(data_pos);
-//        return data_pos;
+//        flushDatas();
+//        notifyDataSetChanged();
 //    }
 //
-//    public <T> int addSonData(int true_fpos, int true_spos, T data) {
+//    public <T> void addSonData(int true_fpos, int true_spos, T data) {
 //
 //        Object obj = viewDataList.get(true_fpos);
 //
@@ -165,10 +132,8 @@
 //        }
 //        list.add(true_spos, data);
 //
-//        int data_pos = flushDatas(data);
-////        notifyDataSetChanged();
-//        notifyItemInserted(data_pos);
-//        return data_pos;
+//        flushDatas();
+//        notifyDataSetChanged();
 //    }
 //
 //    //
@@ -200,11 +165,8 @@
 //            }
 //        }
 //
-//        flushDatas(null);
-//        if (vo.spos == -1)
-//            notifyDataSetChanged();
-//        else
-//            notifyItemRemoved(adapter_pos);
+//        flushDatas();
+//        notifyDataSetChanged();
 //    }
 //
 //    //
@@ -214,13 +176,10 @@
 //        dataCount = 0;
 //
 //        viewDataList.clear();
-//        if (viewTypeList != null) {
-//            viewTypeList.clear();
-//        }
+//
 //        if (choiceHelper != null) {
 //            choiceHelper.clearChoices();
 //        }
-//
 //        notifyDataSetChanged();
 //    }
 //

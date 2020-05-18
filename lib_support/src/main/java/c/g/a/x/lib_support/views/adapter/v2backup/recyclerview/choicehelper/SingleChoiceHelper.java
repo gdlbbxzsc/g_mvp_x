@@ -1,7 +1,8 @@
-//package c.g.a.x.lib_support.views.adapter.v1.recyclerview.choicehelper;
+//package c.g.a.x.lib_support.views.adapter.v2backup.recyclerview.choicehelper;
+//
 //
 //import c.g.a.x.lib_support.views.adapter.ChoiceHelper;
-//import c.g.a.x.lib_support.views.adapter.v1.recyclerview.DataAdapter;
+//import c.g.a.x.lib_support.views.adapter.v2.recyclerview.DataAdapter;
 //
 ///**
 // * Created by Administrator on 2018/7/10.
@@ -39,7 +40,7 @@
 //    @Override
 //    public int removeChoice(Object data) {
 //        int pos = adapter.getPosition(data);
-//        if (pos != -1) choice_data = null;
+//        if (pos != -1)         choice_data = null;
 //        return pos;
 //    }
 //

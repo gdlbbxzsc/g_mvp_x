@@ -1,18 +1,17 @@
-//package c.g.a.x.lib_support.views.adapter.v1.abslistview.choicehelper;
-//
+//package c.g.a.x.lib_support.views.adapter.v2backup.abslistview.choicehelper;
 //
 //
 //import java.util.ArrayList;
 //import java.util.List;
 //
 //import c.g.a.x.lib_support.views.adapter.ChoiceHelper;
-//import c.g.a.x.lib_support.views.adapter.v1.abslistview.DataAdapter;
+//import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
 //
 ///**
 // * Created by Administrator on 2018/7/10.
 // */
 //
-//public class MultipleChoiceHelper<T extends DataAdapter> extends ChoiceHelper<T,List<Object>> {
+//public class MultipleChoiceHelper<T extends DataAdapter> extends ChoiceHelper<T, List<Object>> {
 //
 //    public final List<Object> choice_data = new ArrayList<>();
 //

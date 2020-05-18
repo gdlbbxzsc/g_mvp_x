@@ -122,14 +122,15 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder.RecyclerViewVie
         } catch (Exception e) {
             e.printStackTrace();
         }
+        holder.adapter = this;
+ 
+//        View view = inflater.inflate(holder.getLayout(), parent, false);
+        holder.getView();
+        View view = holder.binder.getRoot();
 
-        View view = inflater.inflate(holder.getLayout(), parent, false);
         holder.recyclerViewViewHolder = holder.new RecyclerViewViewHolder(holder, view);
 
-        holder.adapter = this;
         view.setOnClickListener(holder.listener);
-
-        holder.getView(holder.recyclerViewViewHolder.itemView);
 
         onGetView(holder);
 

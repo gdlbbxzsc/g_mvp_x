@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 
-
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,9 +144,12 @@ public class DataAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             holder.adapter = this;
-            convertView = inflater.inflate(holder.getLayout(), null);
 
-            holder.getView(convertView);
+//            convertView = inflater.inflate(holder.getLayout(), null);
+
+            holder.getView();
+
+            convertView = holder.binder.getRoot();
 
             onGetView(holder);
 

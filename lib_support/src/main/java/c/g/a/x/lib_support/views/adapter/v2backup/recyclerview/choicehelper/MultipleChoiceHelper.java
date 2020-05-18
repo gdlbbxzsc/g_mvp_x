@@ -1,12 +1,10 @@
-//package c.g.a.x.lib_support.views.adapter.v1.abslistview.choicehelper;
-//
-//
+//package c.g.a.x.lib_support.views.adapter.v2backup.recyclerview.choicehelper;
 //
 //import java.util.ArrayList;
 //import java.util.List;
 //
 //import c.g.a.x.lib_support.views.adapter.ChoiceHelper;
-//import c.g.a.x.lib_support.views.adapter.v1.abslistview.DataAdapter;
+//import c.g.a.x.lib_support.views.adapter.v2.recyclerview.DataAdapter;
 //
 ///**
 // * Created by Administrator on 2018/7/10.
@@ -20,15 +18,13 @@
 //        super(adapter);
 //    }
 //
-//
 //    @Override
 //    public Object putChoice(int pos) {
-//        if (pos < 0 || pos >= adapter.getCount()) return null;
+//        if (pos < 0 || pos >= adapter.getItemCount()) return null;
 //        Object obj = adapter.getItem(pos);
 //        putChoice(obj);
 //        return obj;
 //    }
-//
 //
 //    @Override
 //    public int putChoice(Object data) {
@@ -45,7 +41,7 @@
 //
 //    @Override
 //    public Object removeChoice(int pos) {
-//        if (pos < 0 || pos >= adapter.getCount()) return null;
+//        if (pos < 0 || pos >= adapter.getItemCount()) return null;
 //        Object obj = adapter.getItem(pos);
 //        removeChoice(obj);
 //        return obj;
@@ -60,10 +56,8 @@
 //
 //    @Override
 //    public void choiceAll() {
-//
 //        choice_data.clear();
 //        choice_data.addAll(adapter.viewDataList);
-//
 //    }
 //
 //    @Override
@@ -74,7 +68,7 @@
 //
 //    @Override
 //    public boolean isChoiced(int pos) {
-//        if (pos < 0 || pos >= adapter.getCount()) return false;
+//        if (pos < 0 || pos >= adapter.getItemCount()) return false;
 //        return isChoiced(adapter.getItem(pos));
 //    }
 //
@@ -90,6 +84,7 @@
 //
 //    @Override
 //    public void notifyDataSetChanged(int position) {
-//        adapter.notifyDataSetChanged();
+//        if (position == -1) adapter.notifyDataSetChanged();
+//        else adapter.notifyItemChanged(position, -1);
 //    }
 //}

@@ -1,12 +1,13 @@
-//package c.g.a.x.lib_support.views.adapter.v1.recyclerview;
+//package c.g.a.x.lib_support.views.adapter.v2backup.recyclerview;
+//
 //
 //import android.view.View;
 //
 //import androidx.recyclerview.widget.RecyclerView;
 //
-//
 //import java.util.List;
 //
+//import c.g.a.x.lib_support.views.adapter.v2.recyclerview.DataAdapter;
 //import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 //
 //

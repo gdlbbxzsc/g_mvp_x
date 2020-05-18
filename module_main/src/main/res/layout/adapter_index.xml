@@ -3,13 +3,10 @@
     style="@style/Bg_default.B_mm.O_v_G_topcenter">
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#0f0"
-        android:text="index" />
-
-    <ListView
-        android:id="@+id/lv1"
-        style="@style/Listview.D_1.B_mm" />
+        android:text="item text" />
+ 
 </LinearLayout>

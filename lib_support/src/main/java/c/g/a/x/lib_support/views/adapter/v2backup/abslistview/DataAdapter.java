@@ -1,103 +1,86 @@
-//package c.g.a.x.lib_support.views.adapter.v1.abslistview;
+//package c.g.a.x.lib_support.views.adapter.v2backup.abslistview;
 //
 //import android.content.Context;
-//import android.content.res.Resources;
 //import android.os.Bundle;
+//import android.util.SparseArray;
 //import android.view.LayoutInflater;
 //import android.view.View;
 //import android.view.ViewGroup;
 //import android.widget.AbsListView;
 //import android.widget.BaseAdapter;
 //
+//
+//import java.lang.reflect.ParameterizedType;
 //import java.util.ArrayList;
+//import java.util.HashMap;
 //import java.util.List;
 //
 //import c.g.a.x.lib_support.views.adapter.ChoiceHelper;
-//import c.g.a.x.lib_support.views.adapter.v1.abslistview.choicehelper.MultipleChoiceHelper;
-//import c.g.a.x.lib_support.views.adapter.v1.abslistview.choicehelper.SingleChoiceHelper;
+//import c.g.a.x.lib_support.views.adapter.v2.abslistview.ViewHolder;
+//import c.g.a.x.lib_support.views.adapter.v2.abslistview.choicehelper.MultipleChoiceHelper;
+//import c.g.a.x.lib_support.views.adapter.v2.abslistview.choicehelper.SingleChoiceHelper;
 //
 //public class DataAdapter extends BaseAdapter {
 //
 //    public final Context context;
 //    public final LayoutInflater inflater;
-//    public final Resources resources;
 //
 //    public final AbsListView view;// adapter 持有者控件
 //
 //    //
-//    protected int view_type_count = 1;
-//    // key position value view type
-//    protected final List<Class> viewTypeCount;
-//    // viewDataList.get(i)'s viewHolder is viewTypeList.get(i)
-//    protected List<Integer> viewTypeList;
+//    protected Class viewHolder;
+//    protected SparseArray<Class> typeViewMap;    //num from 0    value viewHolder.class
+//    protected HashMap<String, Integer> dataTypeMap;  //key:vo.class    value num from 0
 //
 //    // vo
 //    public final List<Object> viewDataList = new ArrayList<>(10);
 //    //
-//
 //
 //    public Bundle bundle = new Bundle();
 //
 //    public OnItemViewClickListener onItemViewClickListener;//列表item中控件点击事件
 //    public ChoiceHelper choiceHelper;
 //
-//    private DataAdapter(Context context, AbsListView view, Class viewHolder, int view_type_count, Class choiceHelperClz) {
+//    public DataAdapter(Context context, AbsListView view, Class... viewHolderClz) {
 //        this.context = context;
-//
 //        this.inflater = LayoutInflater.from(context);
-//        this.resources = (context).getResources();
 //
 //        this.view = view;
 //
-//        this.view_type_count = view_type_count;
 //
-//        viewTypeCount = new ArrayList<>(view_type_count);
-//        if (viewHolder != null) {
-//            viewTypeCount.add(viewHolder);
-//        }
-//        if (view_type_count > 1) {
-//            viewTypeList = new ArrayList<>(10);
-//        }
+//        if (viewHolderClz.length == 1) {
+//            this.viewHolder = viewHolderClz[0];
+//        } else {
+//            typeViewMap = new SparseArray<>(viewHolderClz.length);
+//            dataTypeMap = new HashMap<>(viewHolderClz.length, 1f);
 //
-//        if (choiceHelperClz == SingleChoiceHelper.class) {
-//            choiceHelper = new SingleChoiceHelper<>(this);
-//        } else if (choiceHelperClz == MultipleChoiceHelper.class) {
-//            choiceHelper = new MultipleChoiceHelper<>(this);
+//            for (Class clz : viewHolderClz) {
+//                putDataViewType(clz);
+//            }
 //        }
-//
 //
 //        view.setAdapter(this);
 //    }
 //
-//    public DataAdapter(Context context, AbsListView view, Class viewHolder) {
-//        this(context, view, viewHolder, 1, null);
+//    public DataAdapter singleChoice() {
+//        choiceHelper = new SingleChoiceHelper<>(this);
+//        return this;
 //    }
 //
-//    public DataAdapter(Context context, AbsListView view, int view_type_count) {
-//        this(context, view, null, view_type_count, null);
+//    public DataAdapter multipleChoice() {
+//        choiceHelper = new MultipleChoiceHelper<>(this);
+//        return this;
 //    }
 //
-//    public DataAdapter(Context context, AbsListView view, Class viewHolder, Class choiceHelperClz) {
-//        this(context, view, viewHolder, 1, choiceHelperClz);
-//    }
-//
-//    public DataAdapter(Context context, AbsListView view, int view_type_count, Class choiceHelperClz) {
-//        this(context, view, null, view_type_count, choiceHelperClz);
-//    }
 //
 //    @Override
 //    public int getViewTypeCount() {
-//        return view_type_count;
-//        // return viewTypeList.size();
+//        return viewHolder == null ? typeViewMap.size() : 1;
 //    }
 //
 //    @Override
 //    public int getItemViewType(int position) {
-//
-//        if (view_type_count == 1) {
-//            return 0;
-//        }
-//        return viewTypeList.get(position);
+//        return viewHolder == null ? dataTypeMap.get(getDataType(position)) : 0;
 //    }
 //
 //    @Override
@@ -125,23 +108,44 @@
 //        return position;
 //    }
 //
+//    public int getPosition(Object obj) {
+//        return viewDataList.indexOf(obj);
+//    }
+//
+//    public boolean contains(Object obj) {
+//        return viewDataList.contains(obj);
+//    }
+//
+//    private void putDataViewType(Class clz) {
+//        int type = typeViewMap.size();
+//        typeViewMap.put(type, clz);
+//
+//        dataTypeMap.put(getDataType(clz), type);
+//    }
+//
+//    protected String getDataType(Class clz) {
+//        return ((ParameterizedType) clz.getGenericSuperclass()).getActualTypeArguments()[0].toString();
+//    }
+//
+//    protected String getDataType(int position) {
+//        return getItem(position).getClass().toString();
+//    }
+//
 //    public Class getItemViewTypeClass(int position) {
-//        return viewTypeCount.get(getItemViewType(position));
+//        return viewHolder == null ? typeViewMap.get(getItemViewType(position)) : viewHolder;
 //    }
 //
 //    @Override
 //    public View getView(int position, View convertView, ViewGroup parent) {
-//        ViewHolder holder = null;
+//        c.g.a.x.lib_support.views.adapter.v2.abslistview.ViewHolder holder = null;
 //
 //        if (convertView == null) {
 //            try {
-//                holder = (ViewHolder) getItemViewTypeClass(position).newInstance();
+//                holder = (c.g.a.x.lib_support.views.adapter.v2.abslistview.ViewHolder) getItemViewTypeClass(position).newInstance();
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-//
 //            holder.adapter = this;
-//
 //            convertView = inflater.inflate(holder.getLayout(), null);
 //
 //            holder.getView(convertView);
@@ -151,7 +155,7 @@
 //            convertView.setTag(holder);// important必须有
 //
 //        } else {
-//            holder = (ViewHolder) convertView.getTag();
+//            holder = (c.g.a.x.lib_support.views.adapter.v2.abslistview.ViewHolder) convertView.getTag();
 //        }
 //
 //        holder.position = position;
@@ -162,17 +166,14 @@
 //        return convertView;
 //    }
 //
-//    public void onGetView(ViewHolder holder) {
+//    public void onGetView(c.g.a.x.lib_support.views.adapter.v2.abslistview.ViewHolder holder) {
 //    }
 //
-//    public void onShowView(ViewHolder holder) {
+//    public void onShowView(c.g.a.x.lib_support.views.adapter.v2.abslistview.ViewHolder holder) {
 //    }
 //
-//    // ////single adapter use.*if separator adapter use will get error;
 //    public <T> void setDatas(List<T> datas) {
-//
 //        clearDatas();
-//
 //        addDatas(datas);
 //    }
 //
@@ -194,34 +195,7 @@
 //        viewDataList.add(pos, data);
 //    }
 //
-//    public <T> void addData(T data, Class viewHolder) {
-//
-//        int type = viewTypeCount.indexOf(viewHolder);
-//        if (type == -1) {
-//            viewTypeCount.add(viewHolder);
-//            type = viewTypeCount.indexOf(viewHolder);
-//        }
-//        viewDataList.add(data);
-//        viewTypeList.add(type);
-//    }
-//
-//    public <T> void addData(int pos, T data, Class viewHolder) {
-//
-//        int type = viewTypeCount.indexOf(viewHolder);
-//        if (type == -1) {
-//            viewTypeCount.add(viewHolder);
-//            type = viewTypeCount.indexOf(viewHolder);
-//        }
-//        if (pos >= viewDataList.size()) {
-//            pos = viewDataList.size();
-//        }
-//        viewDataList.add(pos, data);
-//        viewTypeList.add(pos, type);
-//    }
-//
 //    //
-//
-//
 //    public <T> void removeData(T vo) {
 //        int pos = viewDataList.indexOf(vo);
 //        if (pos < 0) {
@@ -235,9 +209,6 @@
 //            choiceHelper.removeChoice(pos);
 //        }
 //        viewDataList.remove(pos);
-//        if (viewTypeList != null) {
-//            viewTypeList.remove(pos);
-//        }
 //    }
 //
 //    //
@@ -246,19 +217,7 @@
 //            choiceHelper.clearChoices();
 //        }
 //        viewDataList.clear();
-//        if (viewTypeList != null) {
-//            viewTypeList.clear();
-//        }
-//
 //        notifyDataSetChanged();
-//    }
-//
-//    public int getPosition(Object obj) {
-//        return viewDataList.indexOf(obj);
-//    }
-//
-//    public boolean contains(Object obj) {
-//        return viewDataList.contains(obj);
 //    }
 //
 //

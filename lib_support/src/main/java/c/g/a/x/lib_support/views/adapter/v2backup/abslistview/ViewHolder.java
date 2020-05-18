@@ -1,6 +1,8 @@
-//package c.g.a.x.lib_support.views.adapter.v1.abslistview;
+//package c.g.a.x.lib_support.views.adapter.v2backup.abslistview;
 //
 //import android.view.View;
+//
+//import c.g.a.x.lib_support.views.adapter.v2.abslistview.DataAdapter;
 //
 //public abstract class ViewHolder<T> {
 //
