@@ -1,4 +1,8 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/btn_register"
-    style="@style/font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default_btn_round_sltr1"
-    android:text="注册" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Bg_none.B_ww.O_h_G_center">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/btn_register"
+        style="@style/font_medium1.Btn_B_ww_pad_lr16_tb6.Bg_Tc_default_btn_round_sltr1"
+        android:text="注册" />
+</LinearLayout>

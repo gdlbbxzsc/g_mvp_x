@@ -1,23 +1,11 @@
 package c.g.a.x.module_main.main;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_guide.GuideController;
@@ -28,8 +16,6 @@ import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_support.android.utils.NotificationHelper;
 import c.g.a.x.lib_support.views.splistener.custom.OnSPClickListener;
 import c.g.a.x.lib_support.views.toast.SysToast;
-import c.g.a.x.lib_update.ApkVersionHelper;
-import c.g.a.x.lib_update.UpVersionService;
 import c.g.a.x.module_main.R;
 import c.g.a.x.module_main.databinding.ActivityMainBinding;
 import c.g.a.x.module_main.main.index.IndexFragment;
