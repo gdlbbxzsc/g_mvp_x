@@ -1,0 +1,107 @@
+<table>
+    <tbody>
+    <tr class="firstRow">
+        <td>方法</td>
+        <td>作用时机</td>
+        <td>操作对象</td>
+        <td>优点</td>
+        <td>缺点</td>
+        <td>为了上手，我需要掌握什么？</td>
+    </tr>
+    <tr>
+        <td>APT</td>
+        <td>编译期：还未编译为 class 时</td>
+        <td>.java 文件</td>
+        <td>1. 可以织入所有类；2. 编译期代理，减少运行时消耗</td>
+        <td>1. 需要使用 apt 编译器编译；2. 需要手动拼接代理的代码（可以使用 Javapoet
+            弥补）；3. 生成大量代理类
+        </td>
+        <td>设计模式和解耦思想的灵活应用</td>
+    </tr>
+    <tr>
+        <td>AspectJ</td>
+        <td>编译期、加载时</td>
+        <td>.java 文件</td>
+        <td>功能强大，除了 hook 之外，还可以为目标类添加变量，接口。也有抽象，继承等各种更高级的玩法。</td>
+        <td>1. 不够轻量级；2. 定义的切点依赖编程语言，无法兼容Lambda语法；3. 无法织入第三方库；4.
+            会有一些兼容性问题，如：D8、Gradle 4.x等
+        </td>
+        <td>复杂的语法，但掌握几个简单的，就能实现绝大多数场景</td>
+    </tr>
+    <tr>
+        <td>Javassist</td>
+        <td>编译期：class 还未编译为 dex 时或运行时</td>
+        <td>class 字节码</td>
+        <td>1. 减少了生成子类的开销；2. 直接操作修改编译后的字节码，直接绕过了java编译器，所以可以做很多突破限制的事情，例如，跨 dex
+            引用，解决热修复中 CLASS_ISPREVERIFIED 问题。
+        </td>
+        <td>运行时加入切面逻辑，产生性能开销。</td>
+        <td>1. 自定义 Gradle 插件；2. 掌握groovy 语言</td>
+    </tr>
+    <tr>
+        <td>ASM</td>
+        <td>编译期或运行期字节码注入</td>
+        <td>class 字节码</td>
+        <td>小巧轻便、性能好，效率比Javassist高</td>
+        <td>学习成本高</td>
+        <td>需要熟悉字节码语法，ASM 通过树这种数据结构来表示复杂的字节码结构，并利用 Push
+            模型来对树进行遍历，在遍历过程中对字节码进行修改。
+        </td>
+    </tr>
+
+    <tr>
+        <td>ASMDEX</td>
+        <td>编译期和加载时：转化为 .dex 后</td>
+        <td>Dex 字节码，创建 class 文件</td>
+        <td>可以植入所有类</td>
+        <td>学习成本高</td>
+        <td>需要对 class 文件比较熟悉，编写过程复杂。</td>
+    </tr>
+
+    <tr>
+        <td>DexMaker</td>
+        <td>同ASMDEX</td>
+        <td>Dex 字节码，创建 dex 文件</td>
+        <td>同ASMDEX</td>
+        <td>同ASMDEX</td>
+        <td>同ASMDEX</td>
+    </tr>
+
+    <tr>
+        <td>Cglib</td>
+        <td>运行期生成子类拦截方法</td>
+        <td>字节码</td>
+        <td>没有接口也可以织入</td>
+        <td>1. 不能代理被final字段修饰的方法；2. 需要和 dexmaker 结合使用</td>
+        <td>--</td>
+    </tr>
+
+    <tr>
+        <td>xposed</td>
+        <td>运行期hook</td>
+        <td>--</td>
+        <td>能hook自己应用进程的方法，能hook其他应用的方法，能hook系统的方法</td>
+        <td>依赖三方包的支持，兼容性差，手机需要root</td>
+        <td>--</td>
+    </tr>
+
+    <tr>
+        <td>dexposed</td>
+        <td>运行期hook</td>
+        <td>--</td>
+        <td>只能hook自己应用进程的方法，但无需root</td>
+        <td>1. 依赖三方包的支持，兼容性差；2. 只能支持 Dalvik 虚拟机</td>
+        <td>--</td>
+    </tr>
+
+    <tr>
+        <td>epic</td>
+        <td>运行期hook</td>
+        <td>--</td>
+        <td>支持 Dalvik 和 Art 虚拟机</td>
+        <td>只适合在开发调试中使用，碎片化严重有兼容性问题</td>
+        <td>--</td>
+    </tr>
+    </tbody>
+</table>
+http://www.360doc.com/showweb/0/0/913477363.aspx
