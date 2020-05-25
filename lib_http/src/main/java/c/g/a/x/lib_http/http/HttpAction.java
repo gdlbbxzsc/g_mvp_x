@@ -40,7 +40,7 @@ public final class HttpAction<R extends BaseResponse> extends BaseAction<R> {
         try {
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(request));
 
-            createObservable(request.getRequestPath(), body);
+            createObservable(request.getRequestPath(), body, RequestBody.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,7 +49,7 @@ public final class HttpAction<R extends BaseResponse> extends BaseAction<R> {
 
     public final HttpAction get(BaseRequest<R> request) {
         try {
-            createObservable(request.getRequestPath(), createQueryMap(request));
+            createObservable(request.getRequestPath(), createQueryMap(request), Map.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,15 +58,18 @@ public final class HttpAction<R extends BaseResponse> extends BaseAction<R> {
 
     public final HttpAction get(GetUrlPathRequest<R> request) {
         try {
-            createObservable(request.getRequestPath(), createUrlPath(request));
+            createObservable(request.getRequestPath(), createUrlPath(request), String.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return this;
     }
 
-    private <O> void createObservable(String methodName, O o) throws Exception {
-        Method method = service.getClass().getMethod(methodName, o.getClass());
+    private <O> void createObservable(String methodName, O o, Class clzType) throws Exception {
+        //这里出现了一个bug 如果o类型为RequestBody 最新版本里面o.getClass() 无法获取到正确的 RequestBody 类型 因为是kotlin编写的原因未知
+//        所以这里暂时这样写
+//        Method method = service.getClass().getMethod(methodName, o.getClass());
+        Method method = service.getClass().getMethod(methodName, clzType);
         observable = (Observable<R>) method.invoke(service, o);
         commonSchedulers();
     }
