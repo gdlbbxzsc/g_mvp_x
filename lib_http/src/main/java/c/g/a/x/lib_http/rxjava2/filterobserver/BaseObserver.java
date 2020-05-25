@@ -12,6 +12,7 @@ import c.g.a.x.lib_http.base.BaseResponse;
 import c.g.a.x.lib_http.rxjava2.errorlistener.OnErrorToastShortListener;
 import c.g.a.x.lib_support.android.utils.Logger;
 import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
 import retrofit2.HttpException;
 
@@ -37,6 +38,16 @@ public abstract class BaseObserver<T extends BaseResponse> extends BaseFilter im
         putThrowableError(ConnectException.class, "网络连接异常，请检查网络");
         putThrowableError(UnknownHostException.class, "无法解析主机，请检查网络连接", OnErrorToastShortListener.class);
         putThrowableError(OnErrorNotImplementedException.class, "服务器错误");
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+        Logger.e(this.toString() + "====>onSubscribe");
+    }
+
+    @Override
+    public void onComplete() {
+        Logger.e(this.toString() + "====>onComplete");
     }
 
     @Override
