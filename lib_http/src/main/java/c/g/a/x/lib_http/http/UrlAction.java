@@ -16,6 +16,9 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 
@@ -45,6 +48,17 @@ public final class UrlAction<R extends ResponseBody> extends BaseAction<R> {
     public UrlAction url(String url) {
         this.url = url;
         observable = (Observable<R>) service.url(url);
+        commonSchedulers();
+        return this;
+    }
+
+    public UrlAction upload(String url, File file) {
+        this.url = url;
+
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), fileBody);
+        observable = (Observable<R>) service.upload(url, body);
+
         commonSchedulers();
         return this;
     }
