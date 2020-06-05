@@ -1,70 +1,206 @@
-package c.g.a.x.module_chat.detail;
-
-import android.app.Service;
-import android.content.Intent;
-
-import com.alibaba.android.arouter.facade.annotation.Route;
-
-import c.g.a.x.global_application.arouter.Constant;
-import c.g.a.x.lib_mvp.activity.MvpActivity;
-import c.g.a.x.lib_support.android.utils.AndroidUtils;
-import c.g.a.x.module_chat.R;
-import c.g.a.x.module_chat.databinding.ActivityChatDetailBinding;
-import c.g.a.x.module_chat.mqtt.MQTTConfigInfo;
-import c.g.a.x.module_chat.mqtt.MyMqttService;
-
-//这里被注释的部分是消息界面的逻辑功能  解开进行相关修改即可
-@Route(path = Constant.LOGIN_ACTIVITY)
-public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, Presenter> implements Contract.View {
-
-
-    private KeyboardType keyboardTypeNow = KeyboardType.NONE;
-
-    @Override
-    protected int layoutResID() {
-        return R.layout.activity_chat_detail;
-    }
-
-    @Override
-    protected Presenter createPresenter() {
-        return new Presenter<>(this);
-    }
-
-
-    @Override
-    protected void initView() {
-    }
-
-
-    @Override
-    protected void initData() {
-
+//package com.pbph.module_mqtt.activity;
+//
+//import android.app.Activity;
+//import android.app.Service;
+//import android.content.Context;
+//import android.content.Intent;
+//import android.os.Bundle;
+//import android.os.Handler;
+//import android.text.TextUtils;
+//import android.view.KeyEvent;
+//import android.view.View;
+//import android.view.inputmethod.InputMethodManager;
+//import android.widget.Button;
+//import android.widget.CheckBox;
+//import android.widget.EditText;
+//import android.widget.FrameLayout;
+//import android.widget.ListView;
+//
+//import androidx.appcompat.app.AppCompatActivity;
+//
+//import com.pbph.module_mqtt.R;
+//import com.pbph.module_mqtt.bean.Message;
+//import com.pbph.module_mqtt.db.DBMnger;
+//import com.pbph.module_mqtt.db.impl.MsgRecordDao;
+//import com.pbph.module_mqtt.db.impl.MsgRecordVo;
+//import com.pbph.module_mqtt.http.http.HttpAction;
+//import com.pbph.module_mqtt.http.model.reponse.GetClientParamResponse;
+//import com.pbph.module_mqtt.http.model.reponse.GetMqttUserDetailsResponse;
+//import com.pbph.module_mqtt.http.model.request.GetClientParamRequest;
+//import com.pbph.module_mqtt.http.model.request.GetMqttUserDetailsRequest;
+//import com.pbph.module_mqtt.http.rxjava2.filterobserver.BaseObserver;
+//import com.pbph.module_mqtt.mqtt.MQTTConfigInfo;
+//import com.pbph.module_mqtt.mqtt.MyMqttService;
+//import com.pbph.module_mqtt.mqtt.MyMqttServiceConnection;
+//import com.pbph.module_mqtt.utils.AndroidUtils;
+//import com.pbph.module_mqtt.utils.DateHelper;
+//import com.pbph.module_mqtt.utils.RxBus;
+//import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+//import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+//
+//import java.util.List;
+//
+//import c.g.a.x.module_chat.detail.MoreFragment;
+//import c.g.a.x.module_chat.detail.adapter.ChatDetailAdapter;
+//import io.github.rockerhieu.emojicon.EmojiconGridFragment;
+//import io.github.rockerhieu.emojicon.EmojiconsFragment;
+//import io.github.rockerhieu.emojicon.emoji.Emojicon;
+//
+//
+//public class ChatDetailActivity extends AppCompatActivity implements
+//        EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener, MoreFragment.OnImageChooseListener {
+//
+//    private Context context;
+//    private InputMethodManager inputMethodManager;
+//
+//
+//
+//    public SmartRefreshLayout smartRefreshLayout;
+//    private ListView mRealListView;
+//    private ChatDetailAdapter adapter;
+//
+//
+//    private CheckBox cb_keyboard_face;
+//    private CheckBox cb_keyboard_more;
+//    private EditText eedt_keyboard;
+//    private Button btn_keyboard;
+//
+//    private FrameLayout rl_other_keyboard;
+//
+//    private EmojiconsFragment emojiconsFragment;
+//    private MoreFragment moreFragment;
+//
+//
+//    MyMqttServiceConnection connection = new MyMqttServiceConnection();
+//    private KeyboardType keyboardTypeNow = KeyboardType.NONE;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        context = this;
+//
+//        inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//
+//        setContentView(R.layout.activity_chat_detail);
+//
+//        initListView();
+//
+//        initChatKeyBoardFace();
+//        initChatKeyBoardMore();
+//        initChatKeyBoardEditText();
+//        initChatKeyBoardSubmit();
+//
+//
+//        rl_other_keyboard = findViewById(R.id.rl_other_keyboard);
+//        emojiconsFragment = EmojiconsFragment.newInstance(true);
+//        moreFragment = MoreFragment.newInstance();
+//        moreFragment.setListener(this);
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.rl_other_keyboard, emojiconsFragment)
+//                .hide(emojiconsFragment)
+//                .add(R.id.rl_other_keyboard, moreFragment)
+//                .hide(moreFragment)
+//                .commit();
+//
 //        listenerMsg();
 //
-////        GetClientParamResponse.DataBean data = vo.getData();根据服务器返回的数据本地缓存mqtttopic
-////        MQTTConfigInfo.getInstance().setData(data);
+//        getClientParam();
 //
-////        链接本地mqtt消息发送service
-//        bindService(new Intent(context, MyMqttService.class), connection, Service.BIND_AUTO_CREATE);
-    }
-
-
-    @Override
-    protected void onStop() {
-        AndroidUtils.hideSoftInput(this);
-        super.onStop();
-    }
-
-    //
+////        TimerTask task = new TimerTask() {
+////            @Override
+////            public void run() {
+////                for (int i = 0; i < 100; i++) {
+////                    Message msg = Message.createSendMsg(String.valueOf(i), 1);
+////                    adapter.addData(msg);
+////                    handler.sendEmptyMessage(1);
+////                    connection.mService.publish(msg);
+////                    try {
+////                        Thread.sleep(100);
+////                    } catch (InterruptedException e) {
+////                        e.printStackTrace();
+////                    }
+////                }
+////
+////            }
+////        };
+////        Timer timer = new Timer();
+////        timer.schedule(task, 5000);
+//
+////    Handler handler = new Handler() {
+////        @Override
+////        public void handleMessage(@NonNull android.os.Message msg) {
+////            super.handleMessage(msg);
+////            adapter.notifyDataSetChanged();
+////        }
+////    };
+//
+//    }
+//
+//    void getClientParam() {
+//
+//        GetClientParamRequest<GetClientParamResponse> request = new GetClientParamRequest<>();
+//        request.username = "13333333333";
+//
+//        HttpAction.<GetClientParamResponse>context(context).post(request).progress().subscribe(new BaseObserver<GetClientParamResponse>(context) {
+//
+//            @Override
+//            public void onNextDo(GetClientParamResponse vo) {
+//                GetClientParamResponse.DataBean data = vo.getData();
+//                MQTTConfigInfo.getInstance().setData(data);
+//                bindService(new Intent(context, MyMqttService.class), connection, Service.BIND_AUTO_CREATE);
+//
+//            }
+//        });
+//    }
+//
+//    void GetMqttUserDetails() {
+//
+//        GetMqttUserDetailsRequest<GetMqttUserDetailsResponse> request = new GetMqttUserDetailsRequest<>();
+//
+//        request.topic = "ddddd";
+//
+//        HttpAction.<GetMqttUserDetailsResponse>context(context).post(request).progress().subscribe(new BaseObserver<GetMqttUserDetailsResponse>(context) {
+//
+//            @Override
+//            public void onNextDo(GetMqttUserDetailsResponse vo) {
+//
+//                if (vo.getCode() != 200) {
+//                    return;
+//                }
+//            }
+//        });
+//    }
+//
 //    @Override
-//    protected void onDestroy() {//取消对服务器发送来的消息的订阅
+//    public void onEmojiconClicked(Emojicon emojicon) {
+//        EmojiconsFragment.input(eedt_keyboard, emojicon);
+//    }
+//
+//    @Override
+//    public void onEmojiconBackspaceClicked(View v) {
+//        EmojiconsFragment.backspace(eedt_keyboard);
+//    }
+//
+//    @Override
+//    public void onImageChoose(String url) {
+//        sendMyMsg(Message.createSendMsg(url, 2));
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        AndroidUtils.hideSoftInput(this);
+//        super.onStop();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
 //        RxBus.removeDisposable0(ChatDetailActivity.this.toString());
 //        super.onDestroy();
 //    }
 //
 //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
-    //先关闭软键盘和自定义键盘后才能关闭界面
 //        if (keyCode == KeyEvent.KEYCODE_BACK) {
 //            if (isKeyboardOtherVisibility()) {
 //                changeKeyboard(KeyboardType.NONE);
@@ -74,12 +210,12 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //        return super.onKeyDown(keyCode, event);
 //    }
 //
-//    private void listenerMsg() {//订阅服务器发来的消息
+//    private void listenerMsg() {
 //        RxBus.register0(ChatDetailActivity.this.toString(), Message.class, message -> {
 //            Message.BodyBean body = message.getBody();
 //            //客户端 发送的消息 成功失败
 //            if (body.getReadType() == 0 && message.getSource().equals(MQTTConfigInfo.getInstance().topicSelf)) {
-//                //更新客户端消息状态为发送成功或失败 这里因为是引用传递，所以自己发送的消息和服务端状态更改的消息是同一个对象，所以直接更新界面即可
+//                //更新客户端消息状态为发送成功或失败
 //                adapter.notifyDataSetChanged();
 //                return;
 //            }
@@ -88,22 +224,21 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 ////                服务端 发送的消息
 //            if (body.getReadType() == 0 && message.getSource().equals(MQTTConfigInfo.getInstance().targetTopic)) {
 ////                    将服务端消息添加到消息列表中
-//                addTime(message);//根据两条消息之间的时间差 判断是否要在界面上展示消息发送时间
+//                addTime(message);
 //
 //                adapter.addData(message);
 //                adapter.notifyDataSetChanged();
-//                //            收到服务端消息后回复给服务端一条消息 告知 客户端已读 这个逻辑需要具体问题具体分析
+//                //            收到服务端消息后回复给服务端 客户端已读
 //                connection.mService.publish(Message.createReadMsg());
 //                return;
 //            }
-////下边两个判断分别是 两端发来的 你的消息我已收到并且阅读 的状态消息 具体逻辑具体分析吧
+//
 //            //客户端 发送的 已读消息
 //            if (body.getReadType() == 1 && message.getSource().equals(MQTTConfigInfo.getInstance().topicSelf)) {
 //                return;
 //            }
 //
 //            //服务端 发送的 已读消息
-    ////根据服务端发来的消息已读和服务端发来的他收到的消息的最新msgid 将客户端界面上所有客户端消息根据对应msgid之上（比这条消息更旧的消息）的未读状态改为已读
 //            if (body.getReadType() == 1 && message.getSource().equals(MQTTConfigInfo.getInstance().targetTopic)) {
 //                String sid = message.getBody().getMsgId();
 ////                    将这条消息以前的所有消息都设为已读
@@ -145,7 +280,6 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //        smartRefreshLayout.setHeaderHeight(60);
 //
 //        smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
-    ////下拉加载 数据库中或服务端中保存的消息记录的上50条消息记录
 //            loadOldDatas();
 //            smartRefreshLayout.finishRefresh();
 //        });
@@ -153,7 +287,7 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //        mRealListView = findViewById(R.id.lv_chat);
 //        adapter = new ChatDetailAdapter(this, mRealListView);
 //        mRealListView.setAdapter(adapter);
-//        mRealListView.setOnTouchListener((v, event) -> {//如果用户触摸消息列表将所有软键盘都关掉
+//        mRealListView.setOnTouchListener((v, event) -> {
 //            changeKeyboard(KeyboardType.NONE);
 //            return false;
 //        });
@@ -161,21 +295,20 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //    }
 //
 //
-//    private void initChatKeyBoardFace() {//点击emoji表情
+//    private void initChatKeyBoardFace() {
 //        cb_keyboard_face = findViewById(R.id.cb_keyboard_face);
 //        cb_keyboard_face.setOnClickListener(v -> {
-////重复点击emoji表情按钮会在弹出软键盘和表情键盘来回切换
+//
 //            if (keyboardTypeNow != KeyboardType.EMOJI) {
 //                changeKeyboard(KeyboardType.EMOJI);
 //            } else {
 //                changeKeyboard(KeyboardType.TEXT);
 //            }
-    ////如果是点击了对应的软键盘那么消息列表自动滑动到最新一条数据上
 //            mRealListView.setSelection(adapter.getCount() - 1);
 //        });
 //    }
 //
-//    private void initChatKeyBoardMore() {//逻辑同上 更多按钮
+//    private void initChatKeyBoardMore() {
 //        cb_keyboard_more = findViewById(R.id.cb_keyboard_more);
 //        cb_keyboard_more.setOnClickListener(v -> {
 //            if (keyboardTypeNow != KeyboardType.MORE) {
@@ -189,14 +322,14 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //
 //    private void initChatKeyBoardEditText() {
 //        eedt_keyboard = findViewById(R.id.eedt_keyboard);
-//        eedt_keyboard.setOnClickListener(v -> {//弹出软键盘
+//        eedt_keyboard.setOnClickListener(v -> {
 //            changeKeyboard(KeyboardType.TEXT);
 //
 //            mRealListView.setSelection(adapter.getCount() - 1);
 //        });
 //    }
 //
-//    private void initChatKeyBoardSubmit() {//点击发送按钮 发送消息
+//    private void initChatKeyBoardSubmit() {
 //        btn_keyboard = findViewById(R.id.btn_keyboard);
 //        btn_keyboard.setOnClickListener(v -> {
 //            String content = eedt_keyboard.getText().toString();
@@ -213,14 +346,14 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //
 //    private void sendMyMsg(Message msg) {
 //        addTime(msg);
-////先将数据加到消息列表上 再根据服务端消息状态修改状态
+//
 //        adapter.addData(msg);
 //        adapter.notifyDataSetChanged();
-//发送到服务器上
+//
 //        connection.mService.publish(msg);
 //    }
 //
-////用你当前发送的消息和最近一条消息的时间来判断是否展示一下消息发送时间
+//
 //    private void addTime(Message msg) {
 //        Message last = null;
 //        for (int i = adapter.getCount() - 1; i >= 0; i--) {
@@ -230,9 +363,9 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //                break;
 //            }
 //        }
-//        if (last == null) {//界面上一条消息也没有则展示一下发送时间
+//        if (last == null) {
 //            adapter.addData(DateHelper.getDateMnger(msg.getBody().getCreateTime()).getString(DateHelper.Pattern.PATTERN_D2_T2_1));
-//        } else {//根据聊天数据间隔 展示不同样式的时间格式
+//        } else {
 //            String timeStr = createTime(msg.getBody().getCreateTime(), last.getBody().getCreateTime());
 //            if (timeStr != null) {
 //                adapter.addData(timeStr);
@@ -240,7 +373,7 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //        }
 //    }
 //
-//    private void loadOldDatas() {//加载更旧的数据50条
+//    private void loadOldDatas() {
 //        Message fst = null;
 //        for (int i = 0; i < adapter.getCount(); i++) {
 //            Object object = adapter.getItem(i);
@@ -269,7 +402,7 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //                Object object = adapter.getItem(0);
 //                if (object instanceof Message) {
 //                    Message zero = (Message) object;
-////添加时间
+//
 //                    String timeStr = createTime(zero.getBody().getCreateTime(), message.getBody().getCreateTime());
 //                    if (timeStr != null) {
 //                        adapter.addData(0, timeStr);
@@ -281,25 +414,22 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //            pos++;
 //        }
 //        adapter.notifyDataSetChanged();
-// 滑动到对应位置
+//
 //        mRealListView.setSelection(pos);
 //    }
 //
 //    private String createTime(long now, long lst) {
 //        long time = Math.abs(lst - now);
-    ////大于一天时间展示日期时间
 //        if (time >= DateHelper.TimeValue.DAY_MILLIS) {//显示日期时间
 //            return DateHelper.getDateMnger(now).getString(DateHelper.Pattern.PATTERN_D2_T2_1);
 //        } else if (time >= (DateHelper.TimeValue.MIN_MILLIS * 10)) {//显示时间
-    ////超过十分钟展示时间
 //            return DateHelper.getDateMnger(now).getString(DateHelper.Pattern.PATTERN_T2_1);
 //        } else {
 //
 //        }
-//    十分钟内什么也不展示
 //        return null;
 //    }
-// //弹出不同软键盘或受其软键盘
+//
 //    private void changeKeyboard(KeyboardType keyboardType) {
 //        switch (keyboardType) {
 //            case NONE:
@@ -397,7 +527,7 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
 //        return rl_other_keyboard.getVisibility() == View.VISIBLE;
 //    }
 //
-    enum KeyboardType {
-        NONE, TEXT, EMOJI, MORE
-    }
-}
+//    enum KeyboardType {
+//        NONE, TEXT, EMOJI, MORE
+//    }
+//}
