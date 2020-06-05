@@ -1,13 +1,12 @@
 package module_debug;
 
 
-
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 
 
-public class DebugActivity extends MvpActivity<ViewDataBinding,Presenter> implements Contract.View {
+public class DebugActivity extends MvpActivity<ViewBinding, Presenter> implements Contract.View {
 
 
     @Override
