@@ -2,10 +2,7 @@ package c.g.a.x.lib_support.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +14,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import c.g.a.x.lib_support.android.utils.AndroidUtils;
 import c.g.a.x.lib_support.android.utils.viewclickable.ViewClickableMnger;
 import c.g.a.x.lib_support.utils.StringUtils;
 import c.g.a.x.lib_support.views.dialog.WaitDialogMnger;
@@ -67,7 +65,7 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
 
     @Override
     protected void onPause() {
-        hideSoftInput();
+        AndroidUtils.hideSoftInput(this);
         super.onPause();
     }
 
@@ -87,25 +85,6 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
     protected void afterInitView() {
     }
 
-    private void hideSoftInput() {
-        View view = getCurrentFocus();
-        if (view == null) return;
-
-        IBinder binder = view.getWindowToken();
-        if (binder == null) return;
-
-
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        if (imm.isActive()) imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-
-        try {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(binder, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public Context getContext() {
         return context;
