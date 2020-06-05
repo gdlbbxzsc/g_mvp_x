@@ -96,8 +96,9 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'  //没有使用特殊Header，可以不加这行
 
-//图片选择
+//图片选择 被注释掉的更好使只不过懒得改
     api 'com.lzy.widget:imagepicker:0.6.1'
+//    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.6'
 
     // 底部弹窗
     api 'com.contrarywind:Android-PickerView:3.2.7'

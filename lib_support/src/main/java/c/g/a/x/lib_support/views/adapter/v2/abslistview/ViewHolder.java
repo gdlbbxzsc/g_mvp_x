@@ -19,7 +19,6 @@ public abstract class ViewHolder<T, V extends ViewBinding> {
     protected V binder;
 
 
-
     protected int getLayout() {
         return 0;
     }

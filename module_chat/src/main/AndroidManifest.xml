@@ -1,2 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="c.g.a.x.module_chat" />
+    package="c.g.a.x.module_chat">
+
+    <application>
+        <activity
+            android:name=".detail.ChatDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+    </application>
+</manifest>

@@ -93,9 +93,12 @@ public final class Run2SearchRepeatFile {
 
             if (delSet.size() <= 1) continue;
 
-            System.out.print("filename:" + name);
+            System.out.print("repeat file name: ");
+            System.out.print(name);
+            System.out.print(" -- in module: ");
             for (String pp : delSet) {
-                System.out.print(" :" + pp);
+                System.out.print(" , ");
+                System.out.print(pp);
             }
             System.out.println();
         }
