@@ -239,7 +239,7 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
         boolean b = !TextUtils.equals(getPackageName(), componentName.getPackageName());
 
         if (b) {
-            new Handler().postDelayed(() -> Toast.makeText(context, "当前程序已进入后台，若不是本人操作做，请查看是否被界面劫持了", Toast.LENGTH_SHORT).show(), 1000);  //延迟10秒执行
+            new Handler().postDelayed(() -> Toast.makeText(context, "当前程序已进入后台，若不是本人操作做，请查看是否被界面劫持了", Toast.LENGTH_SHORT).show(), 1000);  //延迟1秒执行
         }
     }
 
