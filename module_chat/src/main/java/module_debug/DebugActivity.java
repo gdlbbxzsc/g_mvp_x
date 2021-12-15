@@ -15,6 +15,11 @@ public class DebugActivity extends MvpActivity<ViewBinding, Presenter> implement
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }

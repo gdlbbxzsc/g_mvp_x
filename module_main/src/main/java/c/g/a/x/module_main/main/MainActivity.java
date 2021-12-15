@@ -34,6 +34,11 @@ public class MainActivity extends MvpActivity<ActivityMainBinding, Presenter> im
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }

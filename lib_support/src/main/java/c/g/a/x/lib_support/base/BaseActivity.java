@@ -1,8 +1,14 @@
 package c.g.a.x.lib_support.base;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +34,8 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
 
     protected T binder;
 
+    private boolean forceFinish = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +44,23 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
         context = this;
 
         initSysSetting();
+
+        if (forceFinish) {
+            finish();
+            return;
+        }
+
+        try {
+            getDataFromPreActivity();
+        } catch (Exception e) {
+            e.printStackTrace();
+            doForceFinish();
+
+            if (forceFinish) {
+                finish();
+                return;
+            }
+        }
 
 //        int layout_id = layoutResID();
 //        if (layout_id > 0) {
@@ -52,14 +77,35 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
                 setContentView(binder.getRoot());
             } catch (Exception e) {
                 e.printStackTrace();
+                doForceFinish();
+
+                if (forceFinish) {
+                    finish();
+                    return;
+                }
             }
         }
 
         initView();
 
+        if (forceFinish) {
+            finish();
+            return;
+        }
+
         afterInitView();
 
+        if (forceFinish) {
+            finish();
+            return;
+        }
+
         initData();
+
+        if (forceFinish) {
+            finish();
+            return;
+        }
     }
 
 
@@ -67,6 +113,7 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
     protected void onPause() {
         AndroidUtils.hideSoftInput(this);
         super.onPause();
+        backgroundToast();
     }
 
     @Override
@@ -76,10 +123,18 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
         super.onDestroy();
     }
 
+
+    public final void doForceFinish() {
+        forceFinish = true;
+    }
+
+
     protected void initSysSetting() {
         // 设置不能横屏
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         ARouter.getInstance().inject(this);
+        //防止截屏攻击
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
     }
 
     protected void afterInitView() {
@@ -101,6 +156,8 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
     protected boolean hasContentView() {
         return true;
     }
+
+    protected abstract void getDataFromPreActivity() throws Exception;
 
     protected abstract void initView();
 
@@ -172,6 +229,18 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
 //                        .setNegativeButtonText(R.string.rationale_ask_cancel)
 //                        .setTheme(R.style.my_fancy_style)
 //                        .build());
+    }
+
+    //判断当前程序是否进入后台，若进入后台则提示用户，防止界面劫持
+    public void backgroundToast() {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ComponentName componentName = activityManager.getRunningTasks(1).get(0).topActivity;
+
+        boolean b = !TextUtils.equals(getPackageName(), componentName.getPackageName());
+
+        if (b) {
+            new Handler().postDelayed(() -> Toast.makeText(context, "当前程序已进入后台，若不是本人操作做，请查看是否被界面劫持了", Toast.LENGTH_SHORT).show(), 1000);  //延迟10秒执行
+        }
     }
 
 

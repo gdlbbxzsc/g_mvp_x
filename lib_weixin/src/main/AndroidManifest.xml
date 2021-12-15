@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="c.g.a.x.lib_weixin">
 
-    <application>
+    <application android:exported="false">
         <activity
             android:name="com.test.app.wxapi.WXEntryActivity"
             android:exported="true"

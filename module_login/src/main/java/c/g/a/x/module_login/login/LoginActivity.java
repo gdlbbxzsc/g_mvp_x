@@ -30,6 +30,11 @@ public class LoginActivity extends MvpActivity<ActivityLoginBinding, Presenter> 
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }

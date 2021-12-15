@@ -18,6 +18,11 @@ public class RegisterActivity extends MvpActivity<ActivityRegisterBinding, Prese
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }

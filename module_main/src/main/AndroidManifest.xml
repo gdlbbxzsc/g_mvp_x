@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="c.g.a.x.module_main">
 
-    <application>
+    <application android:exported="false">
 
         <activity
             android:name=".welcome.WelcomeActivity"

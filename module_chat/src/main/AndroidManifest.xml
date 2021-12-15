@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <application>
+    <application android:exported="false">
         <activity
             android:name=".detail.ChatDetailActivity"
             android:screenOrientation="portrait"

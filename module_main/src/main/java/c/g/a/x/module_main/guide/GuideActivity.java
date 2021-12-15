@@ -29,6 +29,11 @@ public class GuideActivity extends MvpActivity<ActivityGuideBinding, Presenter> 
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }

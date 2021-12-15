@@ -26,6 +26,11 @@ public class ChatDetailActivity extends MvpActivity<ActivityChatDetailBinding, P
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }

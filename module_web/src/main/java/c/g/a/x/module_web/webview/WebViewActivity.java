@@ -41,6 +41,11 @@ public class WebViewActivity extends MvpActivity<ActivityWebviewBinding, Present
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected void initView() {
         commonTitlebar = new CommonTitleBar(this).setStyleWhite().setTitle(title);
 

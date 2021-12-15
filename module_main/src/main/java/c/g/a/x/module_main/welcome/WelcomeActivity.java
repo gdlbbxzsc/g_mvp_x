@@ -10,6 +10,7 @@ import java.util.List;
 import c.g.a.x.global_application.arouter.Constant;
 import c.g.a.x.lib_mvp.activity.MvpActivity;
 import c.g.a.x.lib_sp.AccountSpHelper;
+import c.g.a.x.lib_support.utils.SignCheckUtils;
 import c.g.a.x.lib_support.views.dialog.MyDialog;
 import c.g.a.x.lib_support.views.toast.SysToast;
 import c.g.a.x.module_main.R;
@@ -25,6 +26,11 @@ public class WelcomeActivity extends MvpActivity<ActivityWelcomeBinding, Present
     }
 
     @Override
+    protected void getDataFromPreActivity() throws Exception {
+
+    }
+
+    @Override
     protected Presenter createPresenter() {
         return new Presenter<>(this);
     }
@@ -35,6 +41,9 @@ public class WelcomeActivity extends MvpActivity<ActivityWelcomeBinding, Present
 
     @Override
     protected void initData() {
+        //检测签名 防止被重签
+        boolean b = SignCheckUtils.check(context, "2D:52:C3:2B:88:44:A4:1D:92:2B:43:C9:03:ED:A3:A4:B5:55:73:20");
+        if (!b) doForceFinish();
     }
 
     @Override

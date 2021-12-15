@@ -1,0 +1,1 @@
+getIntent().getXX()等方法 需要加上try catch 防止 漏洞攻击
