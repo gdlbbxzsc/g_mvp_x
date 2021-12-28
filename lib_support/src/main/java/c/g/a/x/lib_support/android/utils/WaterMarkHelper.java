@@ -14,23 +14,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 // Watermark.getInstance().show(this, "测试水印");
-public class Watermark {
+//为当前界面增加水印
+public class WaterMarkHelper {
 
-    private static volatile Watermark sInstance;
+    private static volatile WaterMarkHelper sInstance;
 
 
-    public static Watermark getInstance() {
+    public static WaterMarkHelper getInstance() {
         if (sInstance == null) {
-            synchronized (Watermark.class) {
+            synchronized (WaterMarkHelper.class) {
                 if (sInstance == null) {
-                    sInstance = new Watermark();
+                    sInstance = new WaterMarkHelper();
                 }
             }
         }
         return sInstance;
     }
 
-    private Watermark() {
+    private WaterMarkHelper() {
     }
 
     public void show(Activity activity, String text) {
