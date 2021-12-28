@@ -13,7 +13,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-// Watermark.getInstance().show(this, "测试水印");
+// WaterMarkHelper.getInstance().show(this, "测试水印");
 //为当前界面增加水印
 public class WaterMarkHelper {
 

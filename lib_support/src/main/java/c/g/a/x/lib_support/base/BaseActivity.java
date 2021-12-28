@@ -21,6 +21,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import c.g.a.x.lib_support.android.utils.AndroidUtils;
+import c.g.a.x.lib_support.android.utils.WaterMarkHelper;
 import c.g.a.x.lib_support.android.utils.viewclickable.ViewClickableMnger;
 import c.g.a.x.lib_support.utils.StringUtils;
 import c.g.a.x.lib_support.views.dialog.WaitDialogMnger;
@@ -94,6 +95,8 @@ public abstract class BaseActivity<T extends ViewBinding> extends AppCompatActiv
         }
 
         afterInitView();
+
+        WaterMarkHelper.getInstance().show(this, "测试水印");
 
         if (forceFinish) {
             finish();
