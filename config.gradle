@@ -1,3 +1,11 @@
+/////////////////////////////////////////////////////////////////////
+//配置服务器地址第三方信息是正式版本还是测试版本
+//************** **************记
+//*************   *************得
+def isDebug = true//<----------| 发布版本类型true 测试版本 false 正式版本
+//*************   *************修
+//************** **************改
+/////////////////////////////////////////////////////////////////////
 //keystore
 def keystore = [:]
 keystore.storeFile = "C:/Users/Administrator/Desktop/pbph"
@@ -20,19 +28,22 @@ app_versions.applicationId = "c.g.a.x.g_mvp_x"
 app_versions.versionCode = 1
 app_versions.versionName = "1.0"
 ext.app_versions = app_versions
-/////////////////////////////////////////////////////////////////////
-//配置服务器地址第三方信息是正式版本还是测试版本
-//************** **************记
-//*************   *************得
-def isDebug = true//<----------| 发布版本类型true 测试版本 false 正式版本
-//*************   *************修
-//************** **************改
-/////////////////////////////////////////////////////////////////////
-//通用配置
-def common_config = [:]
-common_config.app_mode = isDebug
-common_config.project_applicationId = app_versions.applicationId
-ext.common_config = common_config
+
+////a
+def app_versions_a = [:]
+app_versions_a.applicationId = "c.g.a.x.g_mvp_x.a"
+
+app_versions_a.versionCode = 1
+app_versions_a.versionName = "1.0"
+ext.app_versions_a = app_versions_a
+
+////b
+def app_versions_b = [:]
+app_versions_b.applicationId = "c.g.a.x.g_mvp_x.b"
+
+app_versions_b.versionCode = 1
+app_versions_b.versionName = "1.0"
+ext.app_versions_b = app_versions_b
 /////////////////////////////////////////////////////////////////////
 //服务器配置
 def server_config = [:]
@@ -44,6 +55,29 @@ if (isDebug) {//测试下配置
 //    server_config.aaaa = 321
 }
 ext.server_config = server_config
+
+////a
+def server_config_a = [:]
+if (isDebug) {//测试下配置
+    server_config_a.base_url = "https://39.96.132.92:324431/"
+//    server_config.aaaa = 123
+} else {//正式下配置
+    server_config_a.base_url = "https://39.96.132.92:324432/"
+//    server_config.aaaa = 321
+}
+ext.server_config_a = server_config_a
+
+////b
+def server_config_b = [:]
+if (isDebug) {//测试下配置
+    server_config_b.base_url = "https://39.96.132.92:324431/"
+//    server_config.aaaa = 123
+} else {//正式下配置
+    server_config_b.base_url = "https://39.96.132.92:324432/"
+//    server_config.aaaa = 321
+}
+ext.server_config_b = server_config_b
+
 /////////////////////////////////////////////////////////////////////
 //第三方配置 ps:微信 支付宝 百度 极光 客服等。
 def weixin_config = [:]
@@ -66,13 +100,125 @@ if (isDebug) {
 }
 ext.third_config = third_config
 
+
 /////////////////////////////////////////////////////////////////////
 //配置文件中的占位符都可以写在这里
+////
 def manifest_placeholders = [:]
-manifest_placeholders.placeholder_applicationId = common_config.project_applicationId
+manifest_placeholders.placeholder_applicationId = app_versions.applicationId
 manifest_placeholders.placeholder_wx_app_id = weixin_config.wx_app_id
 
 ext.manifest_placeholders = manifest_placeholders
+
+////a
+def manifest_placeholders_a = [:]
+manifest_placeholders_a.placeholder_applicationId = app_versions_a.applicationId
+manifest_placeholders_a.placeholder_wx_app_id = weixin_config.wx_app_id
+
+ext.manifest_placeholders_a = manifest_placeholders_a
+
+////b
+def manifest_placeholders_b = [:]
+manifest_placeholders_b.placeholder_applicationId = app_versions_b.applicationId
+manifest_placeholders_b.placeholder_wx_app_id = weixin_config.wx_app_id
+
+ext.manifest_placeholders_b = manifest_placeholders_b
+/////////////////////////////////////////////////////////////////////
+//风味维度
+def flavorDimensions = "app"
+ext.flavorDimensions = flavorDimensions
+
+def app_productFlavors = {
+    A {
+        dimension flavorDimensions
+        applicationId app_versions_a.applicationId
+        versionCode app_versions_a.versionCode
+        versionName app_versions_a.versionName
+
+
+        manifest_placeholders_a.aname = "aa"
+        manifestPlaceholders = manifest_placeholders_a
+
+        server_config_a.each { key, value ->
+            if (value instanceof Boolean) {
+                buildConfigField("boolean", (key), value.toString())
+            } else if (value instanceof GString || value instanceof String) {
+                buildConfigField("String", (key), "\"" + value + "\"")
+            } else if (value instanceof Number) {
+                buildConfigField("int", (key), value.toString())
+            }
+        }
+        buildConfigField "String", "project_applicationId", app_versions_a.applicationId
+        buildConfigField "String", "something", '"fora"'
+    }
+    B {
+        dimension flavorDimensions
+        applicationId app_versions_b.applicationId
+        versionCode app_versions_b.versionCode
+        versionName app_versions_b.versionName
+
+        manifest_placeholders_b.bname = "bb"
+        manifestPlaceholders = manifest_placeholders_b
+
+        server_config_b.each { key, value ->
+            if (value instanceof Boolean) {
+                buildConfigField("boolean", (key), value.toString())
+            } else if (value instanceof GString || value instanceof String) {
+                buildConfigField("String", (key), "\"" + value + "\"")
+            } else if (value instanceof Number) {
+                buildConfigField("int", (key), value.toString())
+            }
+        }
+
+        buildConfigField "String", "project_applicationId", app_versions_b.applicationId
+        buildConfigField "String", "something", '"forb"'
+    }
+}
+ext.app_productFlavors = app_productFlavors
+
+def lib_productFlavors = {
+    A {
+        dimension flavorDimensions
+
+        server_config_a.each { key, value ->
+            if (value instanceof Boolean) {
+                buildConfigField("boolean", (key), value.toString())
+            } else if (value instanceof GString || value instanceof String) {
+                buildConfigField("String", (key), "\"" + value + "\"")
+            } else if (value instanceof Number) {
+                buildConfigField("int", (key), value.toString())
+            }
+        }
+
+        buildConfigField "String", "something", '"fora"'
+    }
+    B {
+        dimension flavorDimensions
+
+        server_config_b.each { key, value ->
+            if (value instanceof Boolean) {
+                buildConfigField("boolean", (key), value.toString())
+            } else if (value instanceof GString || value instanceof String) {
+                buildConfigField("String", (key), "\"" + value + "\"")
+            } else if (value instanceof Number) {
+                buildConfigField("int", (key), value.toString())
+            }
+        }
+
+        buildConfigField "String", "something", '"forb"'
+    }
+}
+
+ext.lib_productFlavors = lib_productFlavors
+
+/////////////////////////////////////////////////////////////////////
+//通用配置
+def common_config = [:]
+common_config.app_mode = isDebug
+common_config.project_applicationId = app_versions.applicationId
+ext.common_config = common_config
+
+
 /////////////////////////////////////////////////////////////////////
 //resConfigs打包过滤
 def res_configs = [:]

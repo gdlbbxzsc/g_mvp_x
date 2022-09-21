@@ -24,6 +24,9 @@ android {
         }
     }
 
+    flavorDimensions flavorDimensions
+    productFlavors lib_productFlavors
+
 }
 
 dependencies {

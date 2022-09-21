@@ -54,6 +54,9 @@ android {
         }
     }
 
+    flavorDimensions flavorDimensions
+    productFlavors lib_productFlavors
+
     sourceSets {
         main {
             if (module_Debug.toBoolean()) {

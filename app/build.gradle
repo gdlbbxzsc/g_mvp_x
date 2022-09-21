@@ -54,20 +54,6 @@ android {
         }
     }
 
-    flavorDimensions ""
-//     渠道列表
-    productFlavors {
-        atest {
-            manifest_placeholders.aname = "aa"
-            manifestPlaceholders = manifest_placeholders
-        }
-        btest {
-            manifest_placeholders.aname = "bb"
-            manifestPlaceholders = manifest_placeholders
-        }
-
-    }
-
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -100,6 +86,8 @@ android {
         }
     }
 
+    flavorDimensions flavorDimensions
+    productFlavors app_productFlavors
 
     applicationVariants.all { variant ->
         variant.outputs.all {
